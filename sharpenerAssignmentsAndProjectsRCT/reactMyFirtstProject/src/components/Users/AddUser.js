@@ -5,6 +5,7 @@ import { useState } from "react";
 import ErrorModal from "../UI/ErrorModal";
 const AddUser = (props) => {
   const [enteredUserName, setEnteredUserName] = useState("");
+  const [enteredCollege, setEnteredCollege] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
   const [error, setError] = useState(null);
 
@@ -13,10 +14,15 @@ const AddUser = (props) => {
   };
   const addUserHandler = (event) => {
     event.preventDefault();
-    if (enteredAge.trim().length === 0 || enteredUserName.trim().length === 0) {
+    if (
+      enteredAge.trim().length === 0 ||
+      enteredUserName.trim().length === 0 ||
+      enteredCollege.trim().length === 0
+    ) {
       setError({
         title: "Invalid Input",
-        message: "Please enter valid name and age(Non empty values).",
+        message:
+          "Please enter valid name , age(Non empty values) and valid college name.",
       });
       return;
     }
@@ -27,17 +33,21 @@ const AddUser = (props) => {
       });
       return;
     }
-    props.onUserAdded(enteredUserName, enteredAge);
-    console.log(enteredAge, enteredUserName);
+    props.onUserAdded(enteredUserName, enteredAge, enteredCollege);
     setEnteredUserName("");
     setEnteredAge("");
+    setEnteredCollege("");
   };
   const userNameChageHandler = (e) => {
     setEnteredUserName(e.target.value);
   };
+  const userCollegeChageHandler = (e) => {
+    setEnteredCollege(e.target.value);
+  };
   const userAgeChageHandler = (e) => {
     setEnteredAge(e.target.value);
   };
+
   return (
     <>
       {error && (
@@ -56,6 +66,15 @@ const AddUser = (props) => {
               id="username"
               onChange={userNameChageHandler}
               value={enteredUserName}
+            />
+          </div>
+          <div>
+            <label htmlFor="college">College Name</label>
+            <input
+              type="text"
+              id="college"
+              onChange={userCollegeChageHandler}
+              value={enteredCollege}
             />
           </div>
           <div>
