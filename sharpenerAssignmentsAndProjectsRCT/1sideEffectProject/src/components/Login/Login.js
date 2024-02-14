@@ -1,59 +1,46 @@
-import React, { useReducer } from "react";
-
+import React, { useReducer, useState, useEffect, useContext } from "react";
+import AuthContext from "../../store/auth-context";
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
-
-const Login = (props) => {
-  // const [formIsValid, setFormIsValid] = useState(false);
-  const formReducer = (state, action) => {
-    if (action.type === "USER_EMAIL") {
-      let validateEmail = false;
-      if (action.value.trim().includes("@") && action.value.trim().length > 6) {
-        validateEmail = true;
-      }
-      let validateForm = false;
-      if (state.password && state.college && validateEmail) {
-        validateForm = true;
-      }
-      return {
-        ...state,
-        email: action.value,
-        isEmailValid: validateEmail,
-        isFormValid: validateForm,
-      };
-    } else if (action.type === "USER_PASSWORD") {
-      let validatePass = false;
-      if (action.value.trim().length > 6) {
-        validatePass = true;
-      }
-      let validateForm = false;
-      if (state.email && state.college && validatePass) {
-        validateForm = true;
-      }
-      return {
-        ...state,
-        password: action.value,
-        isPasswordValid: validatePass,
-        isFormValid: validateForm,
-      };
-    } else {
-      let validateCollegeName = false;
-      if (action.value.trim().length > 6) {
-        validateCollegeName = true;
-      }
-      let validateForm = false;
-      if (state.password && state.email && validateCollegeName) {
-        validateForm = true;
-      }
-      return {
-        ...state,
-        college: action.value,
-        isCollegeNameValid: validateCollegeName,
-        isFormValid: validateForm,
-      };
+const formReducer = (state, action) => {
+  if (action.type === "USER_EMAIL") {
+    let validateEmail = false;
+    if (action.value.trim().includes("@") && action.value.trim().length > 6) {
+      validateEmail = true;
     }
-  };
+
+    return {
+      ...state,
+      email: action.value,
+      isEmailValid: validateEmail,
+    };
+  } else if (action.type === "USER_PASSWORD") {
+    let validatePass = false;
+    if (action.value.trim().length > 6) {
+      validatePass = true;
+    }
+    return {
+      ...state,
+      password: action.value,
+      isPasswordValid: validatePass,
+    };
+  } else {
+    let validateCollegeName = false;
+    if (action.value.trim().length > 6) {
+      validateCollegeName = true;
+    }
+
+    return {
+      ...state,
+      college: action.value,
+      isCollegeNameValid: validateCollegeName,
+    };
+  }
+};
+
+const Login = () => {
+  const [formIsValid, setFormIsValid] = useState(false);
   const [formState, formDispatch] = useReducer(formReducer, {
     email: "",
     isEmailValid: false,
@@ -61,25 +48,20 @@ const Login = (props) => {
     isPasswordValid: false,
     college: "",
     isCollegeNameValid: false,
-    isFormValid: false,
   });
+  const authContextData = useContext(AuthContext);
+  const { isCollegeNameValid, isEmailValid, isPasswordValid } = formState;
+  useEffect(() => {
+    const clearTimer = setTimeout(() => {
+      console.log("Effect");
+      setFormIsValid(isCollegeNameValid && isEmailValid && isPasswordValid);
+    }, 700);
 
-  // useEffect(() => {
-  //   const clearTimer = setTimeout(() => {
-  //     console.log("Effect");
-  //     setFormIsValid(
-  //       enteredPassword.trim().length > 6 &&
-  //         enteredEmail.includes("@") &&
-  //         enteredCollegeName.trim().length > 6 &&
-  //         enteredCollegeName !== ""
-  //     );
-  //   }, 700);
-
-  //   return () => {
-  //     console.log("SetTimeout cleared");
-  //     clearTimeout(clearTimer);
-  //   };
-  // }, [enteredEmail, enteredPassword, enteredCollegeName]);
+    return () => {
+      console.log("SetTimeout cleared");
+      clearTimeout(clearTimer);
+    };
+  }, [isEmailValid, isPasswordValid, isCollegeNameValid]);
 
   const emailChangeHandler = (event) => {
     formDispatch({ type: "USER_EMAIL", value: event.target.value });
@@ -95,7 +77,11 @@ const Login = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
     if (formState.email && formState.password && formState.college) {
-      props.onLogin(formState.email, formState.password, formState.college);
+      authContextData.onLogIn(
+        formState.email,
+        formState.password,
+        formState.college
+      );
     }
   };
   // const validateEmailHandler = () => {
@@ -150,7 +136,8 @@ const Login = (props) => {
           <Button
             type="submit"
             className={classes.btn}
-            disabled={!formState.isFormValid}
+            disabled={!formIsValid}
+            onClick={authContextData.onLogIn}
           >
             Login
           </Button>
