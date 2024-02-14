@@ -1,3 +1,4 @@
+import Input from "../Input/Input";
 import React, { useReducer, useState, useEffect, useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import Card from "../UI/Card/Card";
@@ -66,7 +67,6 @@ const Login = () => {
   const emailChangeHandler = (event) => {
     formDispatch({ type: "USER_EMAIL", value: event.target.value });
   };
-
   const passwordChangeHandler = (event) => {
     formDispatch({ type: "USER_PASSWORD", value: event.target.value });
   };
@@ -95,13 +95,12 @@ const Login = () => {
             formState.isEmailValid === false ? classes.invalid : ""
           }`}
         >
-          <label htmlFor="email">E-Mail</label>
-          <input
+          <Input
             type="email"
             id="email"
             value={formState.email}
             onChange={emailChangeHandler}
-            /* onBlur={validateEmailHandler}*/
+            labelName="E-Mail"
           />
         </div>
         <div
@@ -109,13 +108,12 @@ const Login = () => {
             formState.isPasswordValid === false ? classes.invalid : ""
           }`}
         >
-          <label htmlFor="password">Password</label>
-          <input
+          <Input
             type="password"
             id="password"
             value={formState.password}
             onChange={passwordChangeHandler}
-            /*onBlur={validatePasswordHandler}*/
+            labelName="Password"
           />
         </div>
         <div
