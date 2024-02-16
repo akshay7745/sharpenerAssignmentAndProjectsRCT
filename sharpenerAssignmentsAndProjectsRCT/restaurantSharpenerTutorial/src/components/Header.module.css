@@ -1,0 +1,42 @@
+.header_container {
+  background-image: url("https://github.com/academind/react-complete-guide-code/blob/11-practice-food-order-app/extra-files/meals.jpg?raw=true");
+  height: 250px;
+}
+
+.nav_items_wrapper {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(104, 21, 21);
+  height: 80px;
+  color: white;
+}
+.nav_items {
+  margin: auto 150px;
+}
+.logo {
+  font-size: 30px;
+  font-weight: bold;
+}
+.cart {
+  font-size: 15px;
+  font-weight: bold;
+  display: flex;
+  width: 250px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  background-color: rgb(55, 5, 5);
+  align-items: center;
+  justify-content: space-evenly;
+}
+.cart_icon {
+  margin-right: 0px;
+}
+.quantity {
+  background-color: rgb(104, 21, 21);
+  width: 40px;
+  height: 30px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
