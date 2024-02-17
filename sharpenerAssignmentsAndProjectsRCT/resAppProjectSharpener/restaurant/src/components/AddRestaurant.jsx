@@ -23,7 +23,6 @@ const formReducer = (state, action) => {
   }
 };
 const AddRestaurant = (props) => {
-  console.log(props.onRestarantAdd);
   const [formState, formDispatcher] = useReducer(formReducer, {
     orderId: "",
     price: "",
@@ -31,7 +30,6 @@ const AddRestaurant = (props) => {
     table: "",
   });
   const { orderId, price, dish, table } = formState;
-  console.log(formState);
   const submitHandler = (e) => {
     e.preventDefault();
     props.onRestarantAdd(formState);
@@ -46,7 +44,6 @@ const AddRestaurant = (props) => {
       formDispatcher({ type: "DISH", value: e.target.value });
     } else {
       formDispatcher({ type: "TABLE", value: e.target.value });
-      console.log(e.target.value);
     }
   };
   return (

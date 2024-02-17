@@ -6,19 +6,18 @@ const Restaurants = () => {
   const [restarantData3, setRestaurantData3] = useState([]);
   const [deleted, setDeleted] = useState("");
   useEffect(() => {
-    if (restarantData1.length !== 0) {
-      restarantData1.map((data) => {
-        localStorage.setItem(data.orderId, JSON.stringify(data));
-      });
-    } else if (restarantData2.length !== 0) {
-      restarantData2.map((data) => {
-        localStorage.setItem(data.orderId, JSON.stringify(data));
-      });
-    } else {
-      restarantData3.map((data) => {
-        localStorage.setItem(data.orderId, JSON.stringify(data));
-      });
-    }
+    restarantData1.length > 0 &&
+      restarantData1.map((data) =>
+        localStorage.setItem(data.orderId, JSON.stringify(data))
+      );
+    restarantData2.length > 0 &&
+      restarantData2.map((data) =>
+        localStorage.setItem(data.orderId, JSON.stringify(data))
+      );
+    restarantData3.length > 0 &&
+      restarantData3.map((data) =>
+        localStorage.setItem(data.orderId, JSON.stringify(data))
+      );
   }, [restarantData1, restarantData2, restarantData3]);
   useEffect(() => {
     if (deleted !== "") {
@@ -61,7 +60,7 @@ const Restaurants = () => {
       <div>
         <div>
           <h1>Orders</h1>
-          <section>
+          <section key={"table1"}>
             <h2>Table 1</h2>
             <ul>
               {restarantData1.length > 0 &&
@@ -80,7 +79,7 @@ const Restaurants = () => {
                 ))}
             </ul>
           </section>
-          <section>
+          <section key={"table2"}>
             <h2>Table 2</h2>
             <ul>
               {restarantData2.length > 0 &&
@@ -99,7 +98,7 @@ const Restaurants = () => {
                 ))}
             </ul>
           </section>
-          <section>
+          <section key={"table3"}>
             <h2>Table 3</h2>
             <ul>
               {restarantData3.length > 0 &&
