@@ -1,5 +1,5 @@
 import classes from "./AvailableMeals.module.css";
-
+import MealsForm from "./MealsForm";
 const DUMMY_MEALS = [
   {
     id: "m1",
@@ -29,9 +29,14 @@ const DUMMY_MEALS = [
 const AvailableMeals = () => {
   const mealsList = DUMMY_MEALS.map((meal) => (
     <li key={meal.id}>
-      <h4>{meal.name}</h4>
-      <p>{meal.description}</p>
-      <p>${meal.price}</p>
+      <div>
+        <h4>{meal.name}</h4>
+        <p>{meal.description}</p>
+        <p>${meal.price}</p>
+      </div>
+      <div>
+        <MealsForm />
+      </div>
     </li>
   ));
   return (

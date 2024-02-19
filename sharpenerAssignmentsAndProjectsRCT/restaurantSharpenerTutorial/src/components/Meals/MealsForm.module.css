@@ -1,0 +1,32 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+.form > div {
+  width: 120px;
+}
+
+.form > div > div {
+  display: flex;
+  width: 100%;
+}
+.form > div > div input {
+  width: 100%;
+  margin-left: 15px;
+  padding: 4px 5px;
+}
+.form > div:nth-child(2) {
+  width: 100px;
+  margin-top: 5px;
+}
+.form > div:nth-child(2) button {
+  width: 90%;
+  margin-left: 10px;
+  background: rgb(103, 18, 18);
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
