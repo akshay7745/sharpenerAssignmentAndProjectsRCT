@@ -2,7 +2,10 @@
   max-width: 60rem;
   width: 90%;
   margin: 2rem auto;
+  background-color: white;
+  border-radius: 10px;
   animation: meals-appear 1s ease-out forwards;
+  padding: 20px;
 }
 
 .meals ul {
@@ -10,7 +13,23 @@
   margin: 0;
   padding: 0;
 }
-
+.meals ul li {
+  border-bottom: 1.5px solid rgb(224, 217, 217);
+}
+.meals ul li h4:first-child {
+  margin-bottom: 0px;
+}
+.meals ul li p:nth-child(2) {
+  font-style: italic;
+  font-weight: 350;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.meals ul li p:nth-child(3) {
+  font-weight: 550;
+  color: brown;
+  margin-top: 0px;
+}
 @keyframes meals-appear {
   from {
     opacity: 0;
