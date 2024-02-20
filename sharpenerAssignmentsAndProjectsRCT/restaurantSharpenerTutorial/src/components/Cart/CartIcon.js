@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const CartIcon = () => {
   return (
     <svg

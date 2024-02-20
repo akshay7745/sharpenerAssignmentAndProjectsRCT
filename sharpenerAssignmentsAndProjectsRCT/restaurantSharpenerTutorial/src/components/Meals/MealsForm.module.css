@@ -1,32 +1,20 @@
 .form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-}
-.form > div {
-  width: 120px;
+  text-align: right;
 }
 
-.form > div > div {
-  display: flex;
-  width: 100%;
-}
-.form > div > div input {
-  width: 100%;
-  margin-left: 15px;
-  padding: 4px 5px;
-}
-.form > div:nth-child(2) {
-  width: 100px;
-  margin-top: 5px;
-}
-.form > div:nth-child(2) button {
-  width: 90%;
-  margin-left: 10px;
-  background: rgb(103, 18, 18);
-  border: none;
+.form button {
+  font: inherit;
+  cursor: pointer;
+  background-color: #8a2b06;
+  border: 1px solid #8a2b06;
   color: white;
-  padding: 5px 10px;
-  border-radius: 15px;
+  padding: 0.25rem 2rem;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.form button:hover,
+.form button:active {
+  background-color: #641e03;
+  border-color: #641e03;
 }

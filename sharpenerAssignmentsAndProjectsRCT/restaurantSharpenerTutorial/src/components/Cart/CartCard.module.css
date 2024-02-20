@@ -1,0 +1,21 @@
+.cartCard {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  background-color: white;
+  padding: 2.5rem 5rem;
+  border-radius: 10px;
+}
+.cartCardBase {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  /* height: 200%; */
+  right: 0;
+  left: 0;
+  background-color: rgba(25, 23, 28, 0.785);
+  z-index: 15;
+}
