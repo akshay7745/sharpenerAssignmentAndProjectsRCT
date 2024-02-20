@@ -1,4 +1,4 @@
-export const HEADER_BACKGROUND =
+export const HEADER_BACKGROUND_IMG =
   "https://github.com/academind/react-complete-guide-code/blob/11-practice-food-order-app/extra-files/meals.jpg?raw=true";
 export const DUMMY_MEALS = [
   {

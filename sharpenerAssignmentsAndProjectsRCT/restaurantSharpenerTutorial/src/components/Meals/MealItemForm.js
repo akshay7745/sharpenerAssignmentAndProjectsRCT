@@ -1,4 +1,4 @@
-import classes from "./MealsForm.module.css";
+import classes from "./MealItemForm.module.css";
 import Input from "../UI/Input";
 const MealItemForm = () => {
   return (
