@@ -2,23 +2,26 @@ import { Fragment, useState } from "react";
 import Header from "./components/Layout/Header";
 import Meals from "./components/Meals/Meals";
 import Cart from "./components/Cart/Cart";
-
 function App() {
   const [showCartCard, setShowCartCard] = useState(false);
-
-  const cartCardHandler = () => {
+  const showCartCardHandler = () => {
+    setShowCartCard((prevState) => {
+      if (!prevState) {
+        return true;
+      }
+    });
+  };
+  const hideCartCardHandler = () => {
     setShowCartCard((prevState) => {
       if (prevState) {
         return false;
-      } else {
-        return true;
       }
     });
   };
   return (
     <Fragment>
-      {showCartCard && <Cart onCartCardClick={cartCardHandler} />}
-      <Header onCartCardClick={cartCardHandler} />
+      {showCartCard && <Cart onCartCardClick={hideCartCardHandler} />}
+      <Header onCartCardClick={showCartCardHandler} />
       <main>
         <Meals />
       </main>
