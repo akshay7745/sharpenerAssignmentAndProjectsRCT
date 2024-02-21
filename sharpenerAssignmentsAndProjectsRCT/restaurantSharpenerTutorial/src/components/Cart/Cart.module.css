@@ -6,11 +6,11 @@
   overflow: auto;
 }
 
-.cart-items li {
+/* .cart-items li {
   display: flex;
   justify-content: space-between;
   width: 100%;
-}
+} */
 
 .total {
   display: flex;

@@ -9,11 +9,48 @@ const Cart = (props) => {
     return accumulator + item.price * item.quantity;
   }, 0);
   const cartItems = (
+    //! ADD STYLE THROUGH CSS FILE
     <ul className={classes["cart-items"]}>
       {addedToCart.map((item) => (
         <li key={item.id}>
-          <span>{item.name}</span>
-          <span>$ {(item.quantity * item.price).toFixed(2)}</span>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "center",
+              borderBottom: "1px solid black",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+
+                width: "30%",
+              }}
+            >
+              <h4 style={{ textAlign: "left" }}>{item.name}</h4>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100px",
+                }}
+              >
+                <span>${item.price}</span>
+                <span>x{item.quantity}</span>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <span>
+                <button>-</button>
+              </span>
+              <span>
+                <button>+</button>
+              </span>
+            </div>
+          </div>
         </li>
       ))}
     </ul>

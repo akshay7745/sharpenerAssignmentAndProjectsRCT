@@ -5,6 +5,7 @@ const cartContext = createContext({ onAddCart: (data) => {}, addedToCart: [] });
 export const CartContextProvider = (props) => {
   const [addedToCart, setAddedToCart] = useState([]);
   console.log("From the cart context", addedToCart);
+  const totalAmount = 0;
   const addCartHandler = (data) => {
     setAddedToCart((prevState) => {
       let flag = null;
@@ -19,7 +20,14 @@ export const CartContextProvider = (props) => {
     });
   };
   return (
-    <cartContext.Provider value={{ addedToCart, onAddCart: addCartHandler }}>
+    <cartContext.Provider
+      value={{
+        totalAmount,
+        addedToCart,
+        addItem: addCartHandler,
+        removeItem: (id) => {},
+      }}
+    >
       {props.children}
     </cartContext.Provider>
   );

@@ -5,7 +5,7 @@ import { useContext } from "react";
 import cartContext from "../context/cartContext";
 const MealItemForm = (props) => {
   const [quantity, setQuantity] = useState(1);
-  const { onAddCart } = useContext(cartContext);
+  const { addItem } = useContext(cartContext);
   const changeHandler = (e) => {
     if (e.target.value !== "") {
       setQuantity(+e.target.value);
@@ -16,7 +16,7 @@ const MealItemForm = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    onAddCart({ ...props.itemData, quantity: quantity });
+    addItem({ ...props.itemData, quantity: quantity });
     setQuantity(1);
   };
   return (
