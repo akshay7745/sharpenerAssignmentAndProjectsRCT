@@ -1,6 +1,12 @@
 import { createContext, useState } from "react";
 
-const cartContext = createContext({ onAddCart: (data) => {}, addedToCart: [] });
+const cartContext = createContext({
+  onAddCart: (data) => {},
+  addedToCart: [],
+  addItem: () => {},
+  removeItem: (id) => {},
+  addOnlyOneItem: (id) => {},
+});
 
 export const CartContextProvider = (props) => {
   const [addedToCart, setAddedToCart] = useState([]);
@@ -19,13 +25,45 @@ export const CartContextProvider = (props) => {
       return flag ? newState : [...prevState, data];
     });
   };
+  const increaseByOne = (id) => {
+    setAddedToCart((prevState) => {
+      const newState = prevState.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+          };
+        }
+        return item;
+      });
+      return newState;
+    });
+  };
+  const decreaseByOne = (id) => {
+    setAddedToCart((prevState) => {
+      const arr = [];
+      for (let val of prevState) {
+        if (val.id === id) {
+          if (val.quantity > 1) {
+            arr.push({ ...val, quantity: val.quantity - 1 });
+          } else {
+            continue;
+          }
+        } else {
+          arr.push(val);
+        }
+      }
+      return arr;
+    });
+  };
   return (
     <cartContext.Provider
       value={{
         totalAmount,
         addedToCart,
         addItem: addCartHandler,
-        removeItem: (id) => {},
+        removeItem: decreaseByOne,
+        addOnlyOneItem: increaseByOne,
       }}
     >
       {props.children}

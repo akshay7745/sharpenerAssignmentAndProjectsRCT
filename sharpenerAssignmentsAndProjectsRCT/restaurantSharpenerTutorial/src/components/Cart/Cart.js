@@ -4,7 +4,7 @@ import { useContext } from "react";
 import cartContext from "../context/cartContext";
 
 const Cart = (props) => {
-  const { addedToCart } = useContext(cartContext);
+  const { addedToCart, addOnlyOneItem, removeItem } = useContext(cartContext);
   const totalAmount = addedToCart.reduce((accumulator, item) => {
     return accumulator + item.price * item.quantity;
   }, 0);
@@ -44,10 +44,10 @@ const Cart = (props) => {
             </div>
             <div style={{ display: "flex", gap: "10px" }}>
               <span>
-                <button>-</button>
+                <button onClick={() => removeItem(item.id)}>-</button>
               </span>
               <span>
-                <button>+</button>
+                <button onClick={() => addOnlyOneItem(item.id)}>+</button>
               </span>
             </div>
           </div>
