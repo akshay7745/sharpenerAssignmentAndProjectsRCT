@@ -18,11 +18,11 @@ const Modal = (props) => {
   return (
     <Fragment>
       {ReactDOM.createPortal(
-        <ModalOverlay>{props.children}</ModalOverlay>,
+        <Backdrop onCartCardClick={props.onCartCardClick} />,
         portalElement
       )}
       {ReactDOM.createPortal(
-        <Backdrop onCartCardClick={props.onCartCardClick} />,
+        <ModalOverlay>{props.children}</ModalOverlay>,
         portalElement
       )}
     </Fragment>
