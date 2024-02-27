@@ -2,7 +2,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import NavbarText from "react-bootstrap/esm/NavbarText";
-const Header = () => {
+const Header = ({ onShow }) => {
   return (
     <Navbar bg="dark" expand data-bs-theme="dark" fixed="top">
       <Container>
@@ -18,7 +18,7 @@ const Header = () => {
             <Nav.Link href="#about">About</Nav.Link>
           </Nav.Item>
         </Nav>
-        <Nav>
+        <Nav onClick={onShow}>
           <NavbarText className="border-primary border-2   border p-1 rounded-2  ">
             Cart<span className="badge bg-secondary p-2 ms-1 ">2</span>
           </NavbarText>
