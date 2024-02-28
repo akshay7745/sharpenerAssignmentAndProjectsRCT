@@ -1,22 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext, useRef } from "react";
 import addMedicineContext from "../contexts/addMedicineContext";
 import cartContext from "../contexts/cartContext";
 
 const Medicines = () => {
-  const [medicineCount, setMedicineCount] = useState(1);
-  const { medicineData, addMedicineHandler } = useContext(addMedicineContext);
-  const { addToCart, cartItems } = useContext(cartContext);
+  const { medicineData } = useContext(addMedicineContext);
+  const { addToCart } = useContext(cartContext);
+  const inputRef = useRef();
 
-  const changeHandler = (e) => {
-    setMedicineCount(e.target.value);
-  };
   const submitCartHandler = (data) => {
-    addToCart({ ...data, quantity: medicineCount });
+    addToCart({ ...data, quantity: inputRef.current.value });
+    inputRef.current.value = 1;
   };
   return (
     <ul>
       {medicineData.map((medicine) => {
         const { name, price, description, id } = medicine;
+
         return (
           <li
             key={id}
@@ -48,8 +47,8 @@ const Medicines = () => {
                 <input
                   type="number"
                   id="quantity"
-                  value={medicineCount}
-                  onChange={changeHandler}
+                  defaultValue={1}
+                  ref={inputRef}
                 />
                 <button>Add to Cart</button>
               </form>
