@@ -7,12 +7,20 @@ import Button from "react-bootstrap/Button";
 import Products from "./components/Products";
 import Footer from "./components/Footer";
 import { useState } from "react";
-import { cartElements } from "./utility/constants";
+// import { cartElements } from "./utility/constants";
+import { useContext } from "react";
+import cartContext from "./contexts/cartContext";
+
 function App() {
   const [show, setShow] = useState(false);
-
+  const { cartData } = useContext(cartContext);
+  console.log(cartData);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const totalAmount = cartData.reduce((acc, item) => {
+    return acc + item.quantity * item.price;
+  }, 0);
   return (
     <>
       <Offcanvas show={show} placement={"end"} onHide={handleClose}>
@@ -36,7 +44,7 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    {cartElements.map((item) => {
+                    {cartData.map((item) => {
                       return (
                         <tr
                           key={item.title + item.quantity}
@@ -68,7 +76,7 @@ function App() {
             <Row>
               <Col className="text-end ">
                 <h4>
-                  Total <span>$0</span>
+                  Total <span>${totalAmount}</span>
                 </h4>
               </Col>
             </Row>
