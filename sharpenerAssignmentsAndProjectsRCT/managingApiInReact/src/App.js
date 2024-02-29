@@ -9,6 +9,9 @@ function App() {
   const [error, setError] = useState(null);
   console.log(error, new Date().getSeconds());
   useEffect(() => {
+    getMovies();
+  }, []);
+  useEffect(() => {
     let intervalId = "";
     if (error) {
       intervalId = setInterval(() => {
