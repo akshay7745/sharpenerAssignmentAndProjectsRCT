@@ -16,13 +16,26 @@ const Header = ({ onShow }) => {
         <Navbar.Brand>SuperMart</Navbar.Brand>
         <Nav>
           <Nav.Item>
-            <NavLink className={"text-light mx-3 text-decoration-none "} to="/">
+            <NavLink
+              className={" mx-3 text-decoration-none "}
+              style={({ isActive }) => {
+                return {
+                  color: isActive ? "#4169E1" : "white",
+                };
+              }}
+              to="/"
+            >
               Home
             </NavLink>
           </Nav.Item>
           <Nav.Item>
             <NavLink
-              className={"text-light mx-3 text-decoration-none"}
+              className={" mx-3 text-decoration-none"}
+              style={({ isActive }) => {
+                return {
+                  color: isActive ? "#4169E1" : "white",
+                };
+              }}
               to="/store"
             >
               Store
@@ -30,7 +43,12 @@ const Header = ({ onShow }) => {
           </Nav.Item>
           <Nav.Item>
             <NavLink
-              className={"text-light mx-3 text-decoration-none"}
+              className={" mx-3 text-decoration-none"}
+              style={({ isActive }) => {
+                return {
+                  color: isActive ? "#4169E1" : "white",
+                };
+              }}
               to="/about"
             >
               About

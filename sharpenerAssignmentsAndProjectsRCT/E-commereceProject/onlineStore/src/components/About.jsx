@@ -1,10 +1,22 @@
-import React from "react";
-
+import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
 const About = () => {
   return (
     <>
-      <h3 className="text-center">About</h3>
-      <p className="px-5 text-text-center ">
+      <Row className="mt-2 bg-secondary py-5 ">
+        <Col>
+          <h1 className="mt-5 display-1 text-center text-white fw-bold ">
+            The Generics
+          </h1>
+        </Col>
+      </Row>
+      <h3 className="text-center mt-3">About</h3>
+      <p
+        className="px-4 text-text-center "
+        style={{
+          marginBottom: "136px",
+        }}
+      >
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Libero
         eligendi itaque officia non ea accusantium ab exercitationem repellendus
         quo quibusdam, eaque perferendis placeat quasi similique. Ipsam

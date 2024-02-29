@@ -91,14 +91,8 @@ function App() {
         </Offcanvas.Body>
       </Offcanvas>
       <Header onShow={handleShow} onHide={handleClose} />
+
       <Container fluid>
-        <Row className="mt-2 bg-secondary py-5 ">
-          <Col>
-            <h1 className="mt-5 display-1 text-center text-white fw-bold ">
-              The Generics
-            </h1>
-          </Col>
-        </Row>
         <Outlet />
         <Footer />
       </Container>
