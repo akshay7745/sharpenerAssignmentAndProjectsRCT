@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 const Footer = () => {
   return (
     <Row
-      className="bg-info justify-content-evenly align-items-center px-4 "
+      className="bg-info justify-content-evenly align-items-center px-4 fixed-bottom  "
       style={{ height: "100px" }}
     >
       <Col md={4} className="text-center my-4 ">

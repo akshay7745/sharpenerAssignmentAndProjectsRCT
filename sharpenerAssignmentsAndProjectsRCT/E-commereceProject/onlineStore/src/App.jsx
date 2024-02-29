@@ -4,17 +4,19 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Products from "./components/Products";
 import Footer from "./components/Footer";
 import { useState } from "react";
-// import { cartElements } from "./utility/constants";
 import { useContext } from "react";
 import cartContext from "./contexts/cartContext";
+import { createBrowserRouter, Outlet } from "react-router-dom";
+import About from "./components/About";
+import Body from "./components/Body";
+import Error from "./components/Error";
+import Home from "./components/Home";
 
 function App() {
   const [show, setShow] = useState(false);
   const { cartData } = useContext(cartContext);
-  console.log(cartData);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -97,23 +99,37 @@ function App() {
             </h1>
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <h3 className="display-6  mt-4 fw-medium  text-center">MUSIC</h3>
-          </Col>
-        </Row>
-        <Products />
-        <Row className="justify-content-around  ">
-          <Col md={2}>
-            <Button className="ms-5 my-4 text-info" variant="secondary">
-              See The Cart
-            </Button>
-          </Col>
-        </Row>
+        <Outlet />
         <Footer />
       </Container>
     </>
   );
 }
 
-export default App;
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "/store",
+        element: <Body />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
+    errorElement: <Error />,
+  },
+  {
+    path: "/about",
+    element: <About />,
+  },
+]);
+
+export default router;
