@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
-
+import AddNewMovie from "./components/AddNewMovie";
 function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +51,9 @@ function App() {
   }
   return (
     <React.Fragment>
+      <section>
+        <AddNewMovie />
+      </section>
       <section>
         <button onClick={getMovies}>Fetch Movies</button>
       </section>
