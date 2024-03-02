@@ -5,42 +5,58 @@ import "./App.css";
 import AddNewMovie from "./components/AddNewMovie";
 function App() {
   const [movies, setMovies] = useState([]);
+  // const [newMovieAdded, setNewMovieAdded] = useState(false);
+  const [movieDeleted, setMovieDeleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  console.log(error, new Date().getSeconds());
   useEffect(() => {
     getMovies();
   }, []);
   useEffect(() => {
-    let intervalId = "";
-    if (error) {
-      intervalId = setInterval(() => {
-        getMovies();
-      }, 5000);
+    if (movieDeleted) {
+      deleteMovie(movieDeleted);
     }
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [error]);
-  console.log(error);
+  }, [movieDeleted]);
+  const handleMovieDeleted = (id) => {
+    setMovieDeleted(id);
+  };
+  async function deleteMovie(id) {
+    const response = await fetch(
+      `https://reactmoviebackend-default-rtdb.asia-southeast1.firebasedatabase.app/movies/${id}.json`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.ok) {
+      await getMovies();
+    } else {
+      throw new Error("Something went wrong while deleting the movie");
+    }
+  }
   async function getMovies() {
     try {
       setIsLoading(true);
-      const res = await fetch("https://swapi.dev/api/films");
+      const res = await fetch(
+        "https://reactmoviebackend-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json"
+      );
       if (!res.ok) {
-        throw new Error("Something went wrong ...Retrying!!!");
+        throw new Error("Something went wrong...Retrying!!!");
       }
       const data = await res.json();
-      const updatedMovies = data?.results.map((movie) => {
-        const { episode_id, opening_crawl, release_date, title } = movie;
-        return {
-          id: episode_id,
-          title: title,
-          releaseDate: release_date,
-          openingText: opening_crawl,
-        };
-      });
-      setMovies(updatedMovies);
+      const moviesCollection = [];
+
+      for (let key in data) {
+        moviesCollection.push({
+          title: data[key].title,
+          openingText: data[key].openingText,
+          date: data[key].date,
+          id: key,
+        });
+      }
+      setMovies(moviesCollection);
       setIsLoading(false);
       setError(null);
     } catch (error) {
@@ -52,14 +68,16 @@ function App() {
   return (
     <React.Fragment>
       <section>
-        <AddNewMovie />
+        <AddNewMovie getMovies={getMovies} />
       </section>
       <section>
         <button onClick={getMovies}>Fetch Movies</button>
       </section>
       <section>
         {isLoading && !error && <h2>Loading Please wait...</h2>}
-        {!isLoading && !error && <MoviesList movies={movies} />}
+        {!isLoading && !error && (
+          <MoviesList movies={movies} onMovieDeleted={handleMovieDeleted} />
+        )}
         {error && (
           <>
             <h3>{error}</h3>
