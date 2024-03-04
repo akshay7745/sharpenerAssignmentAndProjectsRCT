@@ -48,7 +48,7 @@ const Cart = ({ show, handleClose }) => {
                             />
                             <p>{item.title}</p>
                           </td>
-                          <td>${item.price}</td>
+                          <td>₹{item.price}</td>
                           <td className="d-flex">
                             <span className="border border-1 border-primary mx-4 px-3 py-0 ">
                               {item.quantity}
@@ -65,7 +65,7 @@ const Cart = ({ show, handleClose }) => {
             <Row>
               <Col className="text-end ">
                 <h4>
-                  Total <span>${totalAmount}</span>
+                  Total <span> ₹ {totalAmount}</span>
                 </h4>
               </Col>
             </Row>

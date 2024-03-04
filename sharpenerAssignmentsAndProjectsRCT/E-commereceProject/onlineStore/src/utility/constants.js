@@ -13,6 +13,8 @@ export const productsArr = [
     id: "p1",
     description:
       "Trousers: Match your trousers to your jacket. If wearing a velvet jacket, pair it with black trousers.",
+    review:
+      "Must buy, Thank you I got delivered within 3 days, Feeling so happy",
   },
 
   {
@@ -29,6 +31,8 @@ export const productsArr = [
     id: "p2",
     description:
       "Jacket: Opt for a well-tailored black tuxedo. Alternatively, consider a deep midnight blue tux for a subtle twist. Choose between peak or shawl lapels.",
+    review:
+      "I bought shirt of pink color but got yellow , please stop this, worst experience",
   },
 
   {
@@ -45,6 +49,7 @@ export const productsArr = [
     id: "p3",
     description:
       "Jacket: Opt for a well-tailored black tuxedo. Alternatively, consider a deep midnight blue tux for a subtle twist. Choose between peak or shawl lapels.",
+    review: "The cloth quality is not so good but okay according to price 7/10",
   },
 
   {
@@ -53,14 +58,15 @@ export const productsArr = [
     price: 100,
 
     imageUrl:
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/d/h/o/xl-nvk-halfkurta-nivick-original-imagrzuhqcx5zmdu.jpeg?q=70&crop=false",
+      "https://rukminim2.flixcart.com/image/832/832/kfoapow0-0/t-shirt/y/y/y/l-kd286287-kay-dee-original-imafw2jfesgdmns6.jpeg?q=70&crop=false",
     image1:
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/7/j/w/xl-nvk-halfkurta-nivick-original-imagrzuhfjyxe4dq.jpeg?q=70&crop=false",
+      "https://rukminim2.flixcart.com/image/832/832/k5vcya80/t-shirt/m/d/2/s-kd286287-kay-dee-original-imafzejh22fzxpsn.jpeg?q=70&crop=false",
     image2:
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/7/w/n/xl-nvk-halfkurta-nivick-original-imagrzuhywgwdzyz.jpeg?q=70&crop=false",
+      "https://rukminim2.flixcart.com/image/832/832/k5vcya80/t-shirt/m/d/2/l-kd286287-kay-dee-original-imafzejhjszweszt.jpeg?q=70&crop=false",
     id: "p4",
     description:
       "Summer Dresses: Embrace the sunny season in our lightweight and breezy summer dresses. Choose from vibrant prints, flowy silhouettes, and flattering cuts that will keep you cool and chic.",
+    review: "Nice product must buy 8/10",
   },
 ];
 

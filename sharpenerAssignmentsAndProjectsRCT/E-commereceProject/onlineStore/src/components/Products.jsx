@@ -18,7 +18,7 @@ const Products = () => {
       </Row>
       <Row>
         <Col>
-          <h3 className="display-6  mt-4 fw-medium  text-center">MUSIC</h3>
+          <h3 className="display-6  mt-4 fw-medium  text-center">Clothes</h3>
         </Col>
       </Row>
       <Row className="justify-content-center text-center p-5">
@@ -33,22 +33,22 @@ const Products = () => {
                 <img
                   src={product.imageUrl}
                   alt={product.title}
-                  className="img-fluid "
+                  className="img-fluid w-50"
                 />
-                <Row className="align-items-center mb-4">
-                  <Col md>
-                    <p>{product.price}</p>
-                  </Col>
-                  <Col md>
-                    <Button
-                      variant="info"
-                      onClick={() => onAddToCart({ ...product })}
-                    >
-                      Add to Cart
-                    </Button>
-                  </Col>
-                </Row>
               </Link>
+              <Row className="align-items-center mb-4">
+                <Col md>
+                  <p>₹ {product.price}</p>
+                </Col>
+                <Col md>
+                  <Button
+                    variant="info"
+                    onClick={() => onAddToCart({ ...product })}
+                  >
+                    Add to Cart
+                  </Button>
+                </Col>
+              </Row>
             </Col>
           );
         })}
