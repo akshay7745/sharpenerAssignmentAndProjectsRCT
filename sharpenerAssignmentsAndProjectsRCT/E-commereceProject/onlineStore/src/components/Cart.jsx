@@ -36,7 +36,7 @@ const Cart = ({ show, handleClose }) => {
                     {cartData.map((item) => {
                       return (
                         <tr
-                          key={item.title + item.quantity}
+                          key={item.id + item.title}
                           className="align-items-center "
                         >
                           <td>

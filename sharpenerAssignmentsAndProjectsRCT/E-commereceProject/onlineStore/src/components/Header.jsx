@@ -36,7 +36,7 @@ const Header = ({ onShow }) => {
                   color: isActive ? "#4169E1" : "white",
                 };
               }}
-              to="/store"
+              to="/product"
             >
               Store
             </NavLink>
@@ -52,6 +52,19 @@ const Header = ({ onShow }) => {
               to="/about"
             >
               About
+            </NavLink>
+          </Nav.Item>
+          <Nav.Item>
+            <NavLink
+              className={" mx-3 text-decoration-none"}
+              style={({ isActive }) => {
+                return {
+                  color: isActive ? "#4169E1" : "white",
+                };
+              }}
+              to="/contactus"
+            >
+              Contact Us
             </NavLink>
           </Nav.Item>
         </Nav>

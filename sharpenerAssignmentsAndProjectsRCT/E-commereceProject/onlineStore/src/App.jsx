@@ -8,7 +8,8 @@ import Body from "./components/Body";
 import Error from "./components/Error";
 import Home from "./components/Home";
 import Cart from "./components/Cart";
-
+import ContactUs from "./components/ContactUs";
+import SingleProduct from "./components/SingleProduct";
 function App() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -32,8 +33,12 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/store",
+        path: "/product",
         element: <Body />,
+      },
+      {
+        path: "/product/:productId",
+        element: <SingleProduct />,
       },
       {
         path: "/about",
@@ -43,12 +48,12 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      {
+        path: "/contactus",
+        element: <ContactUs />,
+      },
     ],
     errorElement: <Error />,
-  },
-  {
-    path: "/about",
-    element: <About />,
   },
 ]);
 
