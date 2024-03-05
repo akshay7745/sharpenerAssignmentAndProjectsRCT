@@ -8,10 +8,17 @@ const SingleProduct = () => {
   const { productId } = useParams();
   const { onAddToCart } = useContext(cartContext);
   const filteredItems = productsArr.filter((product) => {
-    console.log(product);
     return product.id === productId;
   });
+  if (filteredItems.length === 0) {
+    return (
+      <h3 style={{ margin: "300px 0", textAlign: "center" }}>
+        No product found...
+      </h3>
+    );
+  }
   const filterObject = filteredItems[0];
+
   const { imageUrl, image1, image2, price, title, description, review } =
     filterObject;
   return (

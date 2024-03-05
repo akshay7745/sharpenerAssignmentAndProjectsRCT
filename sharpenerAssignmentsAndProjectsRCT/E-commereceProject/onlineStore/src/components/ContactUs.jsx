@@ -3,13 +3,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-
+import { useNavigate } from "react-router-dom";
 const ContactUs = () => {
   const [formState, setFormState] = useState({
     name: "",
     email: "",
     number: "",
   });
+  const navigate = useNavigate();
   const { name, email, number } = formState;
 
   const handleSubmit = (e) => {
@@ -31,6 +32,7 @@ const ContactUs = () => {
       if (response.ok) {
         console.log(response);
         console.log("Thank you we will contact you shortly...");
+        navigate("/product");
       } else {
         throw new Error(
           "Something went wrong while submiting contact us form..."
