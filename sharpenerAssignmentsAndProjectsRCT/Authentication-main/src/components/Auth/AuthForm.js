@@ -12,28 +12,36 @@ const AuthForm = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (!isLogin) {
-      signUpRequest({
-        email: emailRef.current.value,
-        password: passRef.current.value,
-        returnSecureToken: true,
-      });
+      authRequest(
+        {
+          email: emailRef.current.value,
+          password: passRef.current.value,
+          returnSecureToken: true,
+        },
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4"
+      );
+    } else {
+      authRequest(
+        {
+          email: emailRef.current.value,
+          password: passRef.current.value,
+          returnSecureToken: true,
+        },
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4"
+      );
     }
   };
-
-  const signUpRequest = async (data) => {
+  const authRequest = async (data, url) => {
     setIsLoading(true);
     setIsError(false);
     try {
-      const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -80,7 +88,9 @@ const AuthForm = () => {
           </button>
         </div>
         <div>
-          <span>{!isError && isLoading ? "Sending request" : ""}</span>
+          <span style={{ color: "white" }}>
+            {!isError && isLoading ? "Sending request" : ""}
+          </span>
         </div>
       </form>
     </section>
