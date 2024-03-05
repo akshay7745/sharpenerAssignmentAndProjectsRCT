@@ -1,18 +1,20 @@
 import { useState, useRef } from "react";
 
 import classes from "./AuthForm.module.css";
-
+import { useContext } from "react";
+import authContext from "../../contexts/authContext/authContext";
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const emailRef = useRef();
   const passRef = useRef();
-  console.log(emailRef, passRef);
+  const { handleLogin } = useContext(authContext);
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (!isLogin) {
-      authRequest(
+      signUpHandler(
         {
           email: emailRef.current.value,
           password: passRef.current.value,
@@ -21,7 +23,7 @@ const AuthForm = () => {
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4"
       );
     } else {
-      authRequest(
+      loginHandler(
         {
           email: emailRef.current.value,
           password: passRef.current.value,
@@ -31,7 +33,7 @@ const AuthForm = () => {
       );
     }
   };
-  const authRequest = async (data, url) => {
+  const signUpHandler = async (data, url) => {
     setIsLoading(true);
     setIsError(false);
     try {
@@ -47,7 +49,8 @@ const AuthForm = () => {
         const data = await response.json();
         setIsLoading(false);
         setIsError(false);
-        console.log(data);
+        // console.log(data);
+        handleLogin(data);
       } else {
         const error = await response.json();
 
@@ -58,7 +61,35 @@ const AuthForm = () => {
       alert(error);
     }
   };
+  const loginHandler = async (data, url) => {
+    setIsLoading(true);
+    setIsError(false);
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
+      if (response.ok) {
+        const data = await response.json();
+        setIsLoading(false);
+        setIsError(false);
+        handleLogin(data);
+
+        // console.log(data);
+      } else {
+        const error = await response.json();
+
+        throw new Error(error.error.message);
+      }
+    } catch (error) {
+      setIsError(true);
+      alert(error);
+    }
+  };
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
