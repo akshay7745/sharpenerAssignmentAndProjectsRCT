@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import Cart from "./components/Cart";
 import ContactUs from "./components/ContactUs";
 import SingleProduct from "./components/SingleProduct";
+import Login from "./components/Login";
 function App() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/contactus",
         element: <ContactUs />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
     errorElement: <Error />,

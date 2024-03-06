@@ -67,6 +67,9 @@ const Header = ({ onShow }) => {
               Contact Us
             </NavLink>
           </Nav.Item>
+          <Nav.Item>
+            <NavLink to="/login">Login</NavLink>
+          </Nav.Item>
         </Nav>
         <Nav onClick={onShow}>
           <NavbarText className="border-primary border-2   border p-1 rounded-2  ">
