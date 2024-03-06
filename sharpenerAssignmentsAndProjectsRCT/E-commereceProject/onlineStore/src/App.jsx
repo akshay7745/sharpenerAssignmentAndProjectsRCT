@@ -11,8 +11,12 @@ import Cart from "./components/Cart";
 import ContactUs from "./components/ContactUs";
 import SingleProduct from "./components/SingleProduct";
 import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+// import { Navigate } from "react-router-dom";
+// import authContext from "./contexts/authContext";
 function App() {
   const [show, setShow] = useState(false);
+  // const { isAuthenticated } = useContext(authContext);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -35,11 +39,22 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/product",
-        element: <Body />,
+
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <Body />
+          </ProtectedRoute>
+        ),
       },
+
       {
         path: "/product/:productId",
-        element: <SingleProduct />,
+        element: (
+          <ProtectedRoute>
+            <SingleProduct />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/about",
