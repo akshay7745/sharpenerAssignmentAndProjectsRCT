@@ -1,6 +1,5 @@
 import { useState } from "react";
 import authContext from "./authContext";
-
 const AuthContextProvider = (props) => {
   const [authData, setAuthData] = useState(null);
   const handleLogin = (data) => {

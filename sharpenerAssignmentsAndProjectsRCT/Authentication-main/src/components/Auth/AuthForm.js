@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-
+import { useHistory } from "react-router-dom";
 import classes from "./AuthForm.module.css";
 import { useContext } from "react";
 import authContext from "../../contexts/authContext/authContext";
@@ -10,7 +10,8 @@ const AuthForm = () => {
   const emailRef = useRef();
   const passRef = useRef();
   const { handleLogin } = useContext(authContext);
-
+  const history = useHistory();
+  console.log("clg History", history);
   const submitHandler = (e) => {
     e.preventDefault();
     if (!isLogin) {
@@ -49,8 +50,7 @@ const AuthForm = () => {
         const data = await response.json();
         setIsLoading(false);
         setIsError(false);
-        // console.log(data);
-        handleLogin(data);
+        handleLogin(data.idToken);
       } else {
         const error = await response.json();
 
@@ -77,9 +77,8 @@ const AuthForm = () => {
         const data = await response.json();
         setIsLoading(false);
         setIsError(false);
-        handleLogin(data);
-
-        // console.log(data);
+        handleLogin(data.idToken);
+        history.push("/profile");
       } else {
         const error = await response.json();
 
