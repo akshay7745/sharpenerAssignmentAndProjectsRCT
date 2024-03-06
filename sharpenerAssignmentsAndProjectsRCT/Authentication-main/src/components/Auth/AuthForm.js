@@ -11,7 +11,6 @@ const AuthForm = () => {
   const passRef = useRef();
   const { handleLogin } = useContext(authContext);
   const history = useHistory();
-  console.log("clg History", history);
   const submitHandler = (e) => {
     e.preventDefault();
     if (!isLogin) {
