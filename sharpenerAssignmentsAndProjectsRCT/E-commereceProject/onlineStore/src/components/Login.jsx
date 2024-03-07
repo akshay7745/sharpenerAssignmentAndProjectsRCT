@@ -38,7 +38,8 @@ const Login = () => {
         throw new Error(err);
       }
       const resData = await res.json();
-      handleLogin(resData.idToken);
+
+      handleLogin(resData.idToken, data.email);
       navigate("/product");
     } catch (error) {
       alert(error);

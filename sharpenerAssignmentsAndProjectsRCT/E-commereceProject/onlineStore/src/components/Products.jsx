@@ -5,8 +5,32 @@ import Button from "react-bootstrap/Button";
 import { useContext } from "react";
 import cartContext from "../contexts/cartContext";
 import { Link } from "react-router-dom";
+import authContext from "../contexts/authContext";
 const Products = () => {
-  const { onAddToCart } = useContext(cartContext);
+  // const { onAddToCart } = useContext(cartContext);
+  const { userName } = useContext(authContext);
+  const addToCart = async (data) => {
+    try {
+      const res = await fetch(
+        `https://crudcrud.com/api/a1d6682b14c44c0c918d9ea2d0c1c75a/cart${userName}`,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.ok) {
+        const resData = await res.json();
+        console.log("Successfully added to cart", resData);
+      } else {
+        throw new Error("Something went wrong while adding to cart");
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
   return (
     <>
       <Row className=" bg-secondary py-5 ">
@@ -43,7 +67,10 @@ const Products = () => {
                 <Col md>
                   <Button
                     variant="info"
-                    onClick={() => onAddToCart({ ...product })}
+                    // onClick={() => onAddToCart({ ...product })}
+                    onClick={() => {
+                      addToCart(product);
+                    }}
                   >
                     Add to Cart
                   </Button>
