@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { Suspense, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import authContext from "../contexts/authContext";
@@ -11,7 +11,9 @@ const ProtectedRoute = (props) => {
       navigate("/login");
     }
   }, [isAuthenticated, navigate]);
-  return isAuthenticated ? props.children : null;
+  return isAuthenticated ? (
+    <Suspense fallback={<div>Loading...</div>}>{props.children}</Suspense>
+  ) : null;
 };
 
 export default ProtectedRoute;
