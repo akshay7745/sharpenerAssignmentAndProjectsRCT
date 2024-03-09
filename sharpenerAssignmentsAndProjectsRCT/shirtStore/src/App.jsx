@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AddProduct from "./components/AddProduct";
-import ShirtList from "./components/ShirtList";
+import ProductList from "./components/ProductList";
 import Cart from "./components/Cart";
 function App() {
   const [clicked, setClicked] = useState(false);
@@ -40,7 +40,7 @@ function App() {
           <AddProduct />
         </section>
         <section>
-          <ShirtList />
+          <ProductList />
         </section>
       </main>
     </>

@@ -4,39 +4,35 @@ export const cartContext = createContext();
 
 const CartContextProvider = (props) => {
   const [cartData, setCartData] = useState([]);
-  const hanldleCartData = (data) => {
+  const addAProductToCart = (data) => {
     setCartData((prevData) => {
       return [...prevData, data];
     });
   };
-  const restoreCartData = (data) => {
-    setCartData(data);
-  };
+
   const getCartData = async () => {
     try {
       const res = await fetch(
-        "https://crudcrud.com/api/3adec8f911224b2eb7f0b5e36a2aff63/cart"
+        "https://crudcrud.com/api/ecc4d0efc47244d9994e0757d5eb6781/cart"
       );
-
       if (res.ok) {
-        const cartData = await res.json();
-        restoreCartData(cartData);
+        const cartProducts = await res.json();
+        console.log(cartProducts);
+        setCartData(cartProducts);
       } else {
-        throw new Error(
-          "Something went wrong while adding and storing product"
-        );
+        throw new Error("Cart data  Fetching failed please reload the page ");
+        // setCartData([]);
       }
     } catch (error) {
-      console.log(error);
+      alert(error.message);
     }
   };
   useEffect(() => {
     getCartData();
   }, []);
+
   return (
-    <cartContext.Provider
-      value={{ hanldleCartData, restoreCartData, cartData }}
-    >
+    <cartContext.Provider value={{ addAProductToCart, cartData }}>
       {props.children}
     </cartContext.Provider>
   );

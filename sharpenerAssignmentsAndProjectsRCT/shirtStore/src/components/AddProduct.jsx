@@ -1,11 +1,11 @@
-import React, { useReducer, useContext } from "react";
+import { useReducer, useContext } from "react";
 import { productContext } from "../contexts/ProductContextProvider";
 
 const formReducer = (state, action) => {
   const type = action.type;
   const val = action.payload;
   if (type === "NAME") {
-    return { ...state, id: new Date().getTime(), shirtName: val };
+    return { ...state, shirtName: val };
   } else if (type === "DESCRIPTION") {
     return { ...state, description: val };
   } else if (type === "PRICE") {
@@ -35,13 +35,11 @@ const AddProduct = () => {
     sizeM: "",
     sizeS: "",
     price: "",
-    id: "",
   });
-  const { handleProductData, restoreData } = useContext(productContext);
   const { shirtName, description, sizeL, sizeM, sizeS, price } = formState;
+  const { addSingleProduct } = useContext(productContext);
   const changeHandler = (e) => {
     const name = e.target.name;
-
     if (name === "shirtName") {
       formDispatcher({ type: "NAME", payload: e.target.value });
     } else if (name === "description") {
@@ -59,36 +57,31 @@ const AddProduct = () => {
   const saveToBackend = async (data) => {
     try {
       const res = await fetch(
-        "https://crudcrud.com/api/3adec8f911224b2eb7f0b5e36a2aff63/products",
+        "https://crudcrud.com/api/ecc4d0efc47244d9994e0757d5eb6781/products",
         {
-          method: "POST", // or 'PUT'
+          method: "POST",
+          body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
         }
       );
       if (res.ok) {
-        console.log(res);
-        // const res1 = await fetch(
-        //   "https://crudcrud.com/api/2463b078dc5d4cefb0d220aea8b3f2f5/products"
-        // );
-        // const products = await res1.json();
-        // restoreData(products);
-      } else {
-        throw new Error(
-          "Something went wrong while adding and storing product"
-        );
+        const resData = await res.json();
+        console.log("Getting added product from the crudcrud", resData);
+        addSingleProduct(resData);
       }
     } catch (error) {
-      console.log(error);
+      console.log(
+        "Something went wrong while adding the product in the store..."
+      );
     }
   };
   const submitHandler = (e) => {
     e.preventDefault();
     // formDispatcher({ type: "RESET", payload: "" });
     saveToBackend(formState);
-    handleProductData(formState);
+    // handleProductData(formState);
   };
   return (
     <form
@@ -104,6 +97,7 @@ const AddProduct = () => {
           name="shirtName"
           value={shirtName}
           onChange={changeHandler}
+          required
         />
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -115,6 +109,7 @@ const AddProduct = () => {
           name="description"
           value={description}
           onChange={changeHandler}
+          required
         />
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -126,6 +121,7 @@ const AddProduct = () => {
           name="price"
           value={price}
           onChange={changeHandler}
+          required
         />
       </div>
       <div style={{ display: "flex" }}>
@@ -137,6 +133,7 @@ const AddProduct = () => {
             id="l"
             name="l"
             value={sizeL}
+            required
           />
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -147,6 +144,7 @@ const AddProduct = () => {
             name="m"
             value={sizeM}
             onChange={changeHandler}
+            required
           />
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -157,6 +155,7 @@ const AddProduct = () => {
             name="s"
             value={sizeS}
             onChange={changeHandler}
+            required
           />
         </div>
       </div>
