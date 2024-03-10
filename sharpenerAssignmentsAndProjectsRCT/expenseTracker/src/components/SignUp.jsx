@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const [signUpData, setSignUpData] = useState({
     email: "",
@@ -10,6 +11,7 @@ const SignUp = () => {
     confirmPassword: "",
   });
   const { email, password, confirmPassword } = signUpData;
+  const navigate = useNavigate();
   const onChangeHandler = (e) => {
     setSignUpData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
@@ -47,7 +49,7 @@ const SignUp = () => {
     <>
       <Row className="mt-5 justify-content-center ">
         <Col md={5}>
-          <Form onSubmit={submitHandler}>
+          <Form className="shadow p-5 rounded-2 " onSubmit={submitHandler}>
             <Form.Group as={Row} className="mb-3" controlId="email">
               <Form.Label column sm="2">
                 Email
@@ -59,6 +61,7 @@ const SignUp = () => {
                   value={email}
                   onChange={onChangeHandler}
                   required={true}
+                  placeholder="Enter email"
                 />
               </Col>
             </Form.Group>
@@ -78,7 +81,7 @@ const SignUp = () => {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="confirmPassword">
+            <Form.Group as={Row} controlId="confirmPassword">
               <Form.Label column sm="2">
                 Confirm Password
               </Form.Label>
@@ -93,15 +96,24 @@ const SignUp = () => {
                 />
               </Col>
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Sign Up
-            </Button>
+            <Row>
+              <Col className="text-center">
+                <Button className="mt-2" variant="primary" type="submit">
+                  Sign Up
+                </Button>
+              </Col>
+            </Row>
           </Form>
         </Col>
       </Row>
       <Row className="justify-content-center ">
-        <Col md={6}>
-          <Button variant="light" className="text-black shadow " type="button">
+        <Col className="text-center">
+          <Button
+            onClick={() => navigate("/login")}
+            variant="light"
+            className="text-black shadow mt-3 "
+            type="button"
+          >
             Already have an account? Login
           </Button>
         </Col>

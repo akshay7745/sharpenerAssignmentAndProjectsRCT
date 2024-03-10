@@ -52,7 +52,7 @@ const Login = () => {
     <>
       <Row className="mt-5 justify-content-center">
         <Col md={5}>
-          <Form onSubmit={submitHandler}>
+          <Form className="shadow p-5 rounded-2 " onSubmit={submitHandler}>
             <Form.Group as={Row} className="mb-3" controlId="email_login">
               <Form.Label column sm="2">
                 Email
@@ -64,6 +64,7 @@ const Login = () => {
                   value={email}
                   onChange={onChangeHandler}
                   required={true}
+                  placeholder="Enter email"
                 />
               </Col>
             </Form.Group>
@@ -83,15 +84,24 @@ const Login = () => {
                 />
               </Col>
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Login
-            </Button>
+            <Row>
+              <Col className="text-center">
+                <Button className="mt-3" variant="primary" type="submit">
+                  Login
+                </Button>
+              </Col>
+            </Row>
           </Form>
         </Col>
       </Row>
-      <Row className="justify-content-center ">
-        <Col md={6}>
-          <Button variant="light" className="text-black shadow " type="button">
+      <Row className="justify-content-evenly mx-auto ">
+        <Col md={12} className="text-center ">
+          <Button
+            onClick={() => navigate("/")}
+            variant="light"
+            className="text-black shadow mt-3 "
+            type="button"
+          >
             Don&apos;t have an account? Sign Up
           </Button>
         </Col>
