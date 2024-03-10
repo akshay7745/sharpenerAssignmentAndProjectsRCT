@@ -1,24 +1,27 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-const SignUp = () => {
+import { authContext } from "../contexts/AuthContextProvider";
+import { useNavigate } from "react-router-dom";
+const Login = () => {
   const [signUpData, setSignUpData] = useState({
     email: "",
     password: "",
-    confirmPassword: "",
   });
-  const { email, password, confirmPassword } = signUpData;
+  const navigate = useNavigate();
+  const { handleToken } = useContext(authContext);
+  const { email, password } = signUpData;
   const onChangeHandler = (e) => {
     setSignUpData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
   };
-  const registerUser = async (data) => {
+  const loginUser = async (data) => {
     try {
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4`,
         {
           method: "POST",
           body: JSON.stringify(data),
@@ -29,8 +32,10 @@ const SignUp = () => {
       );
       if (res.ok) {
         const resData = await res.json();
-        console.log(resData);
-        console.log("User has been successfully registered");
+        console.log(resData.idToken, "login credentials after json");
+        handleToken(resData.idToken);
+        console.log("Login successful");
+        navigate("/home");
       } else {
         const resData = await res.json();
         throw new Error(resData.error.message);
@@ -41,14 +46,14 @@ const SignUp = () => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
-    registerUser({ email, password, returnSecureToken: true });
+    loginUser({ email, password, returnSecureToken: true });
   };
   return (
     <>
-      <Row className="mt-5 justify-content-center ">
+      <Row className="mt-5 justify-content-center">
         <Col md={5}>
           <Form onSubmit={submitHandler}>
-            <Form.Group as={Row} className="mb-3" controlId="email">
+            <Form.Group as={Row} className="mb-3" controlId="email_login">
               <Form.Label column sm="2">
                 Email
               </Form.Label>
@@ -63,7 +68,7 @@ const SignUp = () => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row} className="mb-3" controlId="password">
+            <Form.Group as={Row} className="mb-3" controlId="password_login">
               <Form.Label column sm="2">
                 Password
               </Form.Label>
@@ -78,23 +83,8 @@ const SignUp = () => {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="confirmPassword">
-              <Form.Label column sm="2">
-                Confirm Password
-              </Form.Label>
-              <Col sm="10">
-                <Form.Control
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Re-Enter Password"
-                  value={confirmPassword}
-                  onChange={onChangeHandler}
-                  required={true}
-                />
-              </Col>
-            </Form.Group>
             <Button variant="primary" type="submit">
-              Sign Up
+              Login
             </Button>
           </Form>
         </Col>
@@ -102,7 +92,7 @@ const SignUp = () => {
       <Row className="justify-content-center ">
         <Col md={6}>
           <Button variant="light" className="text-black shadow " type="button">
-            Already have an account? Login
+            Don&apos;t have an account? Sign Up
           </Button>
         </Col>
       </Row>
@@ -110,4 +100,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
