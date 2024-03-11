@@ -14,7 +14,7 @@ const Login = () => {
   const { email, password } = loginData;
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
-  const { handleToken } = useContext(authContext);
+  const { handleLogin } = useContext(authContext);
   const onChangeHandler = (e) => {
     setLoginData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
@@ -35,7 +35,8 @@ const Login = () => {
       if (res.ok) {
         const resData = await res.json();
         console.log(resData.idToken, "login credentials after json");
-        handleToken(resData.idToken);
+        localStorage.setItem("token", resData.idToken);
+        handleLogin(resData.idToken);
         console.log("Login successful");
         setIsLogin(true);
       } else {

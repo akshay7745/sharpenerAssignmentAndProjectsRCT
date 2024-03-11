@@ -4,45 +4,51 @@ import Container from "react-bootstrap/Container";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 // import { authContext } from "./contexts/AuthContextProvider";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import VerifyEmail from "./components/VerifyEmail";
+import Navigation from "./components/Navbar";
+
 const App = () => {
   // const { isAuthenticated } = useContext(authContext);
   return (
-    <div>
+    <>
+      <Navigation />
       <Container fluid>
-        <SignUp />
-        <Login />
-        <Home />
-        <Profile />
-        <VerifyEmail />
+        <Outlet />
       </Container>
-    </div>
+    </>
   );
 };
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <SignUp />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/home",
-    element: <Home />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-  },
-  {
-    path: "/login/verifyEmail",
-    element: <VerifyEmail />,
+    element: <App />,
+    errorElement: <h3>Something went wrong</h3>,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/",
+        element: <SignUp />,
+      },
+      {
+        path: "/home",
+        element: <Home />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/login/verifyEmail",
+        element: <VerifyEmail />,
+      },
+    ],
   },
 ]);
 

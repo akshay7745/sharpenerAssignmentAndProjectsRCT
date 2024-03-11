@@ -9,13 +9,17 @@ export const authContext = createContext({
 const AuthContextProvider = (props) => {
   const [token, setToken] = useState(null);
   const isAuthenticated = !!token;
-  const handleToken = (data) => {
-    localStorage.setItem("token", data);
+  const handleLogin = (data) => {
     setToken(data);
   };
-
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+  };
   return (
-    <authContext.Provider value={{ handleToken, isAuthenticated, token }}>
+    <authContext.Provider
+      value={{ handleLogin, isAuthenticated, token, handleLogout }}
+    >
       {props.children}
     </authContext.Provider>
   );
