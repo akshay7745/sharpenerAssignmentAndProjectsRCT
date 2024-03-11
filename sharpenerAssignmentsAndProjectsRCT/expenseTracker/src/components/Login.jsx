@@ -5,14 +5,16 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { authContext } from "../contexts/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
+import VerifyEmail from "./VerifyEmail";
 const Login = () => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
+  const { email, password } = loginData;
+  const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
   const { handleToken } = useContext(authContext);
-  const { email, password } = loginData;
   const onChangeHandler = (e) => {
     setLoginData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
@@ -35,7 +37,7 @@ const Login = () => {
         console.log(resData.idToken, "login credentials after json");
         handleToken(resData.idToken);
         console.log("Login successful");
-        navigate("/home");
+        setIsLogin(true);
       } else {
         const resData = await res.json();
         throw new Error(resData.error.message);
@@ -106,6 +108,7 @@ const Login = () => {
           </Button>
         </Col>
       </Row>
+      {isLogin && <VerifyEmail email={email} />}
     </>
   );
 };

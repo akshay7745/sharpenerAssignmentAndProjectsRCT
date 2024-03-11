@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import { createBrowserRouter } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
+import VerifyEmail from "./components/VerifyEmail";
 const App = () => {
   // const { isAuthenticated } = useContext(authContext);
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Login />
         <Home />
         <Profile />
+        <VerifyEmail />
       </Container>
     </div>
   );
@@ -37,6 +39,10 @@ export const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
+  },
+  {
+    path: "/login/verifyEmail",
+    element: <VerifyEmail />,
   },
 ]);
 
