@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { authContext } from "../contexts/AuthContextProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import VerifyEmail from "./VerifyEmail";
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -92,6 +92,11 @@ const Login = () => {
                 <Button className="mt-3" variant="primary" type="submit">
                   Login
                 </Button>
+              </Col>
+              <Col md={12} className="text-center mt-3 ">
+                <Link className="link-primary fs-6 " to="/login/forgotPassword">
+                  Forgot password?
+                </Link>
               </Col>
             </Row>
           </Form>

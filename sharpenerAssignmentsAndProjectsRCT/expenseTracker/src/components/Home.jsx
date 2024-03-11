@@ -9,7 +9,7 @@ const Home = () => {
       </Col>
       <Col md={5}>
         <span>
-          Your profile is incomplete.<Link to="/profile">complete now</Link>{" "}
+          Your profile is incomplete.<Link to="/profile">complete now</Link>
         </span>
       </Col>
     </Row>
