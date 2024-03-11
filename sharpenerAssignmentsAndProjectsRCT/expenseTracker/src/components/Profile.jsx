@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -17,6 +17,34 @@ const Profile = () => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
   };
+  const getProfileData = async (data) => {
+    try {
+      const res = await fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (res.ok) {
+        const resData = await res.json();
+        const { displayName, photoUrl } = resData.users[0];
+        console.log("Getting profile 1st time", displayName, photoUrl);
+        setProfile({ name: displayName, imageUrl: photoUrl });
+      } else {
+        const resData = await res.json();
+        const error = resData.error.message;
+        throw new Error(error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   const saveProfile = async (data) => {
     try {
       const res = await fetch(
@@ -45,6 +73,11 @@ const Profile = () => {
     }
   };
 
+  useEffect(() => {
+    const newToken = token || localStorage.getItem("token");
+
+    getProfileData({ idToken: newToken });
+  }, []);
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(profile);

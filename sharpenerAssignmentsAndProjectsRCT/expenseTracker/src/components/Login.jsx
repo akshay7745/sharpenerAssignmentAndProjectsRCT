@@ -6,15 +6,15 @@ import Button from "react-bootstrap/Button";
 import { authContext } from "../contexts/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
-  const [signUpData, setSignUpData] = useState({
+  const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
   const { handleToken } = useContext(authContext);
-  const { email, password } = signUpData;
+  const { email, password } = loginData;
   const onChangeHandler = (e) => {
-    setSignUpData((prevState) => {
+    setLoginData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
   };
