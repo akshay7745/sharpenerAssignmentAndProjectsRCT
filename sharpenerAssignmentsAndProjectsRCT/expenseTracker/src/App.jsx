@@ -10,7 +10,8 @@ import Profile from "./components/Profile";
 import VerifyEmail from "./components/VerifyEmail";
 import Navigation from "./components/Navbar";
 import ForgotPassword from "./components/ForgotPassword";
-
+import ExpenseList from "./components/ExpenseList";
+import ProtectedRoute from "./components/ProtectedRoute";
 const App = () => {
   // const { isAuthenticated } = useContext(authContext);
   return (
@@ -34,7 +35,7 @@ export const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/",
+        path: "/signup",
         element: <SignUp />,
       },
       {
@@ -52,6 +53,14 @@ export const router = createBrowserRouter([
       {
         path: "/login/forgotPassword",
         element: <ForgotPassword />,
+      },
+      {
+        path: "/",
+        element: (
+          <ProtectedRoute>
+            <ExpenseList />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";

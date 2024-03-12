@@ -74,9 +74,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const newToken = token || localStorage.getItem("token");
-
-    getProfileData({ idToken: newToken });
+    getProfileData({ idToken: token });
   }, []);
   const submitHandler = (e) => {
     e.preventDefault();

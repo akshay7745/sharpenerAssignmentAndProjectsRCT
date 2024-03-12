@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -11,7 +11,7 @@ const ForgotPassword = () => {
     try {
       setIsLoading(true);
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4`,
         {
           method: "POST",
           headers: {

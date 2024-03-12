@@ -39,6 +39,7 @@ const Login = () => {
         handleLogin(resData.idToken);
         console.log("Login successful");
         setIsLogin(true);
+        navigate("/");
       } else {
         const resData = await res.json();
         throw new Error(resData.error.message);
@@ -105,7 +106,7 @@ const Login = () => {
       <Row className="justify-content-evenly mx-auto ">
         <Col md={12} className="text-center ">
           <Button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/signup")}
             variant="light"
             className="text-black shadow mt-3 "
             type="button"
