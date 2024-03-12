@@ -66,7 +66,6 @@ const router = createBrowserRouter([
 
         element: (
           <ProtectedRoute>
-            {" "}
             <Body />
           </ProtectedRoute>
         ),

@@ -4,12 +4,29 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
+import axios from "axios";
 const AddExpense = ({ handleExpenses }) => {
   const [expenseData, setExpenseData] = useState({
     amount: "",
     description: "",
     category: "Select Category",
   });
+  const saveExpenses = async (data) => {
+    try {
+      const res = await axios({
+        method: "post",
+        url: "https://onlinestore-594cd-default-rtdb.firebaseio.com/expenses.json",
+        data: data,
+      });
+      if (res.statusText === "OK") {
+        const id = res.data.name;
+        handleExpenses({ ...expenseData, id });
+      }
+      console.log(res);
+    } catch (error) {
+      console.log(error, "from add expenses to the backend");
+    }
+  };
   const { amount, description, category } = expenseData;
   const onChangeHandler = (e) => {
     setExpenseData((prevState) => {
@@ -22,7 +39,7 @@ const AddExpense = ({ handleExpenses }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(expenseData);
-    handleExpenses(expenseData);
+    saveExpenses(expenseData);
   };
   return (
     <>
