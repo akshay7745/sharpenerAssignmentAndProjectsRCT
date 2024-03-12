@@ -5,12 +5,13 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
-const AddExpense = ({ handleExpenses }) => {
-  const [expenseData, setExpenseData] = useState({
-    amount: "",
-    description: "",
-    category: "Select Category",
-  });
+const AddExpense = ({
+  handleExpenses,
+  expenseItem,
+  setExpenseItem,
+  isEdited,
+  getExpenses,
+}) => {
   const saveExpenses = async (data) => {
     try {
       const res = await axios({
@@ -20,32 +21,67 @@ const AddExpense = ({ handleExpenses }) => {
       });
       if (res.statusText === "OK") {
         const id = res.data.name;
-        handleExpenses({ ...expenseData, id });
+        const getRes = await axios(
+          "https://onlinestore-594cd-default-rtdb.firebaseio.com/expenses.json"
+        );
+        console.log(getRes);
+        handleExpenses({ ...expenseItem, id });
       }
       console.log(res);
     } catch (error) {
       console.log(error, "from add expenses to the backend");
     }
   };
-  const { amount, description, category } = expenseData;
+
+  const saveEditedExpenses = async () => {
+    const sendData = { ...expenseItem };
+    delete sendData.id;
+
+    try {
+      const res = await axios.put(
+        `https://onlinestore-594cd-default-rtdb.firebaseio.com/expenses/${isEdited}.json`,
+        sendData
+      );
+      console.log(res, "getting response after editing");
+      await getExpenses();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const { amount, description, category } = expenseItem;
   const onChangeHandler = (e) => {
-    setExpenseData((prevState) => {
+    setExpenseItem((prevState) => {
       return {
         ...prevState,
         [e.target.name]: e.target.value,
       };
     });
   };
+
+  const onEditExpense = (e) => {
+    e.preventDefault();
+    console.log("Editing expense");
+    saveEditedExpenses();
+  };
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(expenseData);
-    saveExpenses(expenseData);
+
+    console.log(expenseItem);
+    saveExpenses(expenseItem);
+    setExpenseItem({
+      amount: "",
+      description: "",
+      category: "Select Category",
+    });
   };
   return (
     <>
       <Row className="mt-5 justify-content-center">
         <Col md={9}>
-          <Form className="shadow p-5 rounded-2 " onSubmit={submitHandler}>
+          <Form
+            className="shadow p-5 rounded-2 "
+            onSubmit={isEdited ? onEditExpense : submitHandler}
+          >
             <InputGroup className="mb-3">
               <InputGroup.Text>Expense Description and Amount</InputGroup.Text>
               <Form.Control
@@ -77,7 +113,7 @@ const AddExpense = ({ handleExpenses }) => {
                 <option value="salary">Salary</option>
               </Form.Select>
               <Button className="px-5" type="submit">
-                Add Expense
+                {isEdited ? "Edit Expense" : "Add Expense"}
               </Button>
             </InputGroup>
           </Form>

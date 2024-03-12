@@ -11,6 +11,7 @@ const AuthContextProvider = (props) => {
   const [token, setToken] = useState(storedToken || null);
   const isAuthenticated = !!token;
   const handleLogin = (data) => {
+    localStorage.setItem("token", data);
     setToken(data);
   };
   const handleLogout = () => {
