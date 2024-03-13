@@ -1,14 +1,13 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
-import { authContext } from "../contexts/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../contexts/authSlice";
 function Navigation() {
-  const { handleLogout } = useContext(authContext);
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(
+    (store) => store.authentication.isAuthentication
+  );
   const navigate = useNavigate();
   return (
     <header
@@ -31,20 +30,24 @@ function Navigation() {
           alignItems: "center",
         }}
       >
-        <NavLink to="/">Signup</NavLink>
-        <NavLink to="/login">Login</NavLink>
-        <NavLink to="/profile">Profile</NavLink>
-        <NavLink to="/home">Welcome</NavLink>
-        <NavLink to="/login/verifyEmail">Verify Email</NavLink>
-        <Button
-          onClick={() => {
-            handleLogout();
-            navigate("/login");
-          }}
-          type="button"
-        >
-          Logout
-        </Button>
+        {!isAuthenticated && <NavLink to="/signup">Signup</NavLink>}
+        {!isAuthenticated && <NavLink to="/login">Login</NavLink>}
+        {isAuthenticated && <NavLink to="/profile">Profile</NavLink>}
+        {isAuthenticated && <NavLink to="/home">Welcome</NavLink>}
+        {isAuthenticated && (
+          <NavLink to="/login/verifyEmail">Verify Email</NavLink>
+        )}
+        {isAuthenticated && (
+          <Button
+            onClick={() => {
+              dispatch(logout());
+              navigate("/login");
+            }}
+            type="button"
+          >
+            Logout
+          </Button>
+        )}
       </div>
     </header>
   );

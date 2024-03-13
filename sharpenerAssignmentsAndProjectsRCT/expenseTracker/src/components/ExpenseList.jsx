@@ -5,8 +5,11 @@ import AddExpense from "./AddExpense";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { restoreExpense, resetExpense } from "../contexts/expenseSlice";
 const ExpenseList = () => {
-  const [expenseData, setExpenseData] = useState([]);
+  const expenses = useSelector((store) => store.expense.expenses);
+  const dispatch = useDispatch();
   const [expenseItem, setExpenseItem] = useState({
     amount: "",
     description: "",
@@ -19,26 +22,20 @@ const ExpenseList = () => {
     setExpenseItem({ amount, description, category });
   };
 
-  const handleExpenses = (data) => {
-    setExpenseData((prevState) => {
-      return [...prevState, data];
-    });
-  };
   const getExpenses = async () => {
     try {
       const res = await axios(
         "https://onlinestore-594cd-default-rtdb.firebaseio.com/expenses.json"
       );
-      console.log("from expense list refresh");
       if (res.data) {
         const allId = Object.keys(res.data);
         const allExpenses = Object.values(res.data).map((item, index) => {
           return { ...item, id: allId[index] };
         });
         setIsEdited(null);
-        setExpenseData(allExpenses);
+        dispatch(restoreExpense(allExpenses));
       } else {
-        setExpenseData([]);
+        dispatch(resetExpense());
       }
     } catch (error) {
       console.log(error);
@@ -49,7 +46,6 @@ const ExpenseList = () => {
       const res = await axios.delete(
         `https://onlinestore-594cd-default-rtdb.firebaseio.com/expenses/${id}.json`
       );
-      console.log(res, "After deleting successfully...");
       if (res.statusText === "OK") {
         getExpenses();
       }
@@ -61,11 +57,9 @@ const ExpenseList = () => {
   useEffect(() => {
     getExpenses();
   }, []);
-  console.log(expenseData);
   return (
     <>
       <AddExpense
-        handleExpenses={handleExpenses}
         expenseItem={expenseItem}
         setExpenseItem={setExpenseItem}
         isEdited={isEdited}
@@ -77,10 +71,9 @@ const ExpenseList = () => {
         </Col>
       </Row>
 
-      {expenseData.map((expense) => {
+      {expenses.map((expense) => {
         const { description, amount, category, id } = expense;
-        console.log(id);
-        return (
+        return amount < 10000 ? (
           <Row key={id} className="justify-content-center  mb-3 ">
             <Col md={2}>
               <Stack style={{ width: "650px" }} direction="horizontal" gap={2}>
@@ -105,6 +98,38 @@ const ExpenseList = () => {
                   type="button"
                 >
                   Delete
+                </Button>
+              </Stack>
+            </Col>
+          </Row>
+        ) : (
+          <Row key={id} className="justify-content-center  mb-3 ">
+            <Col md={2}>
+              <Stack style={{ width: "650px" }} direction="horizontal" gap={2}>
+                <span>{description}</span>
+                <span>{amount}</span>
+                <span>{category}</span>
+                <Button
+                  variant="success"
+                  type="button"
+                  onClick={() => {
+                    handleEdit(expense);
+                  }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleDelete(id);
+                    getExpenses();
+                  }}
+                  variant="danger"
+                  type="button"
+                >
+                  Delete
+                </Button>
+                <Button type="button" variant="warning">
+                  Activate Premium
                 </Button>
               </Stack>
             </Col>

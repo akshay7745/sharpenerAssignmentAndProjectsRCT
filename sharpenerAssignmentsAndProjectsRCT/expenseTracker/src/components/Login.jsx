@@ -1,11 +1,13 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { authContext } from "../contexts/AuthContextProvider";
 import { useNavigate, Link } from "react-router-dom";
 import VerifyEmail from "./VerifyEmail";
+import { useDispatch } from "react-redux";
+import { login } from "../contexts/authSlice";
+
 const Login = () => {
   const [loginData, setLoginData] = useState({
     email: "",
@@ -14,7 +16,8 @@ const Login = () => {
   const { email, password } = loginData;
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
-  const { handleLogin } = useContext(authContext);
+  const dispatch = useDispatch();
+
   const onChangeHandler = (e) => {
     setLoginData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
@@ -34,10 +37,7 @@ const Login = () => {
       );
       if (res.ok) {
         const resData = await res.json();
-        console.log(resData.idToken, "login credentials after json");
-        localStorage.setItem("token", resData.idToken);
-        handleLogin(resData.idToken);
-        console.log("Login successful");
+        dispatch(login(resData.idToken));
         setIsLogin(true);
         navigate("/");
       } else {

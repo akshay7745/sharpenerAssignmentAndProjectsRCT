@@ -1,17 +1,13 @@
-import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useDispatch } from "react-redux";
 import axios from "axios";
-const AddExpense = ({
-  handleExpenses,
-  expenseItem,
-  setExpenseItem,
-  isEdited,
-  getExpenses,
-}) => {
+import { addExpense } from "../contexts/expenseSlice";
+const AddExpense = ({ expenseItem, setExpenseItem, isEdited, getExpenses }) => {
+  const dispatch = useDispatch();
   const saveExpenses = async (data) => {
     try {
       const res = await axios({
@@ -24,10 +20,8 @@ const AddExpense = ({
         const getRes = await axios(
           "https://onlinestore-594cd-default-rtdb.firebaseio.com/expenses.json"
         );
-        console.log(getRes);
-        handleExpenses({ ...expenseItem, id });
+        dispatch(addExpense({ ...expenseItem, id }));
       }
-      console.log(res);
     } catch (error) {
       console.log(error, "from add expenses to the backend");
     }
@@ -42,7 +36,6 @@ const AddExpense = ({
         `https://onlinestore-594cd-default-rtdb.firebaseio.com/expenses/${isEdited}.json`,
         sendData
       );
-      console.log(res, "getting response after editing");
       await getExpenses();
     } catch (error) {
       console.log(error);
@@ -60,13 +53,11 @@ const AddExpense = ({
 
   const onEditExpense = (e) => {
     e.preventDefault();
-    console.log("Editing expense");
     saveEditedExpenses();
   };
   const submitHandler = (e) => {
     e.preventDefault();
 
-    console.log(expenseItem);
     saveExpenses(expenseItem);
     setExpenseItem({
       amount: "",

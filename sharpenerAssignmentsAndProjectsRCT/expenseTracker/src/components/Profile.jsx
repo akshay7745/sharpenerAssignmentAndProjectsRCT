@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { authContext } from "../contexts/AuthContextProvider";
+import { useSelector } from "react-redux";
 const Profile = () => {
   const [profile, setProfile] = useState({
     name: "",
@@ -11,7 +11,7 @@ const Profile = () => {
   });
 
   const { name, imageUrl } = profile;
-  const { token } = useContext(authContext);
+  const token = useSelector((store) => store.authentication.token);
   const onChangeHandler = (e) => {
     setProfile((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };

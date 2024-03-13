@@ -1,9 +1,6 @@
 import Container from "react-bootstrap/Container";
-// import Row from "react-bootstrap/Row";
-// import Col from "react-bootstrap/Col";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
-// import { authContext } from "./contexts/AuthContextProvider";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
@@ -13,7 +10,6 @@ import ForgotPassword from "./components/ForgotPassword";
 import ExpenseList from "./components/ExpenseList";
 import ProtectedRoute from "./components/ProtectedRoute";
 const App = () => {
-  // const { isAuthenticated } = useContext(authContext);
   return (
     <>
       <Navigation />

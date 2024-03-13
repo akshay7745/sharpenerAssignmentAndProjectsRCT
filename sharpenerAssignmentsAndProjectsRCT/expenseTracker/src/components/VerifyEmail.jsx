@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
-import { authContext } from "../contexts/AuthContextProvider";
+import { useSelector } from "react-redux";
 const VerifyEmail = ({ email }) => {
-  const { token } = useContext(authContext);
+  const token = useSelector((store) => store.authentication.token);
   const checkEmail = async (data) => {
     try {
       const res = await fetch(

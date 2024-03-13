@@ -1,8 +1,11 @@
-import { useContext, useEffect } from "react";
-import { authContext } from "../contexts/AuthContextProvider";
+import { useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const ProtectedRoute = (props) => {
-  const { isAuthenticated } = useContext(authContext);
+  const isAuthenticated = useSelector(
+    (store) => store.authentication.isAuthentication
+  );
   const navigate = useNavigate();
   useEffect(() => {
     if (!isAuthenticated) {
