@@ -10,11 +10,7 @@ const expenseSlice = createSlice({
       state.expenses.push(action.payload);
     },
     restoreExpense(state, action) {
-      state.expenses.length = 0;
-
-      for (let val of action.payload) {
-        state.expenses.push(val);
-      }
+      state.expenses = action.payload;
     },
     resetExpense(state) {
       state.expenses.length = 0;

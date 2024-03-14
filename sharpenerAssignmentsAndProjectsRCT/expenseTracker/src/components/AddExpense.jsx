@@ -54,6 +54,11 @@ const AddExpense = ({ expenseItem, setExpenseItem, isEdited, getExpenses }) => {
   const onEditExpense = (e) => {
     e.preventDefault();
     saveEditedExpenses();
+    setExpenseItem({
+      amount: "",
+      description: "",
+      category: "Select Category",
+    });
   };
   const submitHandler = (e) => {
     e.preventDefault();

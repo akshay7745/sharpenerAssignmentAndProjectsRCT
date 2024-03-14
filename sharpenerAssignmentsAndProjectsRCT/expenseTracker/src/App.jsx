@@ -9,14 +9,16 @@ import Navigation from "./components/Navbar";
 import ForgotPassword from "./components/ForgotPassword";
 import ExpenseList from "./components/ExpenseList";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useSelector } from "react-redux";
 const App = () => {
+  const theme = useSelector((store) => store.theme.theme);
   return (
-    <>
+    <div style={theme}>
       <Navigation />
       <Container fluid>
         <Outlet />
       </Container>
-    </>
+    </div>
   );
 };
 

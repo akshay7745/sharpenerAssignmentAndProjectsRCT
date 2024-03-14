@@ -88,7 +88,7 @@ const Profile = () => {
     });
   };
   return (
-    <Row className="justify-content-center ">
+    <Row style={{ height: "100vh" }} className="justify-content-center ">
       <Col md={5}>
         <Row>
           <Col>

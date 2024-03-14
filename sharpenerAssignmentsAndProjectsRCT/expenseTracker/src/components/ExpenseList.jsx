@@ -58,7 +58,7 @@ const ExpenseList = () => {
     getExpenses();
   }, []);
   return (
-    <>
+    <div style={{ height: "100vh" }}>
       <AddExpense
         expenseItem={expenseItem}
         setExpenseItem={setExpenseItem}
@@ -73,7 +73,7 @@ const ExpenseList = () => {
 
       {expenses.map((expense) => {
         const { description, amount, category, id } = expense;
-        return amount < 10000 ? (
+        return (
           <Row key={id} className="justify-content-center  mb-3 ">
             <Col md={2}>
               <Stack style={{ width: "650px" }} direction="horizontal" gap={2}>
@@ -98,45 +98,13 @@ const ExpenseList = () => {
                   type="button"
                 >
                   Delete
-                </Button>
-              </Stack>
-            </Col>
-          </Row>
-        ) : (
-          <Row key={id} className="justify-content-center  mb-3 ">
-            <Col md={2}>
-              <Stack style={{ width: "650px" }} direction="horizontal" gap={2}>
-                <span>{description}</span>
-                <span>{amount}</span>
-                <span>{category}</span>
-                <Button
-                  variant="success"
-                  type="button"
-                  onClick={() => {
-                    handleEdit(expense);
-                  }}
-                >
-                  Edit
-                </Button>
-                <Button
-                  onClick={() => {
-                    handleDelete(id);
-                    getExpenses();
-                  }}
-                  variant="danger"
-                  type="button"
-                >
-                  Delete
-                </Button>
-                <Button type="button" variant="warning">
-                  Activate Premium
                 </Button>
               </Stack>
             </Col>
           </Row>
         );
       })}
-    </>
+    </div>
   );
 };
 

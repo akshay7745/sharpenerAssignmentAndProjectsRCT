@@ -31,7 +31,7 @@ const VerifyEmail = ({ email }) => {
     checkEmail({ requestType: "VERIFY_EMAIL", idToken: token });
   };
   return (
-    <Row className="justify-content-center ">
+    <Row style={{ height: "100vh" }} className="justify-content-center ">
       <Col md={4}>
         <Form onSubmit={submitHandler} className="p-5 shadow mt-5">
           <Form.Group className="mb-3" controlId="email">
