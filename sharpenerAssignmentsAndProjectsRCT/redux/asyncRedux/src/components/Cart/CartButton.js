@@ -1,5 +1,5 @@
 import classes from "./CartButton.module.css";
-import { toggleCart } from "../../store/cartSlice";
+import { toggleCart } from "../../store/ui-slice";
 import { useDispatch, useSelector } from "react-redux";
 const CartButton = (props) => {
   const cartItems = useSelector((store) => store.cart.cartItems);
