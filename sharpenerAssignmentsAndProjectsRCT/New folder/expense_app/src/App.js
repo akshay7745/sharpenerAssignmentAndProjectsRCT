@@ -14,11 +14,11 @@ const App = () => {
   const theme = useSelector((store) => store.theme.theme);
   return (
     <div style={theme}>
-      <h2>REacT</h2>
       <Navigation />
       <Container fluid>
         <Outlet />
       </Container>
+      <h5>react</h5>
     </div>
   );
 };
