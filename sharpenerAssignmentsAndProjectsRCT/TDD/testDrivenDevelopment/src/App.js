@@ -1,6 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
-
+import logo from "./logo.svg";
+import "./App.css";
+import Asyncfile from "./components/Asyncfile";
 function App() {
   return (
     <div className="App">
@@ -17,7 +17,9 @@ function App() {
         >
           Learn React
         </a>
+        <h2>grow bro grow</h2>
       </header>
+      <Asyncfile />
     </div>
   );
 }
