@@ -1,0 +1,24 @@
+import "./App.css";
+import Stack from "react-bootstrap/Stack";
+import Button from "react-bootstrap/Button";
+import Header from "./components/Header";
+import Signup from "./components/Signup";
+import Container from "react-bootstrap/esm/Container";
+import Col from "react-bootstrap/esm/Col";
+import Row from "react-bootstrap/esm/Row";
+function App() {
+  return (
+    <>
+      <Header />
+      <Container fluid>
+        <Row className="justify-content-center mt-5 ">
+          <Col className="" md={4}>
+            <Signup />
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
+}
+
+export default App;
