@@ -2,7 +2,7 @@ import { useReducer, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/esm/Button";
+import Button from "react-bootstrap/Button";
 const formReducer = (state, action) => {
   if (action.type === "EMAIL") {
     return { ...state, email: action.payload };
@@ -133,7 +133,7 @@ function Signup() {
         <Col md={12}>
           <div className="d-grid gap-2">
             <Button variant="outline-dark">
-              Already Have an account? login
+              Already Have an account? Login
             </Button>
           </div>
         </Col>

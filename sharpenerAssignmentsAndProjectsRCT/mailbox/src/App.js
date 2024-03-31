@@ -3,9 +3,9 @@ import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import Header from "./components/Header";
 import Signup from "./components/Signup";
-import Container from "react-bootstrap/esm/Container";
-import Col from "react-bootstrap/esm/Col";
-import Row from "react-bootstrap/esm/Row";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 function App() {
   return (
     <>
