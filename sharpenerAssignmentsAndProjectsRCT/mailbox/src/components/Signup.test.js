@@ -1,22 +1,35 @@
 import { render, screen } from "@testing-library/react";
 import Signup from "./Signup";
+import { MemoryRouter } from "react-router-dom";
 
 describe("Singup.js component", () => {
   test("checking email label", () => {
-    render(<Signup />);
+    render(
+      <MemoryRouter>
+        <Signup />
+      </MemoryRouter>
+    );
     const emailLabel = screen.getByLabelText("Email", { exact: true });
 
     expect(emailLabel).toBeInTheDocument();
   });
   test("checking password label", () => {
-    render(<Signup />);
+    render(
+      <MemoryRouter>
+        <Signup />
+      </MemoryRouter>
+    );
 
     const passLabel = screen.getByLabelText("Password", { exact: true });
 
     expect(passLabel).toBeInTheDocument();
   });
   test("checking confirm password label", () => {
-    render(<Signup />);
+    render(
+      <MemoryRouter>
+        <Signup />
+      </MemoryRouter>
+    );
 
     const confirmPassLabel = screen.getByLabelText("Confirm Password", {
       exact: true,
@@ -24,7 +37,11 @@ describe("Singup.js component", () => {
     expect(confirmPassLabel).toBeInTheDocument();
   });
   test("checking email input", () => {
-    render(<Signup />);
+    render(
+      <MemoryRouter>
+        <Signup />
+      </MemoryRouter>
+    );
 
     const emailInp = screen.getByPlaceholderText("Enter Email", {
       exact: true,
@@ -32,7 +49,11 @@ describe("Singup.js component", () => {
     expect(emailInp).toBeInTheDocument();
   });
   test("checking password input", () => {
-    render(<Signup />);
+    render(
+      <MemoryRouter>
+        <Signup />
+      </MemoryRouter>
+    );
 
     const confirmPassInp = screen.getByPlaceholderText("Password", {
       exact: true,
