@@ -8,6 +8,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Login from "./components/Login";
+import Composer from "./components/Composer";
 import { Outlet, createBrowserRouter } from "react-router-dom";
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
 
           <Login />
           <Welcome />
+          <Composer />
         </Container>
       </Outlet>
     </>
@@ -41,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: "/welcome",
         element: <Welcome />,
+      },
+      {
+        path: "/compose",
+        element: <Composer />,
       },
     ],
   },
