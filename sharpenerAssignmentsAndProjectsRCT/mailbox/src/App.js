@@ -10,6 +10,7 @@ import Row from "react-bootstrap/Row";
 import Login from "./components/Login";
 import Composer from "./components/Composer";
 import { Outlet, createBrowserRouter } from "react-router-dom";
+import AllMails from "./components/AllMails";
 function App() {
   return (
     <>
@@ -17,10 +18,10 @@ function App() {
       <Outlet>
         <Container fluid>
           <Signup />
-
           <Login />
           <Welcome />
           <Composer />
+          <AllMails />
         </Container>
       </Outlet>
     </>
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: "/compose",
         element: <Composer />,
+      },
+      {
+        path: "/mails",
+        element: <AllMails />,
       },
     ],
   },

@@ -1,0 +1,12 @@
+.flexVertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.flexHorizontal {
+  display: flex;
+}
+
+.mailOptions {
+  border: 1px solid black;
+}
