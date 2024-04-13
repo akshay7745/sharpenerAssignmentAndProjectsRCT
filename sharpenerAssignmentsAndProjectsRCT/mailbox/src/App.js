@@ -11,7 +11,34 @@ import Login from "./components/Login";
 import Composer from "./components/Composer";
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import AllMails from "./components/AllMails";
+import MailList from "./components/MailList";
+import SingleMailPage from "./components/SingleMailPage";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "./store/authenticationSlice";
+import { getMails, sendMailData } from "./store/mail-actions";
+let isFirstTimeLoading = true;
+
 function App() {
+  const dispatch = useDispatch();
+  const mailData = useSelector((store) => store.mails.mailData);
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (userData) {
+      dispatch(login(userData));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isFirstTimeLoading) {
+      isFirstTimeLoading = false;
+      dispatch(getMails());
+      return;
+    }
+    if (mailData) {
+      dispatch(sendMailData(mailData));
+    }
+  }, [mailData]);
   return (
     <>
       <Header />
@@ -52,6 +79,16 @@ export const router = createBrowserRouter([
       {
         path: "/mails",
         element: <AllMails />,
+        children: [
+          {
+            path: "/mails",
+            element: <MailList />,
+          },
+          {
+            path: "/mails/:id",
+            element: <SingleMailPage />,
+          },
+        ],
       },
     ],
   },

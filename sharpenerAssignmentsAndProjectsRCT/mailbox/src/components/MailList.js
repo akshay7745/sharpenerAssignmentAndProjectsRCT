@@ -1,0 +1,72 @@
+import React, { useState } from "react";
+import { Link, useOutletContext } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { markAsRead } from "../store/mailSlice";
+const MailList = () => {
+  const { trimString, switchMails } = useOutletContext();
+  const { inbox, sent, draft } = switchMails;
+  const mails = useSelector((state) => state.mails.mailData);
+  const userData = useSelector((state) => state.authentication.userData);
+  const inboxMails = mails.filter((mail) => mail.receiver === userData.userId);
+  const unreadMails = inboxMails?.filter((mail)=>mail.isRead ===false)
+  const sentMails = mails.filter((mail) => mail.sender === userData.userId);
+  const dispatch = useDispatch();
+  console.log("from mail list component ", mails);
+  let mailData = [];
+  if (inbox) {
+    mailData = inboxMails;
+  } else if (sent) {
+    mailData = sentMails;
+  }
+  return (
+    <>
+      <h2>All Mails list</h2>
+      <ul style={{ listStyle: "none", width: "100%" }}>
+        {mailData?.map((mail) => {
+          return (
+            <Link to={`/mails/${mail.id}`}>
+              <li
+                style={{
+                  border: "1px solid black",
+                  margin: "8px 0",
+                  padding: "5px",
+                  position: "relative",
+                  paddingLeft: "25px",
+                }}
+                key={mail.id}
+                onClick={() => {
+                  if (inbox) {
+                    dispatch(markAsRead(mail.id));
+                  }
+                }}
+              >
+                {!mail.isRead && inbox && (
+                  <div
+                    style={{
+                      height: "12px",
+                      width: "12px",
+                      backgroundColor: "skyBlue",
+                      borderRadius: "50%",
+                      display: "inlineBlock",
+                      position: "absolute",
+                      top: 12,
+                      left: 3,
+                    }}
+                  ></div>
+                )}
+                <span style={{ fontWeight: "bold" }}>Title-:</span>
+                <span style={{ marginRight: "10px" }}>
+                  {trimString(mail.title, 15)}.
+                </span>
+                <span style={{ fontWeight: "bold" }}>Body-: </span>
+                <span>{trimString(mail.body, 40)}</span>
+              </li>
+            </Link>
+          );
+        })}
+      </ul>
+    </>
+  );
+};
+
+export default MailList;

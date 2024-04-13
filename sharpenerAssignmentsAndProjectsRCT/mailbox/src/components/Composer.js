@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import EditorBody from "./EditorBody";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
+import { useDispatch } from "react-redux";
+import { addMail } from "../store/mailSlice";
+import { useSelector } from "react-redux";
 function Composer() {
   const [mailData, setMailData] = useState({
-    sender: "akshay7745@gmail.com",
+    sender: "",
     receiver: "",
     title: "",
     body: "",
   });
+  const userData = useSelector((state) => state.authentication.userData);
+  const dispatch = useDispatch();
   const bodyChangeHandler = (data) => {
     setMailData((prevState) => {
       return { ...prevState, body: data };
@@ -25,35 +29,35 @@ function Composer() {
     });
   };
 
-  const sendMail = async (data) => {
-    try {
-      const res = await fetch(
-        `https://mailbody-7480c-default-rtdb.firebaseio.com/mails.json`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      if (!res.ok) {
-        const resData = await res.json();
-        console.log(resData, "from line number 41");
-        throw new Error(resData.error.message);
-      }
-      const resData = await res.json();
-      console.log(resData);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // const sendMail = async (data) => {
+  //   try {
+  //     const res = await fetch(
+  //       `https://mailbody-7480c-default-rtdb.firebaseio.com/mails.json`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(data),
+  //       }
+  //     );
+  //     if (!res.ok) {
+  //       const resData = await res.json();
+  //       console.log(resData, "from line number 41");
+  //       throw new Error(resData.error.message);
+  //     }
+  //     const resData = await res.json();
+  //     console.log(resData);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(mailData);
 
-    sendMail({ ...mailData });
+    // sendMail({ ...mailData });
+    dispatch(addMail({ ...mailData, sender: userData.userId }));
   };
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>

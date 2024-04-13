@@ -4,8 +4,23 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import MailList from "./MailList";
+import SingleMailPage from "./SingleMailPage";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const AllMails = () => {
-  const [mails, setMails] = useState([]);
+  // const [mails, setMails] = useState([]);
+  const [switchMails, setSwitchMails] = useState({
+    inbox: true,
+    sent: false,
+    draft: false,
+  });
+  const userData = useSelector((state) => state.authentication.userData);
+  const mails = useSelector((state) => state.mails.mailData);
+  const inboxMails = mails.filter((mail) => mail.receiver === userData.userId);
+
+  const unreadMails = inboxMails?.filter((mail) => mail.isRead === false);
+  const navigate = useNavigate();
   function trimString(str, maxLength) {
     if (str.length > maxLength) {
       // Clip the string to the desired length and add an ellipsis
@@ -13,30 +28,30 @@ const AllMails = () => {
     }
     return str; // If the string is already within the limit, return it as is
   }
-  useEffect(() => {
-    async function getEmails() {
-      try {
-        const res = await fetch(
-          `https://mailbody-7480c-default-rtdb.firebaseio.com/mails.json`
-        );
-        if (!res.ok) {
-          const resData = await res.json();
-          console.log(resData.Error.message);
-        }
-        const resData = await res.json();
-        console.log(resData, "from line number 20");
-        const allKeys = Object.keys(resData);
-        const allData = Object.values(resData).map((data, index) => {
-          const { sender, receiver, body, title } = data;
-          return { sender, receiver, body, title, id: allKeys[index] };
-        });
-        setMails(allData);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getEmails();
-  }, []);
+  // useEffect(() => {
+  //   async function getEmails() {
+  //     try {
+  //       const res = await fetch(
+  //         `https://mailbody-7480c-default-rtdb.firebaseio.com/mails.json`
+  //       );
+  //       if (!res.ok) {
+  //         const resData = await res.json();
+  //         console.log(resData.Error.message);
+  //       }
+  //       const resData = await res.json();
+  //       console.log(resData, "from line number 20");
+  //       const allKeys = Object.keys(resData);
+  //       const allData = Object.values(resData).map((data, index) => {
+  //         const { sender, receiver, body, title } = data;
+  //         return { sender, receiver, body, title, id: allKeys[index] };
+  //       });
+  //       setMails(allData);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  //   getEmails();
+  // }, []);
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div>
@@ -67,7 +82,14 @@ const AllMails = () => {
             paddingTop: "30px",
           }}
         >
-          <Button className="ms-2">Compose</Button>
+          <Button
+            onClick={() => {
+              navigate("/compose");
+            }}
+            className="ms-2"
+          >
+            Compose
+          </Button>
           <ul
             style={{
               listStyle: "none",
@@ -82,8 +104,15 @@ const AllMails = () => {
                 fontWeight: "bold",
                 marginBottom: "5px",
               }}
+              onClick={() => {
+                setSwitchMails({
+                  inbox: true,
+                  sent: false,
+                  draft: false,
+                });
+              }}
             >
-              Inbox
+              Inbox <span>({unreadMails?.length || 0} unread)</span>
             </li>
             <li
               style={{
@@ -91,10 +120,26 @@ const AllMails = () => {
                 fontWeight: "bold",
                 marginBottom: "5px",
               }}
+              onClick={() => {
+                setSwitchMails({
+                  inbox: false,
+                  sent: true,
+                  draft: false,
+                });
+              }}
             >
               Sent
             </li>
-            <li style={{ borderBottom: "1px solid black", fontWeight: "bold" }}>
+            <li
+              style={{ borderBottom: "1px solid black", fontWeight: "bold" }}
+              onClick={() => {
+                setSwitchMails({
+                  inbox: false,
+                  sent: false,
+                  draft: true,
+                });
+              }}
+            >
               Draft
             </li>
           </ul>
@@ -108,93 +153,11 @@ const AllMails = () => {
             paddingTop: "20px",
           }}
         >
-          <h2>All Mails list</h2>
-          <ul style={{ listStyle: "none", width: "100%" }}>
-            {mails?.map((mail) => {
-              console.log(mail, "from line number 102");
-              return (
-                <li
-                  style={{
-                    border: "1px solid black",
-                    margin: "8px 0",
-                    padding: "5px",
-                  }}
-                  key={mail.id}
-                >
-                  <span style={{ fontWeight: "bold" }}>Title-:</span>{" "}
-                  <span style={{ marginRight: "10px" }}>
-                    {trimString(mail.title, 15)}.
-                  </span>
-                  <span style={{ fontWeight: "bold" }}>Body-: </span>
-                  <span>{trimString(mail.body, 40)}</span>
-                </li>
-              );
-            })}
-
-            {/* <li
-              style={{
-                border: "1px solid black",
-                margin: "8px 0",
-                padding: "5px",
-              }}
-            >
-              mail 2
-            </li>
-            <li
-              style={{
-                border: "1px solid black",
-                margin: "8px 0",
-                padding: "5px",
-              }}
-            >
-              mail 3
-            </li>
-            <li
-              style={{
-                border: "1px solid black",
-                margin: "8px 0",
-                padding: "5px",
-              }}
-            >
-              mail 4
-            </li>
-            <li
-              style={{
-                border: "1px solid black",
-                margin: "8px 0",
-                padding: "5px",
-              }}
-            >
-              mail 5
-            </li>
-            <li
-              style={{
-                border: "1px solid black",
-                margin: "8px 0",
-                padding: "5px",
-              }}
-            >
-              mail 6
-            </li>
-            <li
-              style={{
-                border: "1px solid black",
-                margin: "8px 0",
-                padding: "5px",
-              }}
-            >
-              mail 7
-            </li>
-            <li
-              style={{
-                border: "1px solid black",
-                margin: "8px 0",
-                padding: "5px",
-              }}
-            >
-              mail 8
-            </li> */}
-          </ul>
+          {/* <Outlet context={{ mails, trimString }}> */}
+          <Outlet context={{ trimString, switchMails }}>
+            <MailList />
+            <SingleMailPage />
+          </Outlet>
         </div>
       </div>
     </div>

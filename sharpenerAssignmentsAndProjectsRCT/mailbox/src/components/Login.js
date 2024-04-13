@@ -4,6 +4,8 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import { login } from "../store/authenticationSlice";
+import { useDispatch } from "react-redux";
 const formReducer = (state, action) => {
   if (action.type === "EMAIL") {
     return { ...state, email: action.payload };
@@ -25,11 +27,12 @@ function Login() {
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const sendToTheBackend = async (data) => {
     try {
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAK671JMI_OjI6n3Cme0FO9sQn5oTuOVM0`,
         {
           method: "POST",
           headers: {
@@ -45,7 +48,13 @@ function Login() {
       }
       const resData = await res.json();
       console.log(resData.idToken);
-      navigate("/welcome");
+      alert("Successfully Logged in");
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({ userId: resData.email, token: resData.idToken })
+      );
+      dispatch(login({ userId: resData.email, token: resData.idToken }));
+      navigate("/mails");
     } catch (error) {
       alert(error.message);
     }

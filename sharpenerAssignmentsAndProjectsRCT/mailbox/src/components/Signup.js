@@ -41,7 +41,7 @@ function Signup() {
         return;
       }
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAK671JMI_OjI6n3Cme0FO9sQn5oTuOVM0`,
         {
           method: "POST",
           headers: {
@@ -60,7 +60,16 @@ function Signup() {
         throw new Error(resData.error.message);
       }
       const resData = await res.json();
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({ userId: resData.email, token: resData.idToken })
+      );
+      console.log(resData, "this is resData from the signup function...");
       console.log(resData.idToken);
+      console.log(resData.email);
+      alert("Account created succesfully");
+      navigate("/login");
+      // dispatch();
     } catch (error) {
       alert(error.message);
     }
