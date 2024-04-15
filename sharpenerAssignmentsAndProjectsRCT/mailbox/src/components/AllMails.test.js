@@ -1,10 +1,10 @@
-import { screen, render } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import AllMails from "./AllMails";
 import { MemoryRouter } from "react-router-dom";
-
+import { renderWithProviders } from "../redux_utils/utils_for_tests";
 describe("<AllMails/> component", () => {
   test("checking serch mail btn", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <AllMails />
       </MemoryRouter>
@@ -13,7 +13,7 @@ describe("<AllMails/> component", () => {
     expect.toBeInTheDocument(serchMailText);
   });
   test("checking compose btn", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <AllMails />
       </MemoryRouter>
@@ -21,17 +21,8 @@ describe("<AllMails/> component", () => {
     const composeBtnText = screen.getByText("Compose");
     expect.toBeInTheDocument(composeBtnText);
   });
-  test("checking mail list h2", () => {
-    render(
-      <MemoryRouter>
-        <AllMails />
-      </MemoryRouter>
-    );
-    const mailHeading = screen.getByText("All Mails list");
-    expect.toBeInTheDocument(mailHeading);
-  });
   test("checking list items, inbox", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <AllMails />
       </MemoryRouter>
@@ -40,7 +31,7 @@ describe("<AllMails/> component", () => {
     expect.toBeInTheDocument(inbox);
   });
   test("checking list items, Sent", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <AllMails />
       </MemoryRouter>

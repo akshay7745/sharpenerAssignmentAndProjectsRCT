@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import Signup from "./Signup";
 import { MemoryRouter } from "react-router-dom";
-
+import { renderWithProviders } from "../redux_utils/utils_for_tests";
 describe("Singup.js component", () => {
   test("checking email label", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <Signup />
       </MemoryRouter>
@@ -14,7 +14,7 @@ describe("Singup.js component", () => {
     expect(emailLabel).toBeInTheDocument();
   });
   test("checking password label", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <Signup />
       </MemoryRouter>
@@ -25,7 +25,7 @@ describe("Singup.js component", () => {
     expect(passLabel).toBeInTheDocument();
   });
   test("checking confirm password label", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <Signup />
       </MemoryRouter>
@@ -37,7 +37,7 @@ describe("Singup.js component", () => {
     expect(confirmPassLabel).toBeInTheDocument();
   });
   test("checking email input", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <Signup />
       </MemoryRouter>
@@ -49,7 +49,7 @@ describe("Singup.js component", () => {
     expect(emailInp).toBeInTheDocument();
   });
   test("checking password input", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <Signup />
       </MemoryRouter>

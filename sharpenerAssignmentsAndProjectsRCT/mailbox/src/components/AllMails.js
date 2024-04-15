@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
@@ -16,8 +16,10 @@ const AllMails = () => {
     draft: false,
   });
   const userData = useSelector((state) => state.authentication.userData);
-  const mails = useSelector((state) => state.mails.mailData);
-  const inboxMails = mails.filter((mail) => mail.receiver === userData.userId);
+  // const mails = useSelector((state) => state.mails.mailData);
+  const emails = useSelector((state) => state.mails.mailData);
+  console.log(emails, "from line number 21 all mails component...");
+  const inboxMails = emails.filter((mail) => mail.receiver === userData.userId);
 
   const unreadMails = inboxMails?.filter((mail) => mail.isRead === false);
   const navigate = useNavigate();

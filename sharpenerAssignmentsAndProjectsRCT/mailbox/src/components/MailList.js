@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { markAsRead } from "../store/mailSlice";
+
 const MailList = () => {
-  const { trimString, switchMails } = useOutletContext();
-  const { inbox, sent, draft } = switchMails;
+  function trimString(str, maxLength) {
+    if (str.length > maxLength) {
+      // Clip the string to the desired length and add an ellipsis
+      return str.slice(0, maxLength - 1) + "...";
+    }
+    return str; // If the string is already within the limit, return it as is
+  }
+  const { switchMails } = useOutletContext();
+  const { inbox, sent } = switchMails;
   const mails = useSelector((state) => state.mails.mailData);
   const userData = useSelector((state) => state.authentication.userData);
   const inboxMails = mails.filter((mail) => mail.receiver === userData.userId);
-  const unreadMails = inboxMails?.filter((mail)=>mail.isRead ===false)
+  // const unreadMails = inboxMails?.filter((mail) => mail.isRead === false);
   const sentMails = mails.filter((mail) => mail.sender === userData.userId);
   const dispatch = useDispatch();
   console.log("from mail list component ", mails);

@@ -3,11 +3,9 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import EditorBody from "./EditorBody";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { useDispatch } from "react-redux";
+
 import { addMail } from "../store/mailSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 function Composer() {
   const [mailData, setMailData] = useState({
     sender: "",

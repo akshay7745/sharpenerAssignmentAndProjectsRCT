@@ -1,9 +1,10 @@
-import { screen, render } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import Composer from "./Composer";
+import { renderWithProviders } from "../redux_utils/utils_for_tests";
 import { MemoryRouter } from "react-router-dom";
 describe("Login.js component", () => {
   test("checking subject label", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <Composer />
       </MemoryRouter>
@@ -12,7 +13,7 @@ describe("Login.js component", () => {
     expect.toBeInTheDocument(subjectLabel);
   });
   test("checking receiver label", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <Composer />
       </MemoryRouter>
@@ -21,7 +22,7 @@ describe("Login.js component", () => {
     expect.toBeInTheDocument(receiverLabel);
   });
   test("Send mail button", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <Composer />
       </MemoryRouter>
@@ -32,7 +33,7 @@ describe("Login.js component", () => {
     expect.toBeInTheDocument(sendMailBtn);
   });
   test("Subject input testing", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <Composer />
       </MemoryRouter>
@@ -43,7 +44,7 @@ describe("Login.js component", () => {
     expect.toBeInTheDocument(subjectInp);
   });
   test("Email input", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <Composer />
       </MemoryRouter>
