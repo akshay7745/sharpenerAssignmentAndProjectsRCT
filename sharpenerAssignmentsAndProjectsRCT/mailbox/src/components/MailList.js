@@ -1,8 +1,13 @@
 import React from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { markAsRead } from "../store/mailSlice";
-
+import {
+  mailDeletedByReceiver,
+  mailDeletedBySender,
+  markAsRead,
+} from "../store/mailSlice";
+import Button from "react-bootstrap/Button";
+import { deleteMail } from "../store/mailSlice";
 const MailList = () => {
   function trimString(str, maxLength) {
     if (str.length > maxLength) {
@@ -15,9 +20,14 @@ const MailList = () => {
   const { inbox, sent } = switchMails;
   const mails = useSelector((state) => state.mails.mailData);
   const userData = useSelector((state) => state.authentication.userData);
-  const inboxMails = mails.filter((mail) => mail.receiver === userData.userId);
+  const inboxMails = mails.filter(
+    (mail) =>
+      mail.receiver === userData.userId && mail.deletedByReceiver === false
+  );
   // const unreadMails = inboxMails?.filter((mail) => mail.isRead === false);
-  const sentMails = mails.filter((mail) => mail.sender === userData.userId);
+  const sentMails = mails.filter(
+    (mail) => mail.sender === userData.userId && mail.deletedBySender === false
+  );
   const dispatch = useDispatch();
   console.log("from mail list component ", mails);
   let mailData = [];
@@ -32,7 +42,7 @@ const MailList = () => {
       <ul style={{ listStyle: "none", width: "100%" }}>
         {mailData?.map((mail) => {
           return (
-            <Link to={`/mails/${mail.id}`}>
+            <>
               <li
                 style={{
                   border: "1px solid black",
@@ -68,8 +78,24 @@ const MailList = () => {
                 </span>
                 <span style={{ fontWeight: "bold" }}>Body-: </span>
                 <span>{trimString(mail.body, 40)}</span>
+                <Link to={`/mails/${mail.id}`}>
+                  {" "}
+                  <span>Open mail</span>
+                </Link>
               </li>
-            </Link>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  if (inbox) {
+                    dispatch(mailDeletedByReceiver(mail.id));
+                  } else {
+                    dispatch(mailDeletedBySender(mail.id));
+                  }
+                }}
+              >
+                Delete
+              </Button>
+            </>
           );
         })}
       </ul>

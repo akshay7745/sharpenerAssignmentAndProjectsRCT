@@ -14,13 +14,26 @@ export const mailSlice = createSlice({
       const email = state.mailData.find((item) => item.id === action.payload);
       email.isRead = true;
     },
-    deleteMail(state, action) {},
+    mailDeletedByReceiver(state, action) {
+      const email = state.mailData.find((item) => item.id === action.payload);
+      email.deletedByReceiver = true;
+    },
+    mailDeletedBySender(state, action) {
+      const email = state.mailData.find((item) => item.id === action.payload);
+      email.deletedBySender = true;
+    },
     restoreMailData(state, action) {
       state.mailData = action.payload || [];
     },
   },
 });
 
-export const { addMail, deleteMail, markAsRead, restoreMailData } =
-  mailSlice.actions;
+export const {
+  addMail,
+  deleteMail,
+  markAsRead,
+  restoreMailData,
+  mailDeletedByReceiver,
+  mailDeletedBySender,
+} = mailSlice.actions;
 export default mailSlice.reducer;

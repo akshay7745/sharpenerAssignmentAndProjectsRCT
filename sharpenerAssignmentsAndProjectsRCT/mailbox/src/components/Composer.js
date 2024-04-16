@@ -12,6 +12,8 @@ function Composer() {
     receiver: "",
     title: "",
     body: "",
+    deletedByReceiver: false,
+    deletedBySender: false,
   });
   const userData = useSelector((state) => state.authentication.userData);
   const dispatch = useDispatch();

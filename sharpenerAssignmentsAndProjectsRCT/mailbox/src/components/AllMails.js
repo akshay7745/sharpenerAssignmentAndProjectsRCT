@@ -19,9 +19,13 @@ const AllMails = () => {
   // const mails = useSelector((state) => state.mails.mailData);
   const emails = useSelector((state) => state.mails.mailData);
   console.log(emails, "from line number 21 all mails component...");
-  const inboxMails = emails.filter((mail) => mail.receiver === userData.userId);
+  const inboxMails = emails.filter(
+    (mail) => mail.receiver === userData.userId && !mail.deletedByReceiver
+  );
 
-  const unreadMails = inboxMails?.filter((mail) => mail.isRead === false);
+  const unreadMails = inboxMails?.filter(
+    (mail) => mail.isRead === false && mail.deletedByReceiver === false
+  );
   const navigate = useNavigate();
   function trimString(str, maxLength) {
     if (str.length > maxLength) {
@@ -30,30 +34,7 @@ const AllMails = () => {
     }
     return str; // If the string is already within the limit, return it as is
   }
-  // useEffect(() => {
-  //   async function getEmails() {
-  //     try {
-  //       const res = await fetch(
-  //         `https://mailbody-7480c-default-rtdb.firebaseio.com/mails.json`
-  //       );
-  //       if (!res.ok) {
-  //         const resData = await res.json();
-  //         console.log(resData.Error.message);
-  //       }
-  //       const resData = await res.json();
-  //       console.log(resData, "from line number 20");
-  //       const allKeys = Object.keys(resData);
-  //       const allData = Object.values(resData).map((data, index) => {
-  //         const { sender, receiver, body, title } = data;
-  //         return { sender, receiver, body, title, id: allKeys[index] };
-  //       });
-  //       setMails(allData);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   getEmails();
-  // }, []);
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div>
