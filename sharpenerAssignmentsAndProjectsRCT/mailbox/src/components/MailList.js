@@ -20,12 +20,12 @@ const MailList = () => {
   const { inbox, sent } = switchMails;
   const mails = useSelector((state) => state.mails.mailData);
   const userData = useSelector((state) => state.authentication.userData);
-  const inboxMails = mails.filter(
+  const inboxMails = mails?.filter(
     (mail) =>
       mail.receiver === userData.userId && mail.deletedByReceiver === false
   );
   // const unreadMails = inboxMails?.filter((mail) => mail.isRead === false);
-  const sentMails = mails.filter(
+  const sentMails = mails?.filter(
     (mail) => mail.sender === userData.userId && mail.deletedBySender === false
   );
   const dispatch = useDispatch();
@@ -52,11 +52,6 @@ const MailList = () => {
                   paddingLeft: "25px",
                 }}
                 key={mail.id}
-                onClick={() => {
-                  if (inbox) {
-                    dispatch(markAsRead(mail.id));
-                  }
-                }}
               >
                 {!mail.isRead && inbox && (
                   <div
@@ -80,11 +75,20 @@ const MailList = () => {
                 <span>{trimString(mail.body, 40)}</span>
                 <Link to={`/mails/${mail.id}`}>
                   {" "}
-                  <span>Open mail</span>
+                  <span
+                    onClick={() => {
+                      if (inbox) {
+                        dispatch(markAsRead(mail.id));
+                      }
+                    }}
+                  >
+                    Open mail
+                  </span>
                 </Link>
               </li>
               <Button
                 variant="danger"
+                className="ab"
                 onClick={() => {
                   if (inbox) {
                     dispatch(mailDeletedByReceiver(mail.id));

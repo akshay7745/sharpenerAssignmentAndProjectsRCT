@@ -38,8 +38,18 @@ export const getMails = () => {
       const mailData = await mailResponse.json();
       console.log(mailData, "from the restore mail data slice...");
       console.log(mailData, "this is mail data from mail actions");
-      dispatch(restoreMailData(mailData));
+      return mailData;
+      // dispatch(restoreMailData(mailData));
     };
-    await fetchingMails();
+    try {
+      const data = await fetchingMails();
+      if (data) {
+        dispatch(restoreMailData(data));
+      } else {
+        dispatch(restoreMailData([]));
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   };
 };

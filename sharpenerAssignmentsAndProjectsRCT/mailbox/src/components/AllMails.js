@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
@@ -7,9 +7,19 @@ import Col from "react-bootstrap/Col";
 import MailList from "./MailList";
 import SingleMailPage from "./SingleMailPage";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getMails } from "../store/mail-actions";
 const AllMails = () => {
   // const [mails, setMails] = useState([]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      dispatch(getMails());
+    }, 2000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
   const [switchMails, setSwitchMails] = useState({
     inbox: true,
     sent: false,
@@ -19,7 +29,7 @@ const AllMails = () => {
   // const mails = useSelector((state) => state.mails.mailData);
   const emails = useSelector((state) => state.mails.mailData);
   console.log(emails, "from line number 21 all mails component...");
-  const inboxMails = emails.filter(
+  const inboxMails = emails?.filter(
     (mail) => mail.receiver === userData.userId && !mail.deletedByReceiver
   );
 

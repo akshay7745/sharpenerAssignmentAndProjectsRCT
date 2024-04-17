@@ -33,8 +33,9 @@ function App() {
     if (isFirstTimeLoading) {
       isFirstTimeLoading = false;
       dispatch(getMails());
-      return;
     }
+  }, []);
+  useEffect(() => {
     if (mailData) {
       dispatch(sendMailData(mailData));
     }

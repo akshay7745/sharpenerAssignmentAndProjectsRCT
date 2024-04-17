@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
 const SingleMailPage = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const [singleMail, setMail] = useState({
     title: "",
     body: "",
@@ -10,6 +12,7 @@ const SingleMailPage = () => {
     receiver: "",
     isRead: "",
   });
+
   const { body, sender, receiver, title, isRead } = singleMail;
   const mails = useSelector((state) => state.mails.mailData);
   const findMail = (id) => {

@@ -23,7 +23,7 @@ export const mailSlice = createSlice({
       email.deletedBySender = true;
     },
     restoreMailData(state, action) {
-      state.mailData = action.payload || [];
+      state.mailData = action.payload;
     },
   },
 });
