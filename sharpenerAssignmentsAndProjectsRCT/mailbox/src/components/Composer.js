@@ -6,20 +6,24 @@ import EditorBody from "./EditorBody";
 
 import { addMail } from "../store/mailSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 function Composer() {
   const [mailData, setMailData] = useState({
     sender: "",
     receiver: "",
     title: "",
     body: "",
+    bodyInText: "",
     deletedByReceiver: false,
     deletedBySender: false,
   });
+  console.log(mailData, "from line number 19 from the composer...");
+  const navigate = useNavigate();
   const userData = useSelector((state) => state.authentication.userData);
   const dispatch = useDispatch();
   const bodyChangeHandler = (data) => {
     setMailData((prevState) => {
-      return { ...prevState, body: data };
+      return { ...prevState, body: data.body, bodyInText: data.bodyInText };
     });
   };
   const { receiver, title } = mailData;
@@ -29,35 +33,11 @@ function Composer() {
     });
   };
 
-  // const sendMail = async (data) => {
-  //   try {
-  //     const res = await fetch(
-  //       `https://mailbody-7480c-default-rtdb.firebaseio.com/mails.json`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(data),
-  //       }
-  //     );
-  //     if (!res.ok) {
-  //       const resData = await res.json();
-  //       console.log(resData, "from line number 41");
-  //       throw new Error(resData.error.message);
-  //     }
-  //     const resData = await res.json();
-  //     console.log(resData);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-
   const submitHandler = (e) => {
     e.preventDefault();
-
-    // sendMail({ ...mailData });
+    alert("Sending is in progress.");
     dispatch(addMail({ ...mailData, sender: userData.userId }));
+    navigate("/mails");
   };
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -71,6 +51,7 @@ function Composer() {
             name="receiver"
             onChange={changeHandler}
             value={receiver}
+            required={true}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -82,6 +63,7 @@ function Composer() {
             name="title"
             onChange={changeHandler}
             value={title}
+            required={true}
           />
         </Form.Group>
 

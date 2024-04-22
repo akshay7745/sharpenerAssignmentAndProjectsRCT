@@ -15,8 +15,8 @@ export const authenticationSlice = createSlice({
       state.isLogin = !!action.payload.token;
     },
     logout: (state) => {
-      state.token = "";
-      state.userName = "";
+      state.userData = { token: "", userId: "" };
+
       state.isLogin = false;
     },
   },

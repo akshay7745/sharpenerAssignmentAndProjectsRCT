@@ -15,7 +15,7 @@ const AllMails = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       dispatch(getMails());
-    }, 2000);
+    }, 4000);
     return () => {
       clearInterval(intervalId);
     };
@@ -77,7 +77,7 @@ const AllMails = () => {
         >
           <Button
             onClick={() => {
-              navigate("/compose");
+              navigate("/");
             }}
             className="ms-2"
           >

@@ -7,7 +7,6 @@ import {
   markAsRead,
 } from "../store/mailSlice";
 import Button from "react-bootstrap/Button";
-import { deleteMail } from "../store/mailSlice";
 const MailList = () => {
   function trimString(str, maxLength) {
     if (str.length > maxLength) {
@@ -38,7 +37,7 @@ const MailList = () => {
   }
   return (
     <>
-      <h2>All Mails list</h2>
+      <h2>{inbox ? "Inbox" : "Sent Mails"}</h2>
       <ul style={{ listStyle: "none", width: "100%" }}>
         {mailData?.map((mail) => {
           return (
@@ -72,7 +71,7 @@ const MailList = () => {
                   {trimString(mail.title, 15)}.
                 </span>
                 <span style={{ fontWeight: "bold" }}>Body-: </span>
-                <span>{trimString(mail.body, 40)}</span>
+                <span>{trimString(mail.bodyInText, 60)}</span>
                 <Link to={`/mails/${mail.id}`}>
                   {" "}
                   <span
@@ -88,7 +87,7 @@ const MailList = () => {
               </li>
               <Button
                 variant="danger"
-                className="ab"
+                className=""
                 onClick={() => {
                   if (inbox) {
                     dispatch(mailDeletedByReceiver(mail.id));

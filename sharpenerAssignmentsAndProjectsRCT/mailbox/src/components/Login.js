@@ -83,11 +83,13 @@ function Login() {
           }),
         }
       );
-    } catch (error) {}
+      console.log(res, "from forgot password");
+    } catch (error) {
+      console.log(error);
+    }
   };
   const submitHandler = (event) => {
     event.preventDefault();
-
     console.log(loginState);
     sendToTheBackend(loginState);
   };
@@ -132,18 +134,23 @@ function Login() {
               Login
             </Button>
           </div>
-          <div className="d-grid gap-2">
-            <Button className="rounded-pill " type="submit" variant="link">
+          {/* <div className="d-grid gap-2">
+            <Button
+              className="rounded-pill"
+              type="button"
+              variant="link"
+              onClick={() => updatePassword()}
+            >
               Forgot password?
             </Button>
-          </div>
+          </div> */}
         </Form>
         <Row className="justify-content-center mt-4">
           <Col md={12}>
             <div className="d-grid gap-2">
               <Button
                 onClick={() => {
-                  navigate("/");
+                  navigate("/signup");
                 }}
                 variant="outline-dark"
               >

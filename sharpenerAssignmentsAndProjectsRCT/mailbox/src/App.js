@@ -1,12 +1,7 @@
 import "./App.css";
-import Welcome from "./components/Welcome";
-import Stack from "react-bootstrap/Stack";
-import Button from "react-bootstrap/Button";
 import Header from "./components/Header";
 import Signup from "./components/Signup";
 import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import Login from "./components/Login";
 import Composer from "./components/Composer";
 import { Outlet, createBrowserRouter } from "react-router-dom";
@@ -17,26 +12,24 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "./store/authenticationSlice";
 import { getMails, sendMailData } from "./store/mail-actions";
-let isFirstTimeLoading = true;
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const dispatch = useDispatch();
   const mailData = useSelector((store) => store.mails.mailData);
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
+    console.log(userData, "from app useeffect");
     if (userData) {
       dispatch(login(userData));
     }
   }, []);
 
   useEffect(() => {
-    if (isFirstTimeLoading) {
-      isFirstTimeLoading = false;
-      dispatch(getMails());
-    }
+    dispatch(getMails());
   }, []);
   useEffect(() => {
-    if (mailData) {
+    if (mailData !== undefined || mailData !== null) {
       dispatch(sendMailData(mailData));
     }
   }, [mailData]);
@@ -45,11 +38,10 @@ function App() {
       <Header />
       <Outlet>
         <Container fluid>
-          <Signup />
-          <Login />
-          <Welcome />
           <Composer />
           <AllMails />
+          <Signup />
+          <Login />
         </Container>
       </Outlet>
     </>
@@ -63,6 +55,14 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: (
+          <ProtectedRoute>
+            <Composer />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/signup",
         element: <Signup />,
       },
       {
@@ -70,16 +70,12 @@ export const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/welcome",
-        element: <Welcome />,
-      },
-      {
-        path: "/compose",
-        element: <Composer />,
-      },
-      {
         path: "/mails",
-        element: <AllMails />,
+        element: (
+          <ProtectedRoute>
+            <AllMails />
+          </ProtectedRoute>
+        ),
         children: [
           {
             path: "/mails",

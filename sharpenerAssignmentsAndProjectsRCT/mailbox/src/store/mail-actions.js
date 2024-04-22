@@ -1,6 +1,7 @@
 import { restoreMailData } from "./mailSlice";
 
 export const sendMailData = (mailData) => {
+  // alert("Sending mail");
   return async () => {
     const updatingMailData = async () => {
       const mailResponse = await fetch(
@@ -18,7 +19,11 @@ export const sendMailData = (mailData) => {
         throw new Error("Sending mail data failed...");
       }
     };
-    await updatingMailData();
+    try {
+      await updatingMailData();
+    } catch (error) {
+      alert(error.message);
+    }
   };
 };
 
@@ -44,9 +49,8 @@ export const getMails = () => {
     try {
       const data = await fetchingMails();
       if (data) {
+        console.log(data, "priting mail data from the get mail slice");
         dispatch(restoreMailData(data));
-      } else {
-        dispatch(restoreMailData([]));
       }
     } catch (error) {
       alert(error.message);

@@ -3,31 +3,43 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/authenticationSlice";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const userId = useSelector((state) => state.authentication.userData.userId);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("userData");
+    dispatch(logout());
+  };
+  const handleLogin = () => {
+    navigate("/login");
+  };
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <LinkContainer to="/">
+        <LinkContainer to="/mails">
           <Navbar.Brand>Mail-Box</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <LinkContainer to="/">
-              <Nav.Link>Home</Nav.Link>
+              <Nav.Link>Compose +</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/mails">
               <Nav.Link>Mails</Nav.Link>
             </LinkContainer>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
+            <NavDropdown title="Profile" id="basic-nav-dropdown">
+              <NavDropdown.Item>
+                {userId === "" ? "Guest user" : userId}
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
+              <NavDropdown.Item
+                onClick={userId ? () => handleLogout() : () => handleLogin()}
+              >
+                {userId === "" ? "Login" : "Logout"}
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

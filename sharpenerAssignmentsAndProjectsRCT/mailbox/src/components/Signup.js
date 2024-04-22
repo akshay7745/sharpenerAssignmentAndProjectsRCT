@@ -60,16 +60,9 @@ function Signup() {
         throw new Error(resData.error.message);
       }
       const resData = await res.json();
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({ userId: resData.email, token: resData.idToken })
-      );
-      console.log(resData, "this is resData from the signup function...");
-      console.log(resData.idToken);
-      console.log(resData.email);
+
       alert("Account created succesfully");
       navigate("/login");
-      // dispatch();
     } catch (error) {
       alert(error.message);
     }
