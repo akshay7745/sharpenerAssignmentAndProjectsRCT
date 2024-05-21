@@ -12,7 +12,7 @@ function NewMeetupPage() {
         "Content-Type": "application/json",
       },
     });
-    console.log(response, "from the line number 14");
+
     router.push("/");
   }
   return <NewMeetupForm onAddMeetup={AddMeetupHandler} />;

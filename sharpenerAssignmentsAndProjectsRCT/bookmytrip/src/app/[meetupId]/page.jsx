@@ -1,3 +1,4 @@
+import dbConnect from "@/lib/dbConnect";
 import Image from "next/image";
 
 const data = [
@@ -28,21 +29,26 @@ const data = [
       "at - hassurchampu tal- slsli dist- belgaum karnataka house no - 12",
   },
 ];
-export default function MeetUp({ params }) {
-  const meetingItem = data.find((item) => item.id === params.meetupId);
-  console.log("consoling meetingItem from meetup single component");
+async function getOneMeetup(id) {
+  const res = await fetch(`http://localhost:3000/api/meets/${id}`);
+  const data = await res.json();
+  return data.data;
+}
+export default async function MeetUp({ params }) {
+  const meetingItem = await getOneMeetup(params.meetupId);
+
   return (
     <div className="flex flex-col justify-center align-items-center text-center py-4">
       <Image
-        src={meetingItem.image}
+        src={meetingItem?.image}
         width={700}
         alt="Meeting full image"
         height={600}
         className="m-auto"
       />
-      <h2>{meetingItem.title}</h2>
-      <p>{meetingItem.address}</p>
-      <p>{meetingItem.description}</p>
+      <h2>{meetingItem?.title}</h2>
+      <p>{meetingItem?.address}</p>
+      <p>{meetingItem?.description}</p>
     </div>
   );
 }
