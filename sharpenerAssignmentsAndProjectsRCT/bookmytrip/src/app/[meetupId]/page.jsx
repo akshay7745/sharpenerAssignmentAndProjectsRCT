@@ -28,8 +28,9 @@ const data = [
       "at - hassurchampu tal- slsli dist- belgaum karnataka house no - 12",
   },
 ];
-const MeetUp = ({ params }) => {
+export default function MeetUp({ params }) {
   const meetingItem = data.find((item) => item.id === params.meetupId);
+  console.log("consoling meetingItem from meetup single component");
   return (
     <div className="flex flex-col justify-center align-items-center text-center py-4">
       <Image
@@ -44,6 +45,4 @@ const MeetUp = ({ params }) => {
       <p>{meetingItem.description}</p>
     </div>
   );
-};
-
-export default MeetUp;
+}

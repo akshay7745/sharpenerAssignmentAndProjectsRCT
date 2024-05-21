@@ -90,7 +90,7 @@ function NewMeetupForm(props) {
         </div>
         <div className=" mt-4 text-right">
           <button
-            className="cursor-pointer bg-[#77002e] text-white py-2 px-6 border border-[#77002e] rounded font-bold hover:bg-[#a50e48] hover:text-[#a50e48] active:bg-[#a50e48] active:text-[#a50e48]"
+            className="cursor-pointer bg-[#77002e] text-white py-2 px-6 border border-[#77002e] rounded font-bold hover:bg-[#a50e48] active:bg-[#a50e48] "
             type="submit"
           >
             Add Meetup
