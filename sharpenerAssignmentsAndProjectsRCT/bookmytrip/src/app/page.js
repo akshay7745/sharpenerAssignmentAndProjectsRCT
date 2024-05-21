@@ -1,6 +1,8 @@
 import MeetupList from "@/components/meetups/MeetupList";
-
-// const meetUpData = [
+export const metadata = {
+  title: "React Meetups",
+  description: "Home to all react devs to find the perfect trip planner.",
+};
 //   {
 //     id: "m1",
 //     title: "first meeting",
