@@ -6,8 +6,10 @@ export async function POST(req) {
 
   try {
     const newTodo = await Todo.create(body);
+    revalidatePath("/today");
     return Response.json(
       {
+        revalidated: true,
         message: "success",
         data: newTodo,
       },

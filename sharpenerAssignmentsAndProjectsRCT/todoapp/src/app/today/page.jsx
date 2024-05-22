@@ -1,5 +1,7 @@
+"use client";
 import TodoForm from "@/components/createTodo/TodoForm";
-
+import UpdateStatusButton from "@/components/createTodo/UpdateStatusButton";
+import { useState, useEffect } from "react";
 async function getTodos() {
   const res = await fetch("http://localhost:3000/api/today", {
     cache: "no-store",
@@ -8,15 +10,32 @@ async function getTodos() {
   console.log(todoData.data, "from line number 6 homepage..");
   return todoData.data;
 }
-export default async function HomePage() {
-  // const [todoData, setTodoData] = useState([]);
+async function updateTodo(data) {
+  const res = await fetch("http://localhost:3000/api/completedtodos", {
+    cache: "no-store",
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+}
+export default function HomePage() {
+  const [todoData, setTodoData] = useState([]);
   // const handleTodoData = () => {
   // setTodoData((prevState) => {
   //   return [...prevState, data];
   // });
 
   // };
-  const todoData = await getTodos();
+  useEffect(() => {
+    async function getData() {
+      const todoData = await getTodos();
+      const notCompletedTodos = todoData.filter(
+        (todo) => todo.isCompleted === false
+      );
+      setTodoData(notCompletedTodos);
+    }
+    getData();
+  }, []);
+
   return (
     <>
       <section className="flex justify-center mt-10">
@@ -28,13 +47,19 @@ export default async function HomePage() {
             todoData.map((todoItem) => {
               return (
                 <li
-                  className="border-2 rounded text-lg p-1 mb-4 bg-blue-500 border-blue-700"
+                  className="border-2 flex justify-between items-center rounded text-lg p-1 mb-4 bg-blue-500 border-blue-700"
                   key={todoItem._id}
                 >
                   <span>{todoItem.todo}</span>{" "}
-                  <button className="bg-fuchsia-500 p-3 rounded-md font-bold ml-8 text-base">
-                    mark as completed
-                  </button>
+                  <UpdateStatusButton
+                    todoData={{
+                      todo: todoItem.todo,
+                      isCompleted: true,
+                      id: todoItem._id,
+                    }}
+                    buttonName="mark as completed"
+                    updateTodoHandler={updateTodo}
+                  />
                 </li>
               );
             })}
