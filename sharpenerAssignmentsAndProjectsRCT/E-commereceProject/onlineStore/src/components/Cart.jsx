@@ -6,8 +6,9 @@ import { useContext, useEffect } from "react";
 import cartContext from "../contexts/cartContext";
 import Button from "react-bootstrap/Button";
 import authContext from "../contexts/authContext";
-const Cart = ({ show, handleClose }) => {
-  const { cartData, onAddToCart } = useContext(cartContext);
+
+const Cart = () => {
+  const { cartData, onAddToCart, show, handleClose } = useContext(cartContext);
   // const { isAuthenticated, userName } = useContext(authContext);
   const totalAmount = cartData.reduce((acc, item) => {
     return acc + item.quantity * item.price;

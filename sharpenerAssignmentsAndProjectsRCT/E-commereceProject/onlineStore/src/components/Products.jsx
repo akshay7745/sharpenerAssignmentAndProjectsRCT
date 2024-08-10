@@ -10,9 +10,20 @@ const Products = () => {
   // const { onAddToCart } = useContext(cartContext);
   const { userName } = useContext(authContext);
   const addToCart = async (data) => {
+    console.log(data,"from the add to cart function")
     try {
+      // const res = await fetch(
+      //   `https://crudcrud.com/api/318d497a39a343c09194ca6602956f6c/cart${userName}`,
+      //   {
+      //     method: "POST",
+      //     body: JSON.stringify(data),
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // );
       const res = await fetch(
-        `https://crudcrud.com/api/a1d6682b14c44c0c918d9ea2d0c1c75a/cart${userName}`,
+        `https://ecom-f3cf9-default-rtdb.firebaseio.com/cart${userName}.json`,
         {
           method: "POST",
           body: JSON.stringify(data),
@@ -23,6 +34,7 @@ const Products = () => {
       );
       if (res.ok) {
         const resData = await res.json();
+        console.log(resData)
         console.log("Successfully added to cart", resData);
       } else {
         throw new Error("Something went wrong while adding to cart");
@@ -53,7 +65,7 @@ const Products = () => {
                 className="text-decoration-none  text-black "
                 to={`/product/${product.id}`}
               >
-                <h4 className="mb-4  ">{product.title}</h4>
+                <h4 className="mb-4">{product.title}</h4>
                 <img
                   src={product.imageUrl}
                   alt={product.title}

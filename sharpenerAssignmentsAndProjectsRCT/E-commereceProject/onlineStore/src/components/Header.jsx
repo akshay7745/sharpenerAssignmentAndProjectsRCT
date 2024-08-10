@@ -6,8 +6,10 @@ import { useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import cartContext from "../contexts/cartContext";
 import authContext from "../contexts/authContext";
-const Header = ({ onShow }) => {
-  const { cartData, clearCart } = useContext(cartContext);
+
+const Header = () => {
+  const { cartData, clearCart, handleShow, handleClose } =
+    useContext(cartContext);
   const { isAuthenticated, handleLogout } = useContext(authContext);
   // const saveCartData = async (data) => {
   //   try {
@@ -102,7 +104,8 @@ const Header = ({ onShow }) => {
           )}
         </Nav>
         {isAuthenticated && (
-          <Nav onClick={onShow}>
+          // <Nav onClick={onShow}>
+          <Nav onClick={handleShow}>
             <NavbarText className="border-primary border-2   border p-1 rounded-2  ">
               Cart
               <span className="badge bg-secondary p-2 ms-1 ">{totalItems}</span>

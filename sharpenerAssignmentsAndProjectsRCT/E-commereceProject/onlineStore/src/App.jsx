@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 import Container from "react-bootstrap/Container";
 import Footer from "./components/Footer";
-import { useContext, useEffect, useState, lazy, Suspense } from "react";
+import { useContext, useEffect, useState, lazy } from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import About from "./components/About";
 // import Body from "./components/Body";
@@ -18,14 +18,18 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import authContext from "./contexts/authContext";
 import cartContext from "./contexts/cartContext";
 function App() {
-  const [show, setShow] = useState(false);
-  const { onAddToCart } = useContext(cartContext);
+  const { onAddToCart, handleClose, handleShow, show } =
+    useContext(cartContext);
   const { isAuthenticated, userName } = useContext(authContext);
   const getCartData = async (userName) => {
     try {
+      // const res = await fetch(
+      //   `https://crudcrud.com/api/318d497a39a343c09194ca6602956f6c/cart${userName}`
+      // );
       const res = await fetch(
-        `https://crudcrud.com/api/a1d6682b14c44c0c918d9ea2d0c1c75a/cart${userName}`
+        `https://ecom-f3cf9-default-rtdb.firebaseio.com/cart${userName}.json`
       );
+      console.log(res);
       if (res.ok) {
         const resData = await res.json();
         onAddToCart(resData);
@@ -41,13 +45,11 @@ function App() {
       getCartData(userName);
     }
   }, [show, userName, isAuthenticated]);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   return (
     <>
-      <Cart show={show} handleClose={handleClose} />
-      <Header onShow={handleShow} onHide={handleClose} />
+      <Cart />
+      <Header />
       <Container fluid>
         <Outlet />
         <Footer />

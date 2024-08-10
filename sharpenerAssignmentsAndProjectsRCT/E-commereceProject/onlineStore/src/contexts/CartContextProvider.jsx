@@ -4,7 +4,12 @@ import authContext from "./authContext";
 // import { useSearch } from "../utility/useSearch";
 const CartContextProvider = (props) => {
   const [cartData, setCartData] = useState([]);
+  const [show, setShow] = useState(false);
   const { userName, isAuthenticated } = useContext(authContext);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   // console.log("from cart context", cartData);
   // const postCartData = async (cartData) => {
   //   try {
@@ -67,7 +72,7 @@ const CartContextProvider = (props) => {
     // });
   };
   return (
-    <cartContext.Provider value={{ onAddToCart, cartData, clearCart }}>
+    <cartContext.Provider value={{ onAddToCart, cartData, clearCart,handleClose,handleShow,show }}>
       {props.children}
     </cartContext.Provider>
   );

@@ -20,7 +20,7 @@ const ContactUs = () => {
   async function formHandler() {
     try {
       const response = await fetch(
-        `https://onlinestore-594cd-default-rtdb.firebaseio.com/contactus.json`,
+        `https://ecom-f3cf9-default-rtdb.firebaseio.com/contactus.json`,
         {
           method: "POST",
           body: JSON.stringify(formState),
@@ -49,7 +49,7 @@ const ContactUs = () => {
     });
   };
   return (
-    <Row className="justify-content-center " style={{ marginTop: "100px" }}>
+    <Row className="justify-content-center " style={{ marginTop: "100px",marginBottom:"285px" }}>
       <Col md={5}>
         <Form onSubmit={handleSubmit}>
           <Form.Group as={Row} className="mb-3" controlId="formPlaintextName">
