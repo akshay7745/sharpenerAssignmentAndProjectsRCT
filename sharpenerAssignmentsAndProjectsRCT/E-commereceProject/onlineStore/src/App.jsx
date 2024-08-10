@@ -18,20 +18,19 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import authContext from "./contexts/authContext";
 import cartContext from "./contexts/cartContext";
 function App() {
-  const { onAddToCart, handleClose, handleShow, show } =
+  const { onAddToCart,show } =
     useContext(cartContext);
   const { isAuthenticated, userName } = useContext(authContext);
   const getCartData = async (userName) => {
     try {
-      // const res = await fetch(
-      //   `https://crudcrud.com/api/318d497a39a343c09194ca6602956f6c/cart${userName}`
-      // );
       const res = await fetch(
-        `https://ecom-f3cf9-default-rtdb.firebaseio.com/cart${userName}.json`
+        `https://crudcrud.com/api/c16c7885c56c4127b581ff185690f738/cart${userName}`
       );
+     
       console.log(res);
       if (res.ok) {
         const resData = await res.json();
+        console.log(resData,"resData from app after refreshing the page")
         onAddToCart(resData);
       } else {
         throw new Error("Something went wrong while fetching cart data");

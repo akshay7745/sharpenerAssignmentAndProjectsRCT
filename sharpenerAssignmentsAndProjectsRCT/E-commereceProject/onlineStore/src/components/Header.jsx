@@ -11,20 +11,7 @@ const Header = () => {
   const { cartData, clearCart, handleShow, handleClose } =
     useContext(cartContext);
   const { isAuthenticated, handleLogout } = useContext(authContext);
-  // const saveCartData = async (data) => {
-  //   try {
-  //     const res = await fetch("url", {
-  //       method: "POST",
-  //       body: JSON.stringify(data),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // useEffect(() => {}, [cartData]);
+
   const totalItems = cartData.reduce((acc, item) => {
     return acc + item.quantity;
   }, 0);

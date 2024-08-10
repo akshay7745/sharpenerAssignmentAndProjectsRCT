@@ -8,38 +8,26 @@ import Button from "react-bootstrap/Button";
 import authContext from "../contexts/authContext";
 
 const Cart = () => {
-  const { cartData, onAddToCart, show, handleClose } = useContext(cartContext);
+  const { cartData, onAddToCart, show, handleClose,removeProduct,clearCart } = useContext(cartContext);
+const {userName} = useContext(authContext);
   // const { isAuthenticated, userName } = useContext(authContext);
   const totalAmount = cartData.reduce((acc, item) => {
     return acc + item.quantity * item.price;
   }, 0);
-  // const getCartData = async (name) => {
-  //   try {
-  //     const res = await fetch(
-  //       `https://crudcrud.com/api/a1d6682b14c44c0c918d9ea2d0c1c75a/cart${name}`
-  //     );
-  //     if (res.ok) {
-  //       console.log(res, "From cart component");
-  //       const resData = await res.json();
-  //       console.log(
-  //         resData[resData.length - 1].cartData,
-  //         "Cart component and this data will be loaded in the cart"
-  //       );
-  //       // console.log(resData, "cart component and applying json");
-  //       onAddToCart(resData[resData.length - 1].cartData);
-  //     } else {
-  //       throw new Error("Add products to the cart");
-  //     }
-  //   } catch (error) {
-  //     console.log(error.message);
-  //     alert(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (isAuthenticated && show) {
-  //     getCartData(userName);
-  //   }
-  // }, [isAuthenticated, userName, show]);
+async function deleteProduct(idObj){
+  removeProduct(idObj.id);
+
+  if(idObj._id){
+    fetch(`https://crudcrud.com/api/c16c7885c56c4127b581ff185690f738/cart${userName}${idObj._id}`,{
+      method:"DELETE",
+      headers: { 
+        'Content-type': 'application/json'
+    } 
+    })
+  }
+
+}
+  
   return (
     <>
       <Offcanvas show={show} placement={"end"} onHide={handleClose}>
@@ -89,7 +77,14 @@ const Cart = () => {
                                 <span className="border border-1 border-primary mx-4 px-3 py-0 ">
                                   {item.quantity}
                                 </span>
-                                <Button variant="danger">Remove</Button>
+                                <Button onClick={()=>{
+                                  console.log(item,"from the remove btn")
+                                  if("_id" in item){
+                                    deleteProduct({id:item.id,_id:item._id})
+                                  }else{
+                                    deleteProduct({id:item.id})
+                                  }
+                                }}variant="danger">Remove</Button>
                               </td>
                             </tr>
                           );
@@ -109,7 +104,7 @@ const Cart = () => {
             </Row>
             <Row>
               <Col className="text-center mt-5">
-                <Button className="primary fw-semibold fs-5">PURCHASE</Button>
+                <Button onClick={clearCart} className="primary fw-semibold fs-5">PURCHASE</Button>
               </Col>
             </Row>
           </Container>

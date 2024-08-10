@@ -7,23 +7,24 @@ import cartContext from "../contexts/cartContext";
 import { Link } from "react-router-dom";
 import authContext from "../contexts/authContext";
 const Products = () => {
-  // const { onAddToCart } = useContext(cartContext);
+  const { onAddToCart, addSingleProduct, cartData } = useContext(cartContext);
   const { userName } = useContext(authContext);
   const addToCart = async (data) => {
-    console.log(data,"from the add to cart function")
+    console.log(data, "from the add to cart function");
+    const filteredProduct = cartData.filter(
+      (product) => product.id === data.id
+    );
+    if (!filteredProduct.length) {
+      data ={...data,quantity:1}
+      addSingleProduct({...data,quantity:1});
+      alert("Item successfully added to the cart");
+    } else {
+      alert("The product has already been added to your cart.");
+      return;
+    }
     try {
-      // const res = await fetch(
-      //   `https://crudcrud.com/api/318d497a39a343c09194ca6602956f6c/cart${userName}`,
-      //   {
-      //     method: "POST",
-      //     body: JSON.stringify(data),
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   }
-      // );
       const res = await fetch(
-        `https://ecom-f3cf9-default-rtdb.firebaseio.com/cart${userName}.json`,
+        `https://crudcrud.com/api/c16c7885c56c4127b581ff185690f738/cart${userName}`,
         {
           method: "POST",
           body: JSON.stringify(data),
@@ -32,12 +33,13 @@ const Products = () => {
           },
         }
       );
+
       if (res.ok) {
         const resData = await res.json();
-        console.log(resData)
+        console.log(resData);
         console.log("Successfully added to cart", resData);
       } else {
-        throw new Error("Something went wrong while adding to cart");
+        throw new Error("An error occurred while adding the item to the cart");
       }
     } catch (error) {
       alert(error);
