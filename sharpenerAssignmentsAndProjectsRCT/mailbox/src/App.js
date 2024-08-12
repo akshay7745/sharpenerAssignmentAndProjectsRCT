@@ -19,7 +19,6 @@ function App() {
   const mailData = useSelector((store) => store.mails.mailData);
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
-    console.log(userData, "from app useeffect");
     if (userData) {
       dispatch(login(userData));
     }

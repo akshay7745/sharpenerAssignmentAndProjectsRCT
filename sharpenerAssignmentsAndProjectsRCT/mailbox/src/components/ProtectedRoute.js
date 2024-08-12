@@ -9,7 +9,7 @@ const ProtectedRoute = (props) => {
     if (!userData) {
       navigate("/login");
     }
-  }, [isAuthenticated]);
+  }, []);
   return isAuthenticated ? props.children : null;
 };
 

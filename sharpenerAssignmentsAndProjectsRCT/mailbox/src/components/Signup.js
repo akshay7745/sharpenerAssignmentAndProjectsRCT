@@ -34,6 +34,7 @@ function Signup() {
   });
   const navigate = useNavigate();
   const { email, password, confirmPassword } = signupState;
+  const API_KEY = process.env.REACT_APP_WEB_API_KEY;
   const sendToTheBackend = async (data) => {
     try {
       if (data.password !== data.confirmPassword) {
@@ -41,7 +42,7 @@ function Signup() {
         return;
       }
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAK671JMI_OjI6n3Cme0FO9sQn5oTuOVM0`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
         {
           method: "POST",
           headers: {
@@ -56,7 +57,6 @@ function Signup() {
       );
       if (!res.ok) {
         const resData = await res.json();
-        console.log(resData);
         throw new Error(resData.error.message);
       }
       const resData = await res.json();
@@ -79,7 +79,6 @@ function Signup() {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    console.log(signupState);
     sendToTheBackend(signupState);
   };
   return (
@@ -97,7 +96,7 @@ function Signup() {
                 name="email"
                 value={email}
                 type="email"
-                required
+                required={true}
               />
             </Col>
           </Form.Group>
@@ -117,7 +116,7 @@ function Signup() {
                 placeholder="Password"
                 value={password}
                 onChange={changeHandler}
-                required
+                required={true}
               />
             </Col>
           </Form.Group>
@@ -132,7 +131,7 @@ function Signup() {
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={changeHandler}
-                required
+                required={true}
               />
             </Col>
           </Form.Group>

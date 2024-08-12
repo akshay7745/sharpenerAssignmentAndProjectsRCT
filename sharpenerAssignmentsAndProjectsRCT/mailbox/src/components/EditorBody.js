@@ -10,9 +10,7 @@ function EditorBody({ bodyChangeHandler }) {
     const contentState = editorState.getCurrentContent();
     const rawContent = convertToRaw(contentState);
     const htmlContent = draftToHtml(rawContent);
-    console.log(`${htmlContent}, from line number 13 editor body...`);
     const mailBody = rawContent.blocks[0].text;
-    // bodyChangeHandler(mailBody);
     bodyChangeHandler({ body: `${htmlContent}`, bodyInText: mailBody });
   }, [editorState]);
   const onEditorStateChange = (editorState) => {

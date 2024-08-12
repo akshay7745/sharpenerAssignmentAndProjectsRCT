@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 const SingleMailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [singleMail, setMail] = useState({
     title: "",
     body: "",
@@ -24,14 +24,6 @@ const SingleMailPage = () => {
     }
   };
   useEffect(() => {
-    //   fetch(`https://mailbody-7480c-default-rtdb.firebaseio.com/mails/${id}.json`)
-    //     .then((res) => {
-    //       return res.json();
-    //     })
-    //     .then((resData) => {
-    //       console.log(resData);
-    //     })
-    //     .catch((err) => console.log(err));
     findMail(id);
   }, []);
   return (

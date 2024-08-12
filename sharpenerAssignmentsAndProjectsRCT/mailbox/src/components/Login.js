@@ -29,10 +29,11 @@ function Login() {
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const API_KEY = process.env.REACT_APP_WEB_API_KEY;
   const sendToTheBackend = async (data) => {
     try {
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAK671JMI_OjI6n3Cme0FO9sQn5oTuOVM0`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
         {
           method: "POST",
           headers: {
@@ -47,7 +48,6 @@ function Login() {
         throw new Error(resData.error.message);
       }
       const resData = await res.json();
-      console.log(resData.idToken);
       alert("Successfully Logged in");
       localStorage.setItem(
         "userData",
@@ -71,7 +71,7 @@ function Login() {
   const updatePassword = async (data) => {
     try {
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${API_KEY}`,
         {
           method: "POST",
           headers: {

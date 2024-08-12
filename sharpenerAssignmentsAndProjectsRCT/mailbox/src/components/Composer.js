@@ -17,7 +17,6 @@ function Composer() {
     deletedByReceiver: false,
     deletedBySender: false,
   });
-  console.log(mailData, "from line number 19 from the composer...");
   const navigate = useNavigate();
   const userData = useSelector((state) => state.authentication.userData);
   const dispatch = useDispatch();
@@ -69,7 +68,7 @@ function Composer() {
 
         <EditorBody bodyChangeHandler={bodyChangeHandler} />
         <Button
-          className="fixed-bottom "
+          className="fixed-bottom"
           style={{ marginTop: "325px" }}
           type="submit"
         >

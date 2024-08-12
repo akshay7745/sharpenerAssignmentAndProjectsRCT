@@ -13,6 +13,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("userData");
     dispatch(logout());
+    navigate("/signup");
   };
   const handleLogin = () => {
     navigate("/login");
@@ -21,7 +22,7 @@ const Header = () => {
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <LinkContainer to="/mails">
-          <Navbar.Brand>Mail-Box</Navbar.Brand>
+          <Navbar.Brand>MailBox</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

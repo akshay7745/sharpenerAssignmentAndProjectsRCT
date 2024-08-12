@@ -10,25 +10,22 @@ import Button from "react-bootstrap/Button";
 const MailList = () => {
   function trimString(str, maxLength) {
     if (str.length > maxLength) {
-      // Clip the string to the desired length and add an ellipsis
       return str.slice(0, maxLength - 1) + "...";
     }
     return str; // If the string is already within the limit, return it as is
   }
   const { switchMails } = useOutletContext();
-  const { inbox, sent } = switchMails;
+  const { inbox, sent, draft } = switchMails;
   const mails = useSelector((state) => state.mails.mailData);
   const userData = useSelector((state) => state.authentication.userData);
   const inboxMails = mails?.filter(
     (mail) =>
       mail.receiver === userData.userId && mail.deletedByReceiver === false
   );
-  // const unreadMails = inboxMails?.filter((mail) => mail.isRead === false);
   const sentMails = mails?.filter(
     (mail) => mail.sender === userData.userId && mail.deletedBySender === false
   );
   const dispatch = useDispatch();
-  console.log("from mail list component ", mails);
   let mailData = [];
   if (inbox) {
     mailData = inboxMails;
@@ -37,7 +34,9 @@ const MailList = () => {
   }
   return (
     <>
-      <h2>{inbox ? "Inbox" : "Sent Mails"}</h2>
+      {inbox && <h2>Inbox</h2>}
+      {sent && <h2>Sent Mails</h2>}
+      {draft && <h2>Drafts</h2>}
       <ul style={{ listStyle: "none", width: "100%" }}>
         {mailData?.map((mail) => {
           return (
@@ -49,6 +48,7 @@ const MailList = () => {
                   padding: "5px",
                   position: "relative",
                   paddingLeft: "25px",
+                  borderRadius: "5px",
                 }}
                 key={mail.id}
               >
@@ -81,23 +81,26 @@ const MailList = () => {
                       }
                     }}
                   >
-                    Open mail
+                    Read mail
                   </span>
                 </Link>
               </li>
-              <Button
-                variant="danger"
-                className=""
-                onClick={() => {
-                  if (inbox) {
-                    dispatch(mailDeletedByReceiver(mail.id));
-                  } else {
-                    dispatch(mailDeletedBySender(mail.id));
-                  }
-                }}
-              >
-                Delete
-              </Button>
+              <div style={{ position: "relative" }}>
+                <Button
+                  variant="danger"
+                  className=""
+                  style={{ position: "absolute", right: 0, top: -45 }}
+                  onClick={() => {
+                    if (inbox) {
+                      dispatch(mailDeletedByReceiver(mail.id));
+                    } else {
+                      dispatch(mailDeletedBySender(mail.id));
+                    }
+                  }}
+                >
+                  Delete
+                </Button>
+              </div>
             </>
           );
         })}

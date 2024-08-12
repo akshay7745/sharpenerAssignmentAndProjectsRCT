@@ -10,7 +10,6 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getMails } from "../store/mail-actions";
 const AllMails = () => {
-  // const [mails, setMails] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -26,9 +25,7 @@ const AllMails = () => {
     draft: false,
   });
   const userData = useSelector((state) => state.authentication.userData);
-  // const mails = useSelector((state) => state.mails.mailData);
   const emails = useSelector((state) => state.mails.mailData);
-  console.log(emails, "from line number 21 all mails component...");
   const inboxMails = emails?.filter(
     (mail) => mail.receiver === userData.userId && !mail.deletedByReceiver
   );
@@ -39,7 +36,6 @@ const AllMails = () => {
   const navigate = useNavigate();
   function trimString(str, maxLength) {
     if (str.length > maxLength) {
-      // Clip the string to the desired length and add an ellipsis
       return str.slice(0, maxLength - 1) + "...";
     }
     return str; // If the string is already within the limit, return it as is
@@ -57,7 +53,6 @@ const AllMails = () => {
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"
                 />
-                {/* <InputGroup.Text id="basic-addon2">@example.com</InputGroup.Text> */}
                 <Button>Search mails</Button>
               </InputGroup>
             </Form>
@@ -92,11 +87,23 @@ const AllMails = () => {
             }}
           >
             <li
-              style={{
-                borderBottom: "1px solid black",
-                fontWeight: "bold",
-                marginBottom: "5px",
-              }}
+              style={
+                switchMails.inbox
+                  ? {
+                      borderBottom: "1px solid black",
+                      fontWeight: "bold",
+                      marginBottom: "5px",
+                      color: "blue",
+                      cursor: "pointer",
+                    }
+                  : {
+                      borderBottom: "1px solid black",
+                      fontWeight: "bold",
+                      marginBottom: "5px",
+                      color: "black",
+                      cursor: "pointer",
+                    }
+              }
               onClick={() => {
                 setSwitchMails({
                   inbox: true,
@@ -108,11 +115,23 @@ const AllMails = () => {
               Inbox <span>({unreadMails?.length || 0} unread)</span>
             </li>
             <li
-              style={{
-                borderBottom: "1px solid black",
-                fontWeight: "bold",
-                marginBottom: "5px",
-              }}
+              style={
+                switchMails.sent
+                  ? {
+                      borderBottom: "1px solid black",
+                      fontWeight: "bold",
+                      marginBottom: "5px",
+                      color: "blue",
+                      cursor: "pointer",
+                    }
+                  : {
+                      borderBottom: "1px solid black",
+                      fontWeight: "bold",
+                      marginBottom: "5px",
+                      color: "black",
+                      cursor: "pointer",
+                    }
+              }
               onClick={() => {
                 setSwitchMails({
                   inbox: false,
@@ -124,7 +143,21 @@ const AllMails = () => {
               Sent
             </li>
             <li
-              style={{ borderBottom: "1px solid black", fontWeight: "bold" }}
+              style={
+                switchMails.draft
+                  ? {
+                      borderBottom: "1px solid black",
+                      fontWeight: "bold",
+                      color: "blue",
+                      cursor: "pointer",
+                    }
+                  : {
+                      borderBottom: "1px solid black",
+                      fontWeight: "bold",
+                      color: "black",
+                      cursor: "pointer",
+                    }
+              }
               onClick={() => {
                 setSwitchMails({
                   inbox: false,
@@ -146,7 +179,6 @@ const AllMails = () => {
             paddingTop: "20px",
           }}
         >
-          {/* <Outlet context={{ mails, trimString }}> */}
           <Outlet context={{ trimString, switchMails }}>
             <MailList />
             <SingleMailPage />
