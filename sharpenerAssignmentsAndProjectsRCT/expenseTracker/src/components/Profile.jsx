@@ -20,7 +20,7 @@ const Profile = () => {
   const getProfileData = async (data) => {
     try {
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyApDxpgju0nO_NOSQnT7CMSoHqhNlinWFg`,
         {
           method: "POST",
           headers: {

@@ -20,7 +20,7 @@ const SignUp = () => {
   const registerUser = async (data) => {
     try {
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCB10Q6a5p0jTcYwYXRu5YHzmOQ8UefSy4`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyApDxpgju0nO_NOSQnT7CMSoHqhNlinWFg`,
         {
           method: "POST",
           body: JSON.stringify(data),

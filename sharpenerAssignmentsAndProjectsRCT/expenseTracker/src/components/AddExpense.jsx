@@ -12,13 +12,13 @@ const AddExpense = ({ expenseItem, setExpenseItem, isEdited, getExpenses }) => {
     try {
       const res = await axios({
         method: "post",
-        url: "https://onlinestore-594cd-default-rtdb.firebaseio.com/expenses.json",
+        url: "https://ecom-f3cf9-default-rtdb.firebaseio.com/expenses.json",
         data: data,
       });
       if (res.statusText === "OK") {
         const id = res.data.name;
         const getRes = await axios(
-          "https://onlinestore-594cd-default-rtdb.firebaseio.com/expenses.json"
+          "https://ecom-f3cf9-default-rtdb.firebaseio.com/expenses.json"
         );
         dispatch(addExpense({ ...expenseItem, id }));
       }
@@ -33,7 +33,7 @@ const AddExpense = ({ expenseItem, setExpenseItem, isEdited, getExpenses }) => {
 
     try {
       const res = await axios.put(
-        `https://onlinestore-594cd-default-rtdb.firebaseio.com/expenses/${isEdited}.json`,
+        `https://ecom-f3cf9-default-rtdb.firebaseio.com/expenses/${isEdited}.json`,
         sendData
       );
       await getExpenses();
