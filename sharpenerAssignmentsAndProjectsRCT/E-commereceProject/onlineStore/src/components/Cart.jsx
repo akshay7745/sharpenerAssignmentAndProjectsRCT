@@ -8,26 +8,28 @@ import Button from "react-bootstrap/Button";
 import authContext from "../contexts/authContext";
 
 const Cart = () => {
-  const { cartData, onAddToCart, show, handleClose,removeProduct,clearCart } = useContext(cartContext);
-const {userName} = useContext(authContext);
+  const { cartData, show, handleClose, removeProduct, clearCart } =
+    useContext(cartContext);
+  const { userName } = useContext(authContext);
   // const { isAuthenticated, userName } = useContext(authContext);
   const totalAmount = cartData.reduce((acc, item) => {
     return acc + item.quantity * item.price;
   }, 0);
-async function deleteProduct(idObj){
-  removeProduct(idObj.id);
+  async function deleteProduct(idObj) {
+    removeProduct(idObj.id);
 
-  if(idObj._id){
-    fetch(`https://crudcrud.com/api/c16c7885c56c4127b581ff185690f738/cart${userName}${idObj._id}`,{
-      method:"DELETE",
-      headers: { 
-        'Content-type': 'application/json'
-    } 
-    })
+    if (idObj._id) {
+      fetch(
+        `http://crossorigin.me/https://crudcrud.com/api/${
+          import.meta.env.VITE_KEY_URL
+        }/cart${userName}${idObj._id}`,
+        {
+          method: "DELETE",
+        }
+      );
+    }
   }
 
-}
-  
   return (
     <>
       <Offcanvas show={show} placement={"end"} onHide={handleClose}>
@@ -77,14 +79,22 @@ async function deleteProduct(idObj){
                                 <span className="border border-1 border-primary mx-4 px-3 py-0 ">
                                   {item.quantity}
                                 </span>
-                                <Button onClick={()=>{
-                                  console.log(item,"from the remove btn")
-                                  if("_id" in item){
-                                    deleteProduct({id:item.id,_id:item._id})
-                                  }else{
-                                    deleteProduct({id:item.id})
-                                  }
-                                }}variant="danger">Remove</Button>
+                                <Button
+                                  onClick={() => {
+                                    console.log(item, "from the remove btn");
+                                    if ("_id" in item) {
+                                      deleteProduct({
+                                        id: item.id,
+                                        _id: item._id,
+                                      });
+                                    } else {
+                                      deleteProduct({ id: item.id });
+                                    }
+                                  }}
+                                  variant="danger"
+                                >
+                                  Remove
+                                </Button>
                               </td>
                             </tr>
                           );
@@ -104,7 +114,12 @@ async function deleteProduct(idObj){
             </Row>
             <Row>
               <Col className="text-center mt-5">
-                <Button onClick={clearCart} className="primary fw-semibold fs-5">PURCHASE</Button>
+                <Button
+                  onClick={clearCart}
+                  className="primary fw-semibold fs-5"
+                >
+                  PURCHASE
+                </Button>
               </Col>
             </Row>
           </Container>

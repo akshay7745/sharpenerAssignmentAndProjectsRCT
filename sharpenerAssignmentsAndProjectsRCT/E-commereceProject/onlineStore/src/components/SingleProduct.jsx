@@ -1,12 +1,51 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import classes from "./SingleProduct.module.css";
 import { useParams } from "react-router-dom";
 import { productsArr } from "../utility/constants";
 import cartContext from "../contexts/cartContext";
+import authContext from "../contexts/authContext";
 const SingleProduct = () => {
   const { productId } = useParams();
-  const { onAddToCart } = useContext(cartContext);
+  const { userName } = useContext(authContext);
+  const { addSingleProduct, cartData } = useContext(cartContext);
+  const addToCart = async (data) => {
+    const filteredProduct = cartData.filter(
+      (product) => product.id === data.id
+    );
+    if (!filteredProduct.length) {
+      data = { ...data, quantity: 1 };
+      addSingleProduct({ ...data, quantity: 1 });
+      alert("Item successfully added to the cart");
+    } else {
+      alert("The product has already been added to your cart.");
+      return;
+    }
+    try {
+      const res = await fetch(
+        `https://crudcrud.com/api/${
+          import.meta.env.VITE_KEY_URL
+        }/cart${userName}`,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (res.ok) {
+        const resData = await res.json();
+        console.log(resData);
+        console.log("Successfully added to cart", resData);
+      } else {
+        throw new Error("An error occurred while adding the item to the cart");
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
   const filteredItems = productsArr.filter((product) => {
     return product.id === productId;
   });
@@ -62,7 +101,7 @@ const SingleProduct = () => {
           marginTop: "50px",
         }}
       >
-        <Button onClick={() => onAddToCart(filterObject)}>Add To Cart</Button>
+        <Button onClick={() => addToCart(filterObject)}>Add To Cart</Button>
         <div>
           <strong>Review: </strong>
           {review}

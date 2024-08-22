@@ -23,7 +23,7 @@ const Login = () => {
   const loginRequest = async (data) => {
     try {
       const res = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyApDxpgju0nO_NOSQnT7CMSoHqhNlinWFg",
+        `${import.meta.env.VITE_AUTH_URL}${import.meta.env.VITE_AUTH_KEY_URL}`,
         {
           method: "POST",
           body: JSON.stringify(data),
@@ -76,8 +76,8 @@ const Login = () => {
       </Row>
 
       {/* Provided user Credentials */}
-      
-      <div style={{ display: "flex" ,marginBottom:"160px"}}>
+
+      <div style={{ display: "flex", marginBottom: "160px" }}>
         <div
           style={{
             margin: "auto",
@@ -88,7 +88,7 @@ const Login = () => {
             textAlign: "center",
           }}
         >
-          <p style={{ color: "red",fontSize:"20px"}}>
+          <p style={{ color: "red", fontSize: "20px" }}>
             <strong>User Credentials</strong>
           </p>
           <p>

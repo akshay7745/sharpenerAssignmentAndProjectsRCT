@@ -82,7 +82,6 @@ const Header = () => {
               <button
                 onClick={() => {
                   handleLogout();
-                  clearCart();
                 }}
               >
                 Logout

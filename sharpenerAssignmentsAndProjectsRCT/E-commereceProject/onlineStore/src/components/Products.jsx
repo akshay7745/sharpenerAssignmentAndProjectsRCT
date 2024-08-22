@@ -7,7 +7,7 @@ import cartContext from "../contexts/cartContext";
 import { Link } from "react-router-dom";
 import authContext from "../contexts/authContext";
 const Products = () => {
-  const { onAddToCart, addSingleProduct, cartData } = useContext(cartContext);
+  const { addSingleProduct, cartData } = useContext(cartContext);
   const { userName } = useContext(authContext);
   const addToCart = async (data) => {
     console.log(data, "from the add to cart function");
@@ -15,8 +15,8 @@ const Products = () => {
       (product) => product.id === data.id
     );
     if (!filteredProduct.length) {
-      data ={...data,quantity:1}
-      addSingleProduct({...data,quantity:1});
+      data = { ...data, quantity: 1 };
+      addSingleProduct({ ...data, quantity: 1 });
       alert("Item successfully added to the cart");
     } else {
       alert("The product has already been added to your cart.");
@@ -24,7 +24,9 @@ const Products = () => {
     }
     try {
       const res = await fetch(
-        `https://crudcrud.com/api/c16c7885c56c4127b581ff185690f738/cart${userName}`,
+        `https://crudcrud.com/api/${
+          import.meta.env.VITE_KEY_URL
+        }/cart${userName}`,
         {
           method: "POST",
           body: JSON.stringify(data),

@@ -10,28 +10,32 @@ const CartContextProvider = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const clearCart = () => {
-
-    async function clearProductData(id){
-      fetch(`https://crudcrud.com/api/c16c7885c56c4127b581ff185690f738/cart${userName}${id}`,{
-        method:"DELELE",
-        headers: { 
-          'Content-type': 'application/json'
-      }
-      })
+    async function clearProductData(id) {
+      fetch(
+        `http://crossorigin.me/https://crudcrud.com/api/${
+          import.meta.env.VITE_KEY_URL
+        }/cart${userName}${id}`,
+        {
+          method: "DELELE",
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      );
     }
-    for(let val of cartData){
-      if(val._id){
-        clearProductData(val._id)
+    for (let val of cartData) {
+      if (val._id) {
+        clearProductData(val._id);
       }
     }
     setCartData([]);
-    
-      alert("Order placed successfully.")
-    }
-  const removeProduct =(id)=>{
-const filteredProducts = cartData.filter((product)=> product.id!==id);
-setCartData(filteredProducts);
-  }
+
+    alert("Order placed successfully.");
+  };
+  const removeProduct = (id) => {
+    const filteredProducts = cartData.filter((product) => product.id !== id);
+    setCartData(filteredProducts);
+  };
   const addSingleProduct = (data) => {
     setCartData((state) => {
       return [...state, data];
@@ -50,7 +54,7 @@ setCartData(filteredProducts);
         handleShow,
         show,
         addSingleProduct,
-        removeProduct
+        removeProduct,
       }}
     >
       {props.children}

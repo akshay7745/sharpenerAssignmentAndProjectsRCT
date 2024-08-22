@@ -18,19 +18,18 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import authContext from "./contexts/authContext";
 import cartContext from "./contexts/cartContext";
 function App() {
-  const { onAddToCart,show } =
-    useContext(cartContext);
+  const { onAddToCart, show } = useContext(cartContext);
   const { isAuthenticated, userName } = useContext(authContext);
   const getCartData = async (userName) => {
     try {
       const res = await fetch(
-        `https://crudcrud.com/api/c16c7885c56c4127b581ff185690f738/cart${userName}`
+        `https://crudcrud.com/api/${import.meta.env.VITE_KEY_URL}/cart`
       );
-     
+
       console.log(res);
       if (res.ok) {
         const resData = await res.json();
-        console.log(resData,"resData from app after refreshing the page")
+        console.log(resData, "resData from app after refreshing the page");
         onAddToCart(resData);
       } else {
         throw new Error("Something went wrong while fetching cart data");

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -20,7 +20,7 @@ const ContactUs = () => {
   async function formHandler() {
     try {
       const response = await fetch(
-        `https://ecom-f3cf9-default-rtdb.firebaseio.com/contactus.json`,
+        `${import.meta.env.VITE_BASE_URL}/contactus.json`,
         {
           method: "POST",
           body: JSON.stringify(formState),
@@ -49,7 +49,10 @@ const ContactUs = () => {
     });
   };
   return (
-    <Row className="justify-content-center " style={{ marginTop: "100px",marginBottom:"285px" }}>
+    <Row
+      className="justify-content-center "
+      style={{ marginTop: "100px", marginBottom: "285px" }}
+    >
       <Col md={5}>
         <Form onSubmit={handleSubmit}>
           <Form.Group as={Row} className="mb-3" controlId="formPlaintextName">
