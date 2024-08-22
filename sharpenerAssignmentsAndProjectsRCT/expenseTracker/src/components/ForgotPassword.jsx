@@ -11,7 +11,7 @@ const ForgotPassword = () => {
     try {
       setIsLoading(true);
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyApDxpgju0nO_NOSQnT7CMSoHqhNlinWFg`,
+        `${import.meta.env.VITE_AUTH_URL}${import.meta.env.VITE_AUTH_KEY}`,
         {
           method: "POST",
           headers: {

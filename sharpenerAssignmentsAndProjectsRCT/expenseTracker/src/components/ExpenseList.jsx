@@ -25,7 +25,7 @@ const ExpenseList = () => {
   const getExpenses = async () => {
     try {
       const res = await axios(
-        "https://ecom-f3cf9-default-rtdb.firebaseio.com/expenses.json"
+        `${import.meta.env.VITE_PRODUCT_BASE_URL}.json`
       );
       if (res.data) {
         const allId = Object.keys(res.data);
@@ -44,7 +44,7 @@ const ExpenseList = () => {
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(
-        `https://ecom-f3cf9-default-rtdb.firebaseio.com/expenses/${id}.json`
+        `${import.meta.env.VITE_PRODUCT_BASE_URL}/${id}.json`
       );
       if (res.statusText === "OK") {
         getExpenses();

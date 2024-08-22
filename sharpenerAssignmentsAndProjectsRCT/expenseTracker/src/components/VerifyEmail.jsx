@@ -8,7 +8,7 @@ const VerifyEmail = ({ email }) => {
   const checkEmail = async (data) => {
     try {
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyApDxpgju0nO_NOSQnT7CMSoHqhNlinWFg`,
+        `${import.meta.env.VITE_EMAIL_URL}${import.meta.env.VITE_AUTH_KEY}`,
         {
           method: "POST",
           body: JSON.stringify(data),

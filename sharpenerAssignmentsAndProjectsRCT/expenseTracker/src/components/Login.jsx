@@ -26,7 +26,7 @@ const Login = () => {
   const loginUser = async (data) => {
     try {
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyApDxpgju0nO_NOSQnT7CMSoHqhNlinWFg`,
+        `${import.meta.env.VITE_LOGIN_URL}${import.meta.env.VITE_AUTH_KEY}`,
         {
           method: "POST",
           body: JSON.stringify(data),
