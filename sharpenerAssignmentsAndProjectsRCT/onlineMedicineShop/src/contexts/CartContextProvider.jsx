@@ -10,12 +10,10 @@ const CartContextProvider = (props) => {
   const getCartData = async () => {
     try {
       const res = await fetch(
-        "https://crudcrud.com/api/92780c94fd844895bb4af50ad05a6dfc/medicines"
+        "https://crudcrud.com/api/98ff4bdeadcc46b980659074e5164fe4/cart"
       );
       if (res.ok) {
-        console.log(res, "cartItems");
         const cartItems = await res.json();
-        console.log(cartItems, "cart itesm");
         restoreCartData(cartItems);
       }
     } catch (error) {

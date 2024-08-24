@@ -10,7 +10,7 @@ const MedicineContextProvider = (props) => {
   const getMedicineData = async () => {
     try {
       const res = await fetch(
-        "https://crudcrud.com/api/92780c94fd844895bb4af50ad05a6dfc/medicines"
+        "https://crudcrud.com/api/98ff4bdeadcc46b980659074e5164fe4/medicines"
       );
       if (res.ok) {
         const medicines = await res.json();
