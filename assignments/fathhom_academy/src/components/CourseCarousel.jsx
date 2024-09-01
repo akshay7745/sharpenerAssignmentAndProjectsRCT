@@ -13,9 +13,12 @@ function CourseCarousel() {
           src="carousel1.jpg"
           alt="First slide"
         />
-        <Carousel.Caption className="text-white bg-primary bg-opacity-50 display-1">
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        <Carousel.Caption className="text-white bg-primary bg-opacity-50 ">
+          <h3 className="display-1">Who are we ?</h3>
+          <p className="display-5">
+            We are Fathhom Academy. Trend setter in the online education
+            industry
+          </p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -25,9 +28,11 @@ function CourseCarousel() {
           src="carousel2.jpg"
           alt="Second slide"
         />
-        <Carousel.Caption className="text-dark bg-warning bg-opacity-50 display-1">
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <Carousel.Caption className="text-dark bg-warning bg-opacity-50">
+          <h3 className="display-1">Valuable content</h3>
+          <p className="display-5">
+            We strive to provide unparallel high quality education to our users.
+          </p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -37,10 +42,10 @@ function CourseCarousel() {
           src="carousel3.jpg"
           alt="Third slide"
         />
-        <Carousel.Caption className="text-dark bg-primary bg-opacity-50 display-1">
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+        <Carousel.Caption className="text-dark bg-primary bg-opacity-50 ">
+          <h3 className="display-1">Explore courses</h3>
+          <p className="display-5">
+            We have provided wide range of courses. Please checkout the courses.
           </p>
         </Carousel.Caption>
       </Carousel.Item>

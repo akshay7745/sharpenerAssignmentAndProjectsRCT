@@ -1,20 +1,51 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-
-const CourseCard = () => {
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { courseContext } from "../context/CourseContextProvider";
+const CourseCard = ({ course }) => {
+  const { dispatch } = useContext(courseContext);
+  const navigate = useNavigate();
+  const {
+    courseName,
+    description,
+    instructor,
+    courseId,
+    courseImg,
+    isEnrolled,
+  } = course;
   return (
     <Card style={{ width: "18rem", margin: "0 auto" }}>
-      <Card.Img
-        variant="top"
-        src="https://img.freepik.com/free-vector/data-base-administrator-online-service-platform-admin-manager-data-center-modern-computer-technology-it-profession-idea-online-course-flat-vector-illustration_613284-2645.jpg?size=626&ext=jpg&ga=GA1.1.77852075.1725111883&semt=ais_hybrid"
-      />
+      <Card.Img variant="top" src={courseImg} />
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Text>
-          {`Some quick example text to build on the card title and make up the
-          bulk of the card's content.`}
-        </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
+        <Card.Title>{courseName}</Card.Title>
+        <Card.Text>{description}</Card.Text>
+        <Button
+          variant={isEnrolled ? "success" : "warning"}
+          className="me-3"
+          disabled={isEnrolled}
+          onClick={() => {
+            dispatch({
+              type: "course_enrollment",
+              payload: {
+                id: courseId,
+              },
+            });
+          }}
+          type="button"
+        >
+          {isEnrolled ? "Enrolled" : "Enroll"}
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => {
+            navigate(`/course/${courseId}`);
+          }}
+          type="button"
+          disabled={!isEnrolled}
+        >
+          {isEnrolled ? "Start Learning" : "Enroll to unlock"}
+        </Button>
       </Card.Body>
     </Card>
   );

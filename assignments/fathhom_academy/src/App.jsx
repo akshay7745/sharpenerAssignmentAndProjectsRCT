@@ -7,6 +7,7 @@ import { createBrowserRouter } from "react-router-dom";
 import CourseList from "./components/CourseList";
 import { Outlet } from "react-router-dom";
 import Course from "./components/Course";
+import VideoPlayer from "./components/VideoPlayer";
 
 function App() {
   return (
@@ -50,9 +51,15 @@ export const appRouter = createBrowserRouter([
         element: <CourseList />,
       },
       {
-        path: "/course",
+        path: "/course/:courseId",
         element: <Course />,
       },
     ],
+  },
+  {
+    path: "/signup",
+  },
+  {
+    path: "/login",
   },
 ]);

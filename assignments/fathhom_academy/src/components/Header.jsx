@@ -23,9 +23,7 @@ const Header = () => {
             <LinkContainer to="/">
               <Nav.Link>Courses</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/course">
-              <Nav.Link>Dashboard</Nav.Link>
-            </LinkContainer>
+
             <NavDropdown title="Profile" id="basic-nav-dropdown">
               {/**
                * work on the nav drop down links
