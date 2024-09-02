@@ -3,8 +3,13 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
-
+import { authContext } from "../context/AuthContextProvider";
+import { useContext } from "react";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const { handleLogout, userName } = useContext(authContext);
+  const navigate = useNavigate();
   return (
     <Navbar
       bg="primary"
@@ -23,13 +28,29 @@ const Header = () => {
             <LinkContainer to="/">
               <Nav.Link>Courses</Nav.Link>
             </LinkContainer>
+            <LinkContainer to="/meditation">
+              <Nav.Link>Meditation</Nav.Link>
+            </LinkContainer>
 
             <NavDropdown title="Profile" id="basic-nav-dropdown">
               {/**
                * work on the nav drop down links
                */}
-              <NavDropdown.Item href="#action/3.1">User Name</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Logout</NavDropdown.Item>
+              {/* <NavDropdown.Item>
+                {localStorage.getItem("userName")
+                  ? localStorage.getItem("userName")
+                  : "Guest"}
+              </NavDropdown.Item> */}
+              <NavDropdown.Item>
+                <Button
+                  onClick={() => {
+                    handleLogout();
+                    navigate("/login");
+                  }}
+                >
+                  Logout
+                </Button>
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

@@ -5,15 +5,16 @@ export const courseContext = createContext();
 
 const CourseContextProvider = ({ children }) => {
   const [courses, dispatch] = useReducer(reducer, courseData);
-  useEffect(() => {
-    // fetch course data only once
-    getCourseData();
-  }, []);
+  console.log(courses, "from context");
+  // useEffect(() => {
+  //   // fetch course data only once
+  //   getCourseData();
+  // }, []);
 
-  const getCourseData = async () => {
-    const data = []; //fetched from backend
-    dispatch({ type: "course_data_restored", payload: data });
-  };
+  // const getCourseData = async () => {
+  //   const data = []; //fetched from backend
+  //   dispatch({ type: "course_data_restored", payload: data });
+  // };
   return (
     <courseContext.Provider value={{ dispatch, courses }}>
       {children}

@@ -29,34 +29,6 @@ const CourseList = () => {
                 </Col>
               );
             })}
-
-            {/* <Col className=" text-center ">
-              <CourseCard />
-            </Col>
-            <Col className=" text-center ">
-              <CourseCard />
-            </Col>
-            <Col className=" text-center ">
-              <CourseCard />
-            </Col>
-            <Col className=" text-center ">
-              <CourseCard />
-            </Col>
-            <Col className=" text-center ">
-              <CourseCard />
-            </Col>
-            <Col className=" text-center ">
-              <CourseCard />
-            </Col>
-            <Col className=" text-center ">
-              <CourseCard />
-            </Col>
-            <Col className=" text-center ">
-              <CourseCard />
-            </Col>
-            <Col className=" text-center ">
-              <CourseCard />
-            </Col> */}
           </Row>
         </Container>
       </section>

@@ -8,6 +8,9 @@ import CourseList from "./components/CourseList";
 import { Outlet } from "react-router-dom";
 import Course from "./components/Course";
 import VideoPlayer from "./components/VideoPlayer";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import MoodTracker from "./components/MoodTracker";
 
 function App() {
   return (
@@ -54,12 +57,18 @@ export const appRouter = createBrowserRouter([
         path: "/course/:courseId",
         element: <Course />,
       },
+      {
+        path: "/meditation",
+        element: <MoodTracker />,
+      },
     ],
   },
   {
     path: "/signup",
+    element: <Signup />,
   },
   {
     path: "/login",
+    element: <Login />,
   },
 ]);
