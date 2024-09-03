@@ -16,7 +16,7 @@ function CourseCarousel() {
         <Carousel.Caption className="text-white bg-primary bg-opacity-50 ">
           <h3 className="display-1">Who are we ?</h3>
           <p className="display-5">
-            We are Fathhom Academy. Trend setter in the online education
+            We are Brow Grow Academy. Trend setter in the online education
             industry
           </p>
         </Carousel.Caption>

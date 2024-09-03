@@ -20,7 +20,7 @@ const Header = () => {
     >
       <Container>
         <LinkContainer to="/">
-          <Navbar.Brand>Fathhom Academy</Navbar.Brand>
+          <Navbar.Brand>Bro Grow Academy</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
