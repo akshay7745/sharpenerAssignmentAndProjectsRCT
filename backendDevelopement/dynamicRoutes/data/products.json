@@ -1,9 +1,1 @@
-[
-  {
-    "id": "12453",
-    "title": "A Book",
-    "imageUrl": "https://www.publicdomainpictures.net/pictures/10000/velka/1-1210009435EGmE.jpg",
-    "description": "This is an awesome book!",
-    "price": "19"
-  }
-]
+[{"id":"12453","title":"A Book","imageUrl":"https://www.publicdomainpictures.net/pictures/10000/velka/1-1210009435EGmE.jpg","description":"This is an awesome book!","price":"19"},{"title":"Hari bol","imageUrl":"https://th.bing.com/th/id/R.4d7ed538763628b16ddce71fa675771e?rik=BQPc3PvizmZGYQ&riu=http%3a%2f%2fwww.publicdomainpictures.net%2fpictures%2f210000%2fvelka%2fpink-rose-1484476573EKs.jpg&ehk=4bqy%2bw0GE5zp4sT9GiM6CcDuW0MbrqSpNyIaa%2fZrAgQ%3d&risl=&pid=ImgRaw&r=0","description":"Another great product...","price":"195","id":"0.14912662250100284"}]
