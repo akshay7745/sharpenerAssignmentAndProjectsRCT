@@ -9,9 +9,9 @@
 
 // module.exports = pool.promise();
 
-const Sequelise = require("sequelize");
+const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelise("node_projects", "root", "HariBol@7745", {
+const sequelize = new Sequelize("node_projects", "root", "HariBol@7745", {
   dialect: "mysql",
   host: "localhost",
 });
