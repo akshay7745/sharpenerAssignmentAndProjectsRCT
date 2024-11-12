@@ -8,12 +8,12 @@ const userNameForm = router
   .get((req, res) => {
     fs.readFile("text.txt", "utf8", (err, data) => {
       if (err) {
-        chatData = null;
+        data = null;
       }
-      chatData = data;
+
       res.send(
         `<div><div>${
-          chatData === null ? "No messages found" : data
+          data === null ? "No messages found" : data
         }</div><form action="/" method="POST" onsubmit="document.getElementById('user_name').value=localStorage.getItem('username')" ><input type="hidden" name='username' id="user_name"><input name='message' id="message" placeholder="Enter message" type="text"><button type="submit">Send Message</button></form></div>`
       );
     });
