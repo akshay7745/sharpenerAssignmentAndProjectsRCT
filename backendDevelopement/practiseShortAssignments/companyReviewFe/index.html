@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .border {
+        border: 1px solid black;
+        margin:10px 0;
+        padding: 10px;
+      }
+
+      .bottomBorder{
+        border-bottom: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="addReview">
+      <form id="addReviewForm">
+        <fieldset>
+          <legend>Add Review</legend>
+          <label for="companyName">Company Name</label>
+          <input type="text" name="companyName" id="companyName" />
+          <label for="pros">Pros</label>
+          <input type="text" name="pros" id="pros" />
+          <label for="cons">Cons</label>
+          <input type="text" name="cons" id="cons" />
+          <label for="rating">Rating</label>
+          <input type="number" name="rating" id="rating" />
+          <button type="submit">Submit Review</button>
+        </fieldset>
+      </form>
+    </div>
+    <div id="showReview">
+      <form id="showReviewForm">
+        <label for="showReview">Company Name</label>
+        <input type="text" id="showReview" name="showReview" />
+        <button type="submit">Submit</button>
+      </form>
+
+      <div id="reviewContainer">
+        <h1>Company Reviews</h1>
+   
+    </div>
+  </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js"
+    integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="index.js"></script>
+</html>
