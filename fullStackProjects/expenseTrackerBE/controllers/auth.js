@@ -1,5 +1,7 @@
 const User = require("../models/user");
 const isStringInvalid = require("../utils/stringValidator");
+
+const bcrypt = require("bcrypt");
 exports.signupUser = async (req, res, next) => {
   try {
     console.log(req.body);
@@ -12,9 +14,11 @@ exports.signupUser = async (req, res, next) => {
     ) {
       return res.status(400).json({ message: "Invalid input" });
     }
-    const newUser = await User.create({ email, name, password });
 
-    res.status(200).json({ message: "Signup successful", user: newUser });
+    bcrypt.hash(password, 10, async (err, hash) => {
+      const newUser = await User.create({ name, email, password: hash });
+      res.status(200).json({ message: "Signup successful", user: newUser });
+    });
   } catch (error) {
     console.log(error.errors);
     res
@@ -31,13 +35,23 @@ exports.loginUser = async (req, res, next) => {
     }
     const user = await User.findOne({ where: { email: email } });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    if (password !== user.password) {
-      return res.status(401).json({ message: "Please provide valid password" });
+      return res.status(404).json({ message: "User doesn't exists" });
     }
 
-    return res.status(200).json({ message: "Login successful" });
+    bcrypt.compare(password, user.password, (err, result) => {
+      if (err) {
+        throw new Error("Something went wrong please try again");
+      }
+      if (result) {
+        return res
+          .status(200)
+          .json({ success: true, message: "Login successful" });
+      } else {
+        return res
+          .status(401)
+          .json({ success: false, message: "Please provide valid password" });
+      }
+    });
   } catch (error) {
     res.status(500).json({ error: error, message: "Internal Server Error" });
   }
