@@ -6,11 +6,12 @@ const {
   getExpenses,
   deleteExpense,
 } = require("../controllers/expense");
+const { authenticate } = require("../middlewares/authenticate");
 
-router.post("/addExpense", addExpense);
+router.post("/addExpense", authenticate, addExpense);
 
-router.get("/expenses", getExpenses);
+router.get("/expenses", authenticate, getExpenses);
 
-router.delete("/delete/:expenseId", deleteExpense);
+router.delete("/delete/:expenseId", authenticate, deleteExpense);
 
 module.exports = router;

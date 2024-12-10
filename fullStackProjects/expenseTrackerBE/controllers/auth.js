@@ -2,6 +2,11 @@ const User = require("../models/user");
 const isStringInvalid = require("../utils/stringValidator");
 
 const bcrypt = require("bcrypt");
+
+const jwt = require("jsonwebtoken");
+
+const generateAccessToken = require("../utils/generateAccessToken");
+
 exports.signupUser = async (req, res, next) => {
   try {
     console.log(req.body);
@@ -45,7 +50,10 @@ exports.loginUser = async (req, res, next) => {
       if (result) {
         return res
           .status(200)
-          .json({ success: true, message: "Login successful" });
+          .json({
+            success: true,
+            token: generateAccessToken(user.name, user.id, user.email),
+          });
       } else {
         return res
           .status(401)

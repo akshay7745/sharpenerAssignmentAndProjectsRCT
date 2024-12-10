@@ -11,8 +11,12 @@ const authRoutes = require("./routes/authRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
 app.use("/user", authRoutes);
 app.use("/expense", expenseRoutes);
+
+User.hasMany(Expense);
+Expense.belongsTo(User);
+
 sequelize
-  .sync()
+  .sync({ force: false })
   .then((res) => {
     console.log("Connection established");
   })

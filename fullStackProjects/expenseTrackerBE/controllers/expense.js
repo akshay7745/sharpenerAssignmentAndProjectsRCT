@@ -3,7 +3,9 @@ const Expense = require("../models/expense");
 exports.addExpense = async (req, res, next) => {
   try {
     // const {category,description,amount}= req.body;
-    const expense = await Expense.create(req.body);
+    // const newExpense = await Expense.create(req.body);
+    // const expense = await req.user.addExpense(newExpense);
+    const expense = await req.user.createExpense(req.body);
 
     res.status(201).json({ success: true, expense });
   } catch (error) {
@@ -16,7 +18,7 @@ exports.addExpense = async (req, res, next) => {
 
 exports.getExpenses = async (req, res, next) => {
   try {
-    const expenses = await Expense.findAll();
+    const expenses = await req.user.getExpenses();
 
     res.status(200).json({
       success: true,
@@ -33,13 +35,12 @@ exports.deleteExpense = async (req, res, next) => {
   const deletedExpense = await Expense.destroy({
     where: {
       id: expenseId,
+      userId: req.user.id,
     },
   });
 
-  res
-    .status(200)
-    .json({
-      success: true,
-      message: `Expense with id ${deletedExpense} deleted successfully.`,
-    });
+  res.status(200).json({
+    success: true,
+    message: `Expense with id ${deletedExpense} deleted successfully.`,
+  });
 };
