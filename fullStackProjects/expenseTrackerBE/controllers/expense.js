@@ -1,5 +1,5 @@
 const Expense = require("../models/expense");
-
+const User = require("../models/user");
 exports.addExpense = async (req, res, next) => {
   try {
     // const {category,description,amount}= req.body;
@@ -18,7 +18,7 @@ exports.addExpense = async (req, res, next) => {
 
 exports.getExpenses = async (req, res, next) => {
   try {
-    const expenses = await req.user.getExpenses();
+    const expenses = await req.user.getExpenses({ include: User });
 
     res.status(200).json({
       success: true,

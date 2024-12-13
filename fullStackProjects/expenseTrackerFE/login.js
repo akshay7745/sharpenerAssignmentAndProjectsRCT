@@ -5,13 +5,14 @@ loginForm.addEventListener("submit", (e) => {
   const email = loginForm.email.value;
   const password = loginForm.password.value;
   const userData = { email, password };
-  console.log(userData);
   axios
     .post(`http://localhost:3000/user/login`, userData)
     .then((res) => {
       if (res.status === 200) {
-        alert("Login successful");
         console.log(res);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("isPremium", res.data.isPremium);
+        window.location.replace("expense.html");
       }
     })
     .catch((err) => {

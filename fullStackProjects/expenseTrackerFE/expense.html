@@ -12,11 +12,19 @@
     />
   </head>
   <body>
+    <header class="container-fluid sticky-top">
+        <div class="row p-2 justify-content-between border border-2">
+          <div class="col col-10 fs-2">Expense Manager</div>
+        <button class="col btn btn-outline-primary d-block" id="razorBtn">Buy Premium</button>
+     
+        </div>
+      </div>
+    </header>
     <section class="container-fluid mt-md-5">
       <div class="container">
         <div class="row">
           <div class="col">
-            <h2 class="text-center fs-2 text-black-50 fs-1">Add Expense</h2>
+            <h2 class="text-center fs-2 text-black-50 fs-1 ">Expense Tracker</h2>
           </div>
           <div class="container">
             <form
@@ -33,7 +41,7 @@
                   id="description"
                   name="description"
                   placeholder="Expense Description"
-                  rows="2"
+                  rows="1"
                 ></textarea>
               </div>
               <div class="col-auto">
@@ -64,6 +72,11 @@
                   Add Expense
                 </button>
               </div>
+              <!-- <div class="col-auto">
+                <button id="rzpBtn" type="button" class="btn btn-primary mb-3">
+                  Buy Premium
+                </button>
+              </div> -->
             </form>
           </div>
         </div>
@@ -77,16 +90,18 @@
             <h2 class="fs-2">Expense list</h2>
           </div>
         </div>
-        <div class="row expenseLists">
-          <div
+        <div class="row row-cols-1 expenseLists justify-content-center">
+          <!-- <div
             id="expenseId"
-            class="col-12 d-flex justify-content-center my-3 gap-3 align-items-center border border-1 rounded-3 px-1 py-2"
+            class="col-6 d-flex justify-content-between my-3 gap-3 align-items-center border border-1 rounded-3 px-1 py-2"
           >
-            <span>Category</span>
-            <span>Description</span>
-            <span>Amount</span>
+            <div>
+              <span class="mx-2">Category</span>
+              <span class="mx-2">Description</span>
+              <span class="mx-2">Amount</span>
+            </div>
             <button class="btn btn-info">Delete Expense</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
@@ -102,5 +117,6 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="expense.js"></script>
 </html>

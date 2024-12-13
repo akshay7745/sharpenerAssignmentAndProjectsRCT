@@ -9,8 +9,6 @@ const generateAccessToken = require("../utils/generateAccessToken");
 
 exports.signupUser = async (req, res, next) => {
   try {
-    console.log(req.body);
-
     const { name, email, password } = req.body;
     if (
       isStringInvalid(email) ||
@@ -21,6 +19,9 @@ exports.signupUser = async (req, res, next) => {
     }
 
     bcrypt.hash(password, 10, async (err, hash) => {
+      if (err) {
+        throw new Error("Something went wrong, please try again later.");
+      }
       const newUser = await User.create({ name, email, password: hash });
       res.status(200).json({ message: "Signup successful", user: newUser });
     });
@@ -36,7 +37,9 @@ exports.loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     if (isStringInvalid(email) || isStringInvalid(password)) {
-      return res.status(400).json({ message: "Invalid input" });
+      return res
+        .status(400)
+        .json({ message: "Enter valid email and password" });
     }
     const user = await User.findOne({ where: { email: email } });
     if (!user) {
@@ -48,16 +51,15 @@ exports.loginUser = async (req, res, next) => {
         throw new Error("Something went wrong please try again");
       }
       if (result) {
-        return res
-          .status(200)
-          .json({
-            success: true,
-            token: generateAccessToken(user.name, user.id, user.email),
-          });
+        return res.status(200).json({
+          success: true,
+          isPremium: user.isPremium,
+          token: generateAccessToken(user.name, user.id, user.email),
+        });
       } else {
         return res
           .status(401)
-          .json({ success: false, message: "Please provide valid password" });
+          .json({ success: false, message: "Please check the password" });
       }
     });
   } catch (error) {

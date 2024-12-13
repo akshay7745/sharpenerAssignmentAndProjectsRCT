@@ -10,6 +10,7 @@ signupForm.addEventListener("submit", (e) => {
     .post(`http://localhost:3000/user/signup`, userData)
     .then((res) => {
       console.log("signup successful", res);
+      window.location.replace("login.html");
     })
     .catch((err) => {
       console.log("Error", err.response.data);
