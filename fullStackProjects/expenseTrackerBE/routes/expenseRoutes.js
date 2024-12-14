@@ -5,6 +5,7 @@ const {
   addExpense,
   getExpenses,
   deleteExpense,
+  allExpenses,
 } = require("../controllers/expense");
 const { authenticate } = require("../middlewares/authenticate");
 

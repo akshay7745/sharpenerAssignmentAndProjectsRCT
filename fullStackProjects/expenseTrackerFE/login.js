@@ -11,7 +11,8 @@ loginForm.addEventListener("submit", (e) => {
       if (res.status === 200) {
         console.log(res);
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("isPremium", res.data.isPremium);
+
+        // localStorage.setItem("isPremium", res.data.isPremium);
         window.location.replace("expense.html");
       }
     })

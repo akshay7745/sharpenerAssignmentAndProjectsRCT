@@ -1,5 +1,6 @@
 const Razorpay = require("razorpay");
 const Order = require("../models/order");
+const generateAccessToken = require("../utils/generateAccessToken");
 
 exports.premiumMembership = async (req, res, next) => {
   try {
@@ -37,7 +38,7 @@ exports.updateTransaction = async (req, res, next) => {
   const { payment_id, order_id } = req.body;
   try {
     const order = await Order.update(
-      { status: "SUCCESSFULL", paymentid: payment_id },
+      { status: "SUCCESSFUL", paymentid: payment_id },
       {
         where: {
           orderid: order_id,
@@ -45,9 +46,11 @@ exports.updateTransaction = async (req, res, next) => {
       }
     );
     await req.user.update({ isPremium: true });
+    const { name, id, email } = req.user;
     res.status(201).json({
       success: true,
       order,
+      token: generateAccessToken(name, id, email, true),
     });
   } catch (error) {
     res.status(500).json({

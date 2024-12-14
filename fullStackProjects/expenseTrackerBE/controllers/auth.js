@@ -53,8 +53,12 @@ exports.loginUser = async (req, res, next) => {
       if (result) {
         return res.status(200).json({
           success: true,
-          isPremium: user.isPremium,
-          token: generateAccessToken(user.name, user.id, user.email),
+          token: generateAccessToken(
+            user.name,
+            user.id,
+            user.email,
+            user.isPremium
+          ),
         });
       } else {
         return res

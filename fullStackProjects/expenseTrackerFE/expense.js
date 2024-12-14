@@ -2,7 +2,10 @@ const expenseForm = document.getElementById("expenseForm");
 
 const expenseListContainer = document.querySelector(".expenseLists");
 
-const premiumBtn = document.getElementById("razorBtn");
+const purchaseBtn = document.getElementById("razorBtn");
+const premiumSymbol = document.querySelector(".premiumSymbol");
+const leaderboardBtn = document.querySelector("#leaderboardBtn");
+const leaderboardParent = document.querySelector("#section");
 
 expenseForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -27,13 +30,30 @@ expenseForm.addEventListener("submit", async (e) => {
   showExpense(newExpense);
 });
 
+const leaderboard = document.getElementById("leaderboard");
+
+function parseJwt(token) {
+  var base64Url = token.split(".")[1];
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var jsonPayload = decodeURIComponent(
+    window
+      .atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+
+  return JSON.parse(jsonPayload);
+}
+
 async function getExpenses() {
   try {
     const expenses = await axios.get("http://localhost:3000/expense/expenses", {
       headers: { Authorization: localStorage.getItem("token") },
     });
     const expenseData = expenses.data.expenses;
-    console.log("Expense data", expenseData);
 
     expenseData.forEach((data) => showExpense(data));
   } catch (error) {
@@ -61,20 +81,10 @@ function showExpense(expense) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // const isPremium = JSON.stringify(localStorage.getItem("isPremium"));
-  const isPremium = localStorage.getItem("isPremium");
-
-  console.log(isPremium);
-  premiumBtn.innerText =
-    isPremium === true ? "Premium Account ⭐" : "Buy Premium";
-
-  // premiumBtn.setAttribute("disabled", isPremium ? true : false);
-
-  premiumBtn.classList.replace(
-    isPremium == true ? "d-block" : "d-none",
-    isPremium == true ? "d-none" : "d-block"
-  );
-
+  const { isPremium } = parseJwt(localStorage.getItem("token"));
+  // const payload = parseJwt(localStorage.getItem("token"));
+  // console.log(isPremium);
+  updatePremiumUser(isPremium);
   getExpenses();
 });
 
@@ -94,20 +104,22 @@ async function deleteExpense(event) {
   }
 }
 
-premiumBtn.addEventListener("click", async (e) => {
+purchaseBtn.addEventListener("click", async (e) => {
   const token = localStorage.getItem("token");
   const response = await axios.get(
     "http://localhost:3000/purchase/premiummembership",
     { headers: { Authorization: token } }
   );
+
   console.log(response, "from line number 87");
+
   let options = {
     key: response.data.key_id, // key id from dashboard
     order_id: response.data.order.id, //for each payment new order id will be created by razorpay
     handler: async function (res) {
       // this method will be called on successful payment
-      console.log("Successfull payment handler from line number 93", res);
-      await axios.post(
+      console.log("Successful payment handler from line number 93", res);
+      const paymentInfo = await axios.post(
         "http://localhost:3000/purchase/updatetransactionstatus",
         {
           order_id: options.order_id,
@@ -115,6 +127,10 @@ premiumBtn.addEventListener("click", async (e) => {
         },
         { headers: { Authorization: token } }
       );
+
+      localStorage.setItem("token", paymentInfo.data.token);
+      const { isPremium } = parseJwt(paymentInfo.data.token);
+      updatePremiumUser(isPremium);
       alert("You are now a Prime member");
     },
   };
@@ -128,3 +144,52 @@ premiumBtn.addEventListener("click", async (e) => {
     alert("Something went wrong, please try again later");
   });
 });
+
+leaderboardBtn.addEventListener("click", async (e) => {
+  console.log("Showing leaderboard");
+  const leaderboardData = await axios(
+    "http://localhost:3000/premium/showleaderboard"
+  );
+
+  leaderboardParent.classList.replace("d-none", "d-block");
+
+  const innerBody = leaderboardData.data.expenses
+    .map((data, i) => {
+      const { name, totalExpenses } = data;
+      return `  <tr>
+                  <th scope="row">${i + 1}</th>
+                  <td>${name}</td>
+                  <td>${totalExpenses}</td>
+                  </tr>`;
+    })
+    .join("");
+  const table = `  <table class="table table-striped text-center">
+              <thead>
+                <tr>
+                  <th scope="col">Sr No</th>
+                  <th scope="col">Name</th>
+               
+                  <th scope="col">Expenditure ( in Rs.)</th>
+                </tr>
+              </thead>
+       <tbody> ${innerBody}</tbody>
+            </table>`;
+  leaderboard.innerHTML = table;
+});
+
+function updatePremiumUser(isPremium) {
+  console.log(isPremium);
+  purchaseBtn.classList.replace(
+    isPremium ? "d-block" : "d-none",
+    isPremium ? "d-none" : "d-block"
+  );
+  leaderboardBtn.classList.replace(
+    isPremium ? "d-none" : "d-block",
+    isPremium ? "d-block" : "d-none"
+  );
+
+  premiumSymbol.classList.replace(
+    isPremium ? "d-none" : "d-block",
+    isPremium ? "d-block" : "d-none"
+  );
+}
