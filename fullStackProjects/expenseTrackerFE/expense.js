@@ -155,11 +155,11 @@ leaderboardBtn.addEventListener("click", async (e) => {
 
   const innerBody = leaderboardData.data.expenses
     .map((data, index) => {
-      const { name, total_sum } = data;
+      const { name, totalExpenses } = data;
       return `  <tr>
                   <th scope="row">${index + 1}</th>
                   <td>${name}</td>
-                  <td>${total_sum}</td>
+                  <td>${totalExpenses}</td>
                   </tr>`;
     })
     .join("");

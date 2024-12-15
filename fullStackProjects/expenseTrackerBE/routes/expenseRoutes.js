@@ -14,5 +14,6 @@ router.post("/addExpense", authenticate, addExpense);
 router.get("/expenses", authenticate, getExpenses);
 
 router.delete("/delete/:expenseId", authenticate, deleteExpense);
+// router.delete("/delete/:expenseId", deleteExpense);
 
 module.exports = router;
