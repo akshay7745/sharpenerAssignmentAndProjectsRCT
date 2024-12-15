@@ -1,40 +1,49 @@
 const Razorpay = require("razorpay");
 const Order = require("../models/order");
 const generateAccessToken = require("../utils/generateAccessToken");
+const sequelize = require("../utils/database");
 
 exports.premiumMembership = async (req, res, next) => {
+  const t = await sequelize.transaction();
   try {
     let rzp = new Razorpay({
       key_id: process.env.RAZOR_KEY_ID,
       key_secret: process.env.RAZOR_KEY_SECRET,
     });
 
-    let amount = 1500;
+    const amount = 3500;
 
     rzp.orders.create({ amount, currency: "INR" }, (err, order) => {
       if (err) {
-        console.log("Error from rzp", err);
         throw new Error(JSON.stringify(err));
       }
       req.user
-        .createOrder({ orderid: order.id, status: "PENDING" })
-        .then(() => {
+        .createOrder(
+          { orderid: order.id, status: "PENDING" },
+          { transaction: t }
+        )
+        .then(async () => {
+          await t.commit();
           return res.status(201).json({
             order,
             key_id: rzp.key_id,
           });
         })
-        .catch((error) => {
-          console.log("Error at create order", error);
+        .catch(async (error) => {
           throw new Error(error);
         });
     });
   } catch (error) {
-    console.log(error);
+    await t.rollback();
+    res.status(500).json({
+      error,
+      message: "Something went wrong while purchasing premium membership",
+    });
   }
 };
 
 exports.updateTransaction = async (req, res, next) => {
+  const t = await sequelize.transaction();
   const { payment_id, order_id } = req.body;
   try {
     const order = await Order.update(
@@ -43,16 +52,22 @@ exports.updateTransaction = async (req, res, next) => {
         where: {
           orderid: order_id,
         },
+        transaction: t,
       }
     );
-    await req.user.update({ isPremium: true });
+    await req.user.update({ isPremium: true }, { transaction: t });
     const { name, id, email } = req.user;
+
+    await t.commit();
+
     res.status(201).json({
       success: true,
       order,
       token: generateAccessToken(name, id, email, true),
     });
   } catch (error) {
+    await t.rollback();
+
     res.status(500).json({
       success: false,
       message: error,

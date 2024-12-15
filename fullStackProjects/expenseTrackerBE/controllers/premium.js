@@ -1,5 +1,4 @@
 const User = require("../models/user");
-const Expense = require("../models/expense");
 const sequelize = require("../utils/database");
 exports.allExpenses = async (req, res, next) => {
   try {
