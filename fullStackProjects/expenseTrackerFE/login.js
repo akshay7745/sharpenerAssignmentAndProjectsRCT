@@ -1,4 +1,5 @@
 const loginForm = document.getElementById("login");
+const resetPasswordForm = document.getElementById("resetPasswordForm");
 
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -18,5 +19,20 @@ loginForm.addEventListener("submit", (e) => {
     })
     .catch((err) => {
       console.log(err.response.data.message);
+    });
+});
+
+resetPasswordForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log(e.target.email.value);
+  axios
+    .post("http://localhost:3000/password/forgotpassword", {
+      email: e.target.email.value,
+    })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 });

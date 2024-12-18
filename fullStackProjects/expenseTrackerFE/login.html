@@ -12,6 +12,44 @@
     />
   </head>
   <body>
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="resetPasswordForm">
+              <div class="mb-3">
+                <label for="resetEmail" class="form-label">Email address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="resetEmail"
+                  name="email"
+                  aria-describedby="emailHelp"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     <section class="container-fluid mt-md-5">
       <div class="row justify-content-center">
         <div class="col col-md-5">
@@ -28,6 +66,15 @@
               </div>
 
               <button type="submit" class="btn btn-primary">Login</button>
+              <button
+                id="forgotPasswordBtn"
+                type="button"
+                class="btn btn-link"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Forgot Password
+              </button>
             </div>
           </form>
         </div>

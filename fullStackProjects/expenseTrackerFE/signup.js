@@ -13,6 +13,6 @@ signupForm.addEventListener("submit", (e) => {
       window.location.replace("login.html");
     })
     .catch((err) => {
-      console.log("Error", err.response.data);
+      console.log("Error", err);
     });
 });
