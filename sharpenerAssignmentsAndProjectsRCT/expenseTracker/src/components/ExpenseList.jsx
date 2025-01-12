@@ -1,14 +1,21 @@
 import { useState, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+// import Table from "react-bootstrap/Table";
 import AddExpense from "./AddExpense";
-import Button from "react-bootstrap/Button";
-import Stack from "react-bootstrap/Stack";
+// import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { restoreExpense, resetExpense } from "../contexts/expenseSlice";
+import {
+  restoreExpense,
+  resetExpense,
+  deleteExpense,
+} from "../contexts/expenseSlice";
+import ExpenseTable from "./ExpenseTable";
 const ExpenseList = () => {
   const expenses = useSelector((store) => store.expense.expenses);
+  let emailId = useSelector((store) => store.authentication.email);
+  emailId = emailId.slice(0, emailId.length - 10);
   const dispatch = useDispatch();
   const [expenseItem, setExpenseItem] = useState({
     amount: "",
@@ -25,7 +32,7 @@ const ExpenseList = () => {
   const getExpenses = async () => {
     try {
       const res = await axios(
-        `${import.meta.env.VITE_PRODUCT_BASE_URL}.json`
+        `${import.meta.env.VITE_PRODUCT_BASE_URL}${emailId}.json`
       );
       if (res.data) {
         const allId = Object.keys(res.data);
@@ -44,10 +51,11 @@ const ExpenseList = () => {
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(
-        `${import.meta.env.VITE_PRODUCT_BASE_URL}/${id}.json`
+        `${import.meta.env.VITE_PRODUCT_BASE_URL}${emailId}/${id}.json`
       );
       if (res.statusText === "OK") {
-        getExpenses();
+        // getExpenses();
+        dispatch(deleteExpense(id));
       }
     } catch (error) {
       console.log(error);
@@ -59,51 +67,44 @@ const ExpenseList = () => {
   }, []);
   return (
     <div style={{ height: "100vh" }}>
+      {/** Expense Form */}
       <AddExpense
         expenseItem={expenseItem}
         setExpenseItem={setExpenseItem}
         isEdited={isEdited}
         getExpenses={getExpenses}
+        setIsEdited={setIsEdited}
+        emailId={emailId}
       />
-      <Row>
+      <Row className="mt-5">
         <Col>
-          <h3 className="display-4 text-center">Daily Expenses</h3>
+          <h3 className="display-5 text-center">Daily Expenses</h3>
         </Col>
       </Row>
+      {!expenses.length && (
+        <Row>
+          <Col>
+            <h3 className="fs-1 text-black-50 text-center mt-4">
+              No Expenses Found.
+            </h3>
+          </Col>
+        </Row>
+      )}
 
-      {expenses.map((expense) => {
-        const { description, amount, category, id } = expense;
-        return (
-          <Row key={id} className="justify-content-center  mb-3 ">
-            <Col md={2}>
-              <Stack style={{ width: "650px" }} direction="horizontal" gap={2}>
-                <span>{description}</span>
-                <span>{amount}</span>
-                <span>{category}</span>
-                <Button
-                  variant="success"
-                  type="button"
-                  onClick={() => {
-                    handleEdit(expense);
-                  }}
-                >
-                  Edit
-                </Button>
-                <Button
-                  onClick={() => {
-                    handleDelete(id);
-                    getExpenses();
-                  }}
-                  variant="danger"
-                  type="button"
-                >
-                  Delete
-                </Button>
-              </Stack>
-            </Col>
-          </Row>
-        );
-      })}
+      {expenses.length ? (
+        <Row className="mt-4">
+          <Col>
+            <ExpenseTable
+              expenses={expenses}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+              getExpenses={getExpenses}
+            />
+          </Col>
+        </Row>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

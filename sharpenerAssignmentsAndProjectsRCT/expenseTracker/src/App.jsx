@@ -1,6 +1,7 @@
 import Container from "react-bootstrap/Container";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
+// import "./App.css";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
@@ -11,9 +12,16 @@ import ExpenseList from "./components/ExpenseList";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector } from "react-redux";
 const App = () => {
-  const theme = useSelector((store) => store.theme.theme);
+  const isDarkMode = useSelector((store) => store.theme.isDarkMode);
+  // className={`${${isDarkMode}?"bg-dark text-bg-dark": "bg-light text-bg-light"}}`}
   return (
-    <div style={theme}>
+    <div
+      style={{ backgroundColor: "black" }}
+      className={`${
+        isDarkMode ? "bg-dark text-bg-dark" : "bg-light text-bg-light"
+      }`}
+    >
+      {/**Header outlet and footer */}
       <Navigation />
       <Container fluid>
         <Outlet />

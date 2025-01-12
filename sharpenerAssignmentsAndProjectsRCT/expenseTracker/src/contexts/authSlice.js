@@ -5,17 +5,27 @@ const authSlice = createSlice({
   initialState: {
     token: localStorage.getItem("token") || null,
     isAuthentication: !!localStorage.getItem("token") || null,
+    email: localStorage.getItem("email") || "",
+    displayName: "",
+    profilePicture: "",
   },
   reducers: {
     login(state, action) {
-      localStorage.setItem("token", action.payload);
-      state.isAuthentication = !!action.payload;
-      state.token = action.payload;
+      const { idToken, email, profilePicture, displayName } = action.payload;
+      localStorage.setItem("token", idToken);
+      localStorage.setItem("email", email);
+      state.isAuthentication = !!action.payload.idToken;
+      state.token = idToken;
+      state.email = email;
+      state.profilePicture = profilePicture || "";
+      state.displayName = displayName || "";
     },
     logout(state) {
       localStorage.removeItem("token");
+      localStorage.removeItem("email");
       state.isAuthentication = false;
       state.token = null;
+      state.email = null;
     },
   },
 });

@@ -32,7 +32,8 @@ const SignUp = () => {
       if (res.ok) {
         const resData = await res.json();
         console.log(resData);
-        console.log("User has been successfully registered");
+        alert("User has been successfully registered");
+        navigate("/login");
       } else {
         const resData = await res.json();
         throw new Error(resData.error.message);

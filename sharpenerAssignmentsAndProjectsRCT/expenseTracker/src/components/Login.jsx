@@ -5,8 +5,8 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { useNavigate, Link } from "react-router-dom";
 import VerifyEmail from "./VerifyEmail";
-import { useDispatch } from "react-redux";
-import { login } from "../contexts/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../contexts/authSlice";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -14,7 +14,8 @@ const Login = () => {
     password: "",
   });
   const { email, password } = loginData;
-  const [isLogin, setIsLogin] = useState(false);
+
+  const isLogin = useSelector((store) => store.authentication.token);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -37,8 +38,13 @@ const Login = () => {
       );
       if (res.ok) {
         const resData = await res.json();
-        dispatch(login(resData.idToken));
-        setIsLogin(true);
+        console.log(resData);
+        dispatch(login(resData));
+
+        setTimeout(() => {
+          alert("Token Expired please login.");
+          dispatch(logout());
+        }, 3600000);
         navigate("/");
       } else {
         const resData = await res.json();
@@ -115,7 +121,7 @@ const Login = () => {
           </Button>
         </Col>
       </Row>
-      {isLogin && <VerifyEmail email={email} />}
+      {!!isLogin && <VerifyEmail email={email} />}
     </>
   );
 };

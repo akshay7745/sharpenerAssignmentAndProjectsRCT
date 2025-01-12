@@ -1,18 +1,37 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Home = () => {
+  const displayName = useSelector((store) => store.authentication.displayName);
+  const profilePicture = useSelector(
+    (store) => store.authentication.profilePicture
+  );
   return (
-    <Row style={{ height: "100vh" }} className="justify-content-between ">
-      <Col md={5}>
-        <h2>Welcome to the expense app</h2>
-      </Col>
-      <Col md={5}>
-        <span>
-          Your profile is incomplete.<Link to="/profile">complete now</Link>
-        </span>
-      </Col>
-    </Row>
+    <>
+      <Row className="text-center mt-5 bg-dark text-bg-dark">
+        <Col>
+          <h2 className="fs-1">
+            Welcome to the Expense Tracker (Expense Manager) App.
+          </h2>
+        </Col>
+      </Row>
+      <Row className="text-center mt-4">
+        <Col>
+          {displayName === "" && profilePicture === "" ? (
+            <span className="fs-5">
+              Your profile is incomplete.
+              <Link to="/profile"> Complete Now</Link>
+            </span>
+          ) : (
+            <span className="fs-5">
+              Your profile is complete.
+              <Link to="/profile"> Click To Update </Link>
+            </span>
+          )}
+        </Col>
+      </Row>
+    </>
   );
 };
 

@@ -5,20 +5,27 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { addExpense } from "../contexts/expenseSlice";
-const AddExpense = ({ expenseItem, setExpenseItem, isEdited, getExpenses }) => {
+import { addExpense, editExpense } from "../contexts/expenseSlice";
+const AddExpense = ({
+  expenseItem,
+  setExpenseItem,
+  isEdited,
+  getExpenses,
+  setIsEdited,
+  emailId,
+}) => {
   const dispatch = useDispatch();
   const saveExpenses = async (data) => {
     try {
       const res = await axios({
         method: "post",
-        url: `${import.meta.env.VITE_PRODUCT_BASE_URL}.json`,
+        url: `${import.meta.env.VITE_PRODUCT_BASE_URL}${emailId}.json`,
         data: data,
       });
       if (res.statusText === "OK") {
         const id = res.data.name;
         const getRes = await axios(
-          `${import.meta.env.VITE_PRODUCT_BASE_URL}.json`
+          `${import.meta.env.VITE_PRODUCT_BASE_URL}${emailId}.json`
         );
         dispatch(addExpense({ ...expenseItem, id }));
       }
@@ -33,10 +40,11 @@ const AddExpense = ({ expenseItem, setExpenseItem, isEdited, getExpenses }) => {
 
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_PRODUCT_BASE_URL}/${isEdited}.json`,
+        `${import.meta.env.VITE_PRODUCT_BASE_URL}${emailId}/${isEdited}.json`,
         sendData
       );
-      await getExpenses();
+      // await getExpenses();
+      dispatch(editExpense({ ...expenseItem, id: isEdited }));
     } catch (error) {
       console.log(error);
     }
@@ -59,6 +67,7 @@ const AddExpense = ({ expenseItem, setExpenseItem, isEdited, getExpenses }) => {
       description: "",
       category: "Select Category",
     });
+    setIsEdited(null);
   };
   const submitHandler = (e) => {
     e.preventDefault();
