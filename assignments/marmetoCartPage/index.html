@@ -5,19 +5,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
     <!-- REPLACE THIS WITH YOUR PROJECT NAME. EXAMPLE - Category tabs -->
-    <title>Responsive Cart Page</title>
+    <title>Coding Assesment L2 boilerplate</title>
   </head>
 
   <body>
     <!-- Your code goes here -->
     <div class="container">
-      <a
-        href="https://github.com/mmdmrishabh/Coding-assessment-l2-Boilerplate-code/blob/main/Readme.md"
-        target="_blank"
-        >Read how to work with boilerplate</a
-      >
+      <header class="header">
+        <nav>
+          <div class="logo-container">
+            <img src="./images/logo.png" alt="Marmeto brand logo" /><span
+              class="brand-name"
+              >Marmeto</span
+            >
+          </div>
+          <ul class="nav-lists">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+          <ul class="nav-icons">
+            <li><img src="./images/search.png" /></li>
+            <li><img src="./images/wish.png" /></li>
+            <li><img src="./images/cart.png" /></li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <section class="hero">
+          <div class="hero-content-wrapper">
+            <div>
+              <img src="./images/logo.png" />
+              <h1>Cart</h1>
+            </div>
+            <p>Home &gt; Cart</p>
+          </div>
+        </section>
+        <section class="cart-section">
+          <div class="cart-wrapper">
+            <div class="cart">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody id="tBody">
+                  <tr>
+                    <td>
+                      <div class="product-info">
+                        <div class="product-img-container">
+                          <img src="./images/sofa.png" alt="sofa set" />
+                        </div>
+                        <span class="product-name">Product name</span>
+                      </div>
+                    </td>
+                    <td class="product-price">Rs 250000</td>
+                    <td class="quantity">
+                      <div>
+                        <input type="number" min="1" value="1" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="delete-icon">
+                        <span class="subPrice">250000</span>
+                        <div class="delete">
+                          <img src="./images/delete.png" alt="delete icon" />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="subTotal">
+              <h1>Cart Totals</h1>
+              <div class="cart-total-items">
+                <div class="subTotal-wrapper">
+                  <span class="cart-subTotal">Subtotal</span
+                  ><span class="cart-subTotal-price">250000</span>
+                </div>
+              </div>
+              <div class="cart-total">
+                <span class="cart-total-text">Total</span
+                ><span class="cart-total-price">350000</span>
+              </div>
+              <button class="checkout-btn" type="button">Check Out</button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer>
+        <div class="footer-container">
+          <div class="footer-item">
+            <div class="footer-icon-wrapper">
+              <img src="./images/trophy.png" alt="Quality icon" />
+            </div>
+            <div class="footer-description">
+              <h2>High Quality</h2>
+              <p>crafted from top materials</p>
+            </div>
+          </div>
+
+          <div class="footer-item">
+            <div class="footer-icon-wrapper">
+              <img src="./images/guarantee.png" alt="Guarantee icon" />
+            </div>
+            <div class="footer-description">
+              <h2>Warranty Protection</h2>
+              <p>Over 2 years</p>
+            </div>
+          </div>
+
+          <div class="footer-item">
+            <div class="footer-icon-wrapper">
+              <img src="./images/shipping.png" alt="Shipping icon" />
+            </div>
+            <div class="footer-description">
+              <h2>Free Shipping</h2>
+              <p>Order over 150 $</p>
+            </div>
+          </div>
+
+          <div class="footer-item">
+            <div class="footer-icon-wrapper">
+              <img
+                src="./images/customer-support.png"
+                alt="Customer care icon"
+              />
+            </div>
+            <div class="footer-description">
+              <h2>24 / 7 Support</h2>
+              <p>Dedicated support</p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-    <!-- Happy coding 😊 -->
     <script src="./script.js"></script>
   </body>
 </html>
